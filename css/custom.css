@@ -25,9 +25,6 @@
     margin-left: 20px !important;
 }
 
-
-
-
 .recent-post-item:hover, .card-widget:hover {
     /* recent-post-item 是post的博客文章 card-widget 是侧边栏的工具卡片
 hover 表示当悬浮时 属性成立*/
@@ -40,13 +37,20 @@ hover 表示当悬浮时 属性成立*/
     /*所有的属性变化持续0.3s，形成动画效果*/
 
 }
-/*磨砂效果*/
-.recent-post-item, .card-widget {
+/*磨砂效果*/ /*强制*/
+#aside-content .card-widget, /* aside-content 是侧边栏的大类（仅一个） 而.card.wdget则是小卡片，可以有多个*/
+#recent-posts > .recent-post-item, /*定位recent-post-item*/
+.layout_page >div:first-child:not(.recent-posts),
+.layout_post > #post,/* 定位具体文章的正文的volume*/
+#page, 
+.category-lists, 
+.tag-cloud-list, 
+.archive-list {
     background: rgba(255 , 255 , 255 , 0.7) !important;
-    backdrop-filter: blur(10px) saturate(180%); /* blur 高斯模糊 saturate 饱和度提升*/
-    -webkit-backdrop-filter: blur(10px) saturate(180%); /* -webkit时浏览器的前缀，为了兼容safari */
+    backdrop-filter: blur(10px) saturate(180%) !important ; /* blur 高斯模糊 saturate 饱和度提升*/
+    -webkit-backdrop-filter: blur(10px) saturate(180%) !important;/* -webkit时浏览器的前缀，为了兼容safari */
+    border-radius: 12px !important;
     border: 2px solid rgba(255 , 255 , 255 , 0.3) !important;
     /* border 格式： border: [width] [snytax] [color(即rgba(,,,))] solid样式表示实线 */
-    box-shadow: 0 8px 20px 0 rgba(31 , 38 , 135 , 0.07);
-    
+    box-shadow: 0 8px 20px 0 rgba(31 , 38 , 135 , 0.07) !important;
 }
