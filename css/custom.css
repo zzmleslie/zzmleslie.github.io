@@ -54,6 +54,8 @@ hover 表示当悬浮时 属性成立*/
     /* border 格式： border: [width] [snytax] [color(即rgba(,,,))] solid样式表示实线 */
     box-shadow: 0 8px 20px 0 rgba(31 , 38 , 135 , 0.07) !important;
 }
+#post,
+.layout_post > #post,
 #article-container {
     background: rgba(255 , 255 , 255 , 0.7) !important;
     backdrop-filter: blur(10px) saturate(180%) !important ; /* blur 高斯模糊 saturate 饱和度提升*/
