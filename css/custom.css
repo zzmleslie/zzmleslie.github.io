@@ -1,13 +1,13 @@
 :root {
-    --global-bg: #A9CBD9;
-    --light-blue: #254159;
-    --text-selection: #BF0436;
-    --bnt-bg: #2D83A6;
-    --bnt-hover-color: #164773;
+    --global-bg: #89ac9b;
+    --light-blue: #39a088;
+    --text-selection: #521779;
+    --bnt-bg: #a0debe;
+    --bnt-hover-color: #f1f159;
 
 }
 
 .card-widget {
     border-radius: 12px !important;
-    box-shadow: 0 4px 8px rgba( 11 , 43 , 64 , 0.25);
+    box-shadow: 0 4px 8px rgba(179, 215, 52, 0.25);
 }
