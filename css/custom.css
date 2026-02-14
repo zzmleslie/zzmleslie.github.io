@@ -12,12 +12,22 @@
     border-radius: 10px !important;
     box-shadow: 0 4px 8px rgba(179, 215, 52, 0.80);
 }
-/* 使得侧栏从右边转为左边*/
+/* 使得侧栏从右边转为左边 ,并向左对齐*/
 #content-inner {
-    display: flex;
+    display: flex ;
     flex-direction: row-reverse; /* reverse axis*/
+    justify-content: flex-end; /* 将元素推到当前的方向，到头为止*/
 }
-/* */
+/* 调整card-widget 的左边距*/
+#aside-content {
+    width: 20% !important;
+    margin-right: 20px !important;
+    margin-left: 20px !important;
+}
+
+
+
+
 .recent-post-item:hover, .card-widget:hover {
     /* recent-post-item 是post的博客文章 card-widget 是侧边栏的工具卡片
 hover 表示当悬浮时 属性成立*/
