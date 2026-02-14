@@ -32,7 +32,7 @@ hover 表示当悬浮时 属性成立*/
 }
 /*磨砂效果*/
 .recent-post-item, .card-widget {
-    background: rgba(255 , 255 , 255 , 0.7) !important;
+    background: rgba(255 , 255 , 255 , 0.7);
     backdrop-filter: blur(10px) saturate(180%); /* blur 高斯模糊 saturate 饱和度提升*/
     -webkit-backdrop-filter: blur(10px) saturate(180%); /* -webkit时浏览器的前缀，为了兼容safari */
     border: 2px solid rgba(255 , 255 , 255 , 0.3) !important;
