@@ -12,6 +12,7 @@
     border-radius: 10px !important;
     box-shadow: 0 4px 8px rgba(179, 215, 52, 0.80);
 }
+
 /* 使得侧栏从右边转为左边 ,并向左对齐*/
 #content-inner {
     display: flex ;
