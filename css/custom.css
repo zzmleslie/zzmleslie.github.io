@@ -2,12 +2,12 @@
     --global-bg: #89ac9b;
     --light-blue: #39a088;
     --text-selection: #521779;
-    --bnt-bg: #a0debe;
+    --bnt-bg: #b0cabd;
     --bnt-hover-color: #f1f159;
 
 }
 
 .card-widget {
     border-radius: 12px !important;
-    box-shadow: 0 4px 8px rgba(179, 215, 52, 0.25);
+    box-shadow: 0 4px 8px rgba(179, 215, 52, 0.80);
 }
