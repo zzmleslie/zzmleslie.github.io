@@ -1,13 +1,32 @@
+/*修改背景的颜色*/
 :root {
-    --global-bg: #89ac9b;
-    --light-blue: #39a088;
-    --text-selection: #521779;
-    --bnt-bg: #b0cabd;
-    --bnt-hover-color: #f1f159;
+    --global-bg: #89ac9b;/* 全局背景色 */
+    --light-blue: #39a088;/* Butterfly 的主色变量名比较特殊，叫 light-blue */
+    --text-selection: #521779;/* 文字选中颜色 */
+    --bnt-bg: #b0cabd; /* 按钮颜色 */
+    --bnt-hover-color: #f1f159;/* 按钮悬停颜色 */
 
 }
 
 .card-widget {
     border-radius: 12px !important;
     box-shadow: 0 4px 8px rgba(179, 215, 52, 0.80);
+}
+/* 使得侧栏从右边转为左边*/
+#content-inner {
+    display: flex;
+    flex-direction: row-reverse; /* reverse axis*/
+}
+/* */
+.recent-post-item:hover, .card-widget:hover {
+    /* recent-post-item 是post的博客文章 card-widget 是侧边栏的工具卡片
+hover 表示当悬浮时 属性成立*/
+    box-shadow: 0 8px 20px rgba(0 , 0 , 0 , 0.15) !important;
+    /* px arguments : arg[0]表示四周发散 arg[1] 表示向下投影 arg[2]表示模糊半径 
+    ！important 表示强制覆盖*/
+    transform: translateY(-5px); /* transform 变换属性 translateY纵向移动，在屏幕坐标系中，向上是负方向）
+    */
+    transition: all 0.3s;
+    /*所有的属性变化持续0.3s，形成动画效果*/
+
 }
