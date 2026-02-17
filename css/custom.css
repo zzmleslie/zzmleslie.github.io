@@ -1,18 +1,18 @@
 @font-face {
     font-weight: 400 !important;
-    font-family: 'jcyh' ; 
-    src: url('/font/jcyh.ttf') format('truetype') !important ;/* 指向你存放文件的路径 */
+    font-family: 'huiwen' ; 
+    src: url('/font/huiwen.ttf') format('truetype') !important ;/* 指向你存放文件的路径 */
     font-display: swap !important; /* 字体加载前先显示默认字体，避免白屏 */
 }
 
 body {
     font-weight: 400 !important;
-    font-family: 'jcyh', "Microsoft YaHei", sans-serif !important ;
+    font-family: 'huiwen', "Microsoft YaHei", sans-serif !important ;
 }
 
 #article-container {
     font-weight: 400 !important;
-    font-family: 'jcyh', "Microsoft YaHei", sans-serif !important ;
+    font-family: 'huiwen', "Microsoft YaHei", sans-serif !important ;
     line-height: 2 !important;
 }
 
