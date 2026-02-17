@@ -70,7 +70,7 @@ hover 表示当悬浮时 属性成立*/
 @font-face {
     font-weight: 400 !important;
     font-family: 'jcyh' ; 
-    src: url('/font/jcyh.ttf') format('ttf') !important ;/* 指向你存放文件的路径 */
+    src: url('/font/jcyh.ttf') format('truetype') !important ;/* 指向你存放文件的路径 */
     font-display: swap !important; /* 字体加载前先显示默认字体，避免白屏 */
 }
 
