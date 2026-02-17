@@ -68,9 +68,9 @@ hover 表示当悬浮时 属性成立*/
 }
 
 @font-face {
-    font-family: 'JinagChengYueHuTi 400W';
-    src: url('/font/JiangChengYueHuTi_400W.woff') format('woff');/* 指向你存放文件的路径 */
-    font-display: swap; /* 字体加载前先显示默认字体，避免白屏 */
+    font-family: 'JinagChengYueHuTi 400W' !important; 
+    src: url('/font/JiangChengYueHuTi_400W.woff') format('woff') !important ;/* 指向你存放文件的路径 */
+    font-display: swap !important; /* 字体加载前先显示默认字体，避免白屏 */
 }
 
 body {
@@ -78,5 +78,5 @@ body {
 }
 
 #article-container {
-    line-height: 2;
+    line-height: 2 !important;
 }
