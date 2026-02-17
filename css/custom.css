@@ -68,13 +68,13 @@ hover 表示当悬浮时 属性成立*/
 }
 
 @font-face {
-    font-family: '江城月湖体-400W' !important; 
-    src: url('/font/江城月湖体-400W.woff') format('woff') !important ;/* 指向你存放文件的路径 */
+    font-family: 'JHYC' t; 
+    src: url('/font/JHYC.woff') format('woff') !important ;/* 指向你存放文件的路径 */
     font-display: swap !important; /* 字体加载前先显示默认字体，避免白屏 */
 }
 
 body {
-    font-family: "江城月湖体-400W", "Microsoft YaHei", sans-serif !important ;
+    font-family: "JHYC", "Microsoft YaHei", sans-serif !important ;
 }
 
 #article-container {
