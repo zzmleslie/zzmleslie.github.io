@@ -1,3 +1,22 @@
+@font-face {
+    font-weight: 400 !important;
+    font-family: 'jcyh' ; 
+    src: url('/font/jcyh.ttf') format('truetype') !important ;/* 指向你存放文件的路径 */
+    font-display: swap !important; /* 字体加载前先显示默认字体，避免白屏 */
+}
+
+body {
+    font-weight: 400 !important;
+    font-family: 'jcyh', "Microsoft YaHei", sans-serif !important ;
+}
+
+#article-container {
+    font-weight: 400 !important;
+    font-family: 'jcyh', "Microsoft YaHei", sans-serif !important ;
+    line-height: 2 !important;
+}
+
+
 /*修改背景的颜色*/
 :root {
     --global-bg: #89ac9b;/* 全局背景色 */
@@ -67,20 +86,3 @@ hover 表示当悬浮时 属性成立*/
     box-shadow: 0 8px 20px 0 rgba(31 , 38 , 135 , 0.07) !important;
 }
 
-@font-face {
-    font-weight: 400 !important;
-    font-family: 'jcyh' ; 
-    src: url('/font/jcyh.ttf') format('truetype') !important ;/* 指向你存放文件的路径 */
-    font-display: swap !important; /* 字体加载前先显示默认字体，避免白屏 */
-}
-
-body {
-    font-weight: 400 !important;
-    font-family: 'jcyh', "Microsoft YaHei", sans-serif !important ;
-}
-
-#article-container {
-    font-weight: 400 !important;
-    font-family: 'jcyh', "Microsoft YaHei", sans-serif !important ;
-    line-height: 2 !important;
-}
