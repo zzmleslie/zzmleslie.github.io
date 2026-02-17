@@ -80,3 +80,7 @@ body {
 #article-container {
     line-height: 2 !important;
 }
+
+body {
+    background-color: red !important;
+}
