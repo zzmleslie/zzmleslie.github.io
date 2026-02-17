@@ -66,3 +66,17 @@ hover 表示当悬浮时 属性成立*/
     /* border 格式： border: [width] [snytax] [color(即rgba(,,,))] solid样式表示实线 */
     box-shadow: 0 8px 20px 0 rgba(31 , 38 , 135 , 0.07) !important;
 }
+
+@font-face {
+    font-family: 'JinagChengYueHuTi 400W';
+    src: url('/font/JiangChengYueHuTi_400W.woff') format('woff');/* 指向你存放文件的路径 */
+    font-display: swap; /* 字体加载前先显示默认字体，避免白屏 */
+}
+
+body {
+    font-family: "JiangChengYueHuTi 400W", "Microsoft YaHei", sans-serif !important ;
+}
+
+#article-container {
+    line-height: 2;
+}
