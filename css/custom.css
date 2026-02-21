@@ -88,6 +88,7 @@ hover 表示当悬浮时 属性成立*/
 }
 
 #article-container h1{
-    padding-left: 15px 
+    padding-left: 15px !important;
+    border-left: 5px 
 }
 
