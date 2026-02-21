@@ -4,12 +4,14 @@
     font-weight: 400 ;
     font-style: normal;
     font-display: swap; /* 字体加载前先显示默认字体，避免白屏 */
-    
+    font-size: 18px !important;
     
 }
 
 body ,#article-container, #site-name, #site-title, #site-subtitle {
     font-family: 'huiwen', "Microsoft YaHei", sans-serif !important ;
+    font-size: 18px !important;
+
 }
 
 #article-container {
