@@ -8,9 +8,14 @@
 
 body ,#article-container, #site-name, #site-title, #site-subtitle {
     font-family: 'huiwen', "Microsoft YaHei", sans-serif !important ;
-    font-size: 18px !important;
-
 }
+body ,#article-container, #site-name{
+    font-size: 18px !important;
+}
+#site-title, #site-subtitle {
+    font-size: 25px !important;
+}
+ 
 
 #article-container {
     line-height: 2 !important;
