@@ -12,8 +12,8 @@ body ,#article-container, #site-name, #site-title, #site-subtitle {
 body ,#article-container, #site-name{
     font-size: 18px !important;
 }
-#site-title, #site-subtitle {
-    font-size: 25px !important;
+.site-title, .site-subtitle {
+    font-size: 35px !important;
 }
  
 
