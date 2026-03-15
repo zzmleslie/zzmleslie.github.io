@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵) | Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵)</title><meta name="author" content="Zzm_Leslie ⚡️"><meta name="copyright" content="Zzm_Leslie ⚡️"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="明白，我的错。这次我绝对不删减、不修改任何文字内容，仅仅将 &#123;% span %&#125; 转换为 100% 兼容的 HTML 语法，并严格按照 Markdown 标准重写你的表格和代码块。 这是为您整理的完整 .md 源码，你可以直接全选复制： 12345678910111213141516171819202122232425262728293031323334353637383940">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zzm&#39;s Blog (✧ω✧) (๑˃̵ᴗ˂̵)">
+<meta property="og:url" content="http://example.com/2026/03/14/software-1-lesson-2/index.html">
+<meta property="og:site_name" content="Zzm&#39;s Blog (✧ω✧) (๑˃̵ᴗ˂̵)">
+<meta property="og:description" content="明白，我的错。这次我绝对不删减、不修改任何文字内容，仅仅将 &#123;% span %&#125; 转换为 100% 兼容的 HTML 语法，并严格按照 Markdown 标准重写你的表格和代码块。 这是为您整理的完整 .md 源码，你可以直接全选复制： 12345678910111213141516171819202122232425262728293031323334353637383940">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/image/rana2.png">
+<meta property="article:published_time" content="2026-03-14T13:55:17.883Z">
+<meta property="article:modified_time" content="2026-03-15T02:51:00.389Z">
+<meta property="article:author" content="Zzm_Leslie ⚡️">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/rana2.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "http://example.com/2026/03/14/software-1-lesson-2/",
+  "image": "http://example.com/image/rana2.png",
+  "datePublished": "2026-03-14T13:55:17.883Z",
+  "dateModified": "2026-03-15T02:51:00.389Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Zzm_Leslie ⚡️",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/03/14/software-1-lesson-2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Zzm\'s Blog (✧ω✧) (๑˃̵ᴗ˂̵)',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵)</span></a><a class="nav-page-title" href="/"><span class="site-name">Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵)</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Untitled</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-03-14T13:55:17.883Z" title="Created 2026-03-14 21:55:17">2026-03-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-03-15T02:51:00.389Z" title="Updated 2026-03-15 10:51:00">2026-03-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>明白，我的错。这次我<strong>绝对不删减、不修改任何文字内容</strong>，仅仅将 <code>&#123;% span %&#125;</code> 转换为 100% 兼容的 HTML 语法，并严格按照 Markdown 标准重写你的表格和代码块。</p>
+<p>这是为您整理的完整 <code>.md</code> 源码，你可以直接全选复制：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: software<span class="emphasis">_1_</span>lesson<span class="emphasis">_2</span></span><br><span class="line"><span class="emphasis">date: 2026-03-14 21:55:17</span></span><br><span class="line"><span class="emphasis">tags: tech</span></span><br><span class="line"><span class="emphasis">cover: lesson_</span>2<span class="emphasis">_cover.png</span></span><br><span class="line"><span class="emphasis">---</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">## <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;&quot;</span>&gt;</span></span>无穷集和对角线法<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> </span></span><br><span class="line"><span class="emphasis">&#123;# 自定义的颜色提示 #&#125;</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">简单概括就是，先构造实数序列（0-1），将自然数与实数序列一一对应，然后试图构造新的一个实数序列：将第一个实数的第一位小数取反，再将实数的第二位小数取反，依次构造出不等于任何已有实数序列的新实数。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f;&quot;</span>&gt;</span></span>Input:<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> 一个巨大的 `std::vector<span class="language-xml">&lt;std::string&gt;</span>`，里面存了无数个长度无限的 01 字符串。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f;&quot;</span>&gt;</span></span>Algorithm:<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>  遍历这个 `vector`，取第 $i$ 个字符串的第 $i$ 位，做 `!bit` 操作。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f;&quot;</span>&gt;</span></span>Result:<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> 得到一个新的 `string`。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f;&quot;</span>&gt;</span></span>Assertion:<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> `find(vector.begin(), vector.end(), new_</span>string) == vector.end()` 永远为真。）</span><br><span class="line"></span><br><span class="line"><span class="section">## <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;&quot;</span>&gt;</span></span>希尔伯特的野心：万能判定机<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> </span></span><br><span class="line"></span><br><span class="line">希尔伯特在 1928 年提出这个挑战时，他的设想非常宏大。</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#105a3b;&quot;</span>&gt;</span></span>他想知道：是否存在一个算法（程序），当你输入任何一个数学命题（用逻辑符号写成），它都能在有限的时间内给你一个明确的答复：<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> <span class="language-xml"><span class="tag">&lt;<span class="name">kbd</span>&gt;</span></span>True<span class="language-xml"><span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span> 或 <span class="language-xml"><span class="tag">&lt;<span class="name">kbd</span>&gt;</span></span>False<span class="language-xml"><span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f;&quot;</span>&gt;</span></span>输入：<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> 一段符合语法规则的“逻辑代码”（一阶逻辑符号系统）。</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f;&quot;</span>&gt;</span></span>处理：<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> 一个清楚明白的“验算程序”（算法）。</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f;&quot;</span>&gt;</span></span>输出：<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> <span class="code">`return true;`</span> 或者 <span class="code">`return false;`</span>。</span><br><span class="line"></span><br><span class="line"><span class="section">## <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;&quot;</span>&gt;</span></span>罗素悖论<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> </span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#105a3b;&quot;</span>&gt;</span></span></span><br><span class="line">设命题函数 $P(x)$ 表示 &quot;$x \notin x$&quot;，假设由性质 $P$ 确定了⼀个类 $A = \&#123; x \mid x \notin x \&#125;$</span><br><span class="line">$A \in A$ 是否成⽴？</span><br><span class="line">若 $A \in A$</span><br><span class="line">→ $A$ 是 $A$ 的元素</span><br><span class="line">→ $A$ 不具有性质 $P$</span><br><span class="line">→ $A \notin A$ ⽭盾！</span><br><span class="line">若 $A \notin A$</span><br><span class="line">→ $A$ 具有性质 $P$</span><br><span class="line">→ $A$ 是由所有具有性质 $P$ 的类组成的</span><br><span class="line">→ $A \in A$ ⽭盾！</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="section">## <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;&quot;</span>&gt;</span></span>哥德尔的不完备定理<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#105a3b;&quot;</span>&gt;</span></span>「我不可在系统 T 内被证明」<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">$G \leftrightarrow \neg Bew(G)$ （<span class="code">`Bew(x)`</span> 返回值：如果能证明，则为“真”；否则为“假”）</span><br><span class="line"></span><br><span class="line"><span class="section">## <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;&quot;</span>&gt;</span></span>停机问题<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#105a3b;&quot;</span>&gt;</span></span>图灵通过 $D$ 集合证明了：无论你的 <span class="code">`Scanner`</span> 写得多么复杂，我都能根据你的 <span class="code">`Scanner`</span> 源码 ，构造出一个<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> <span class="language-xml"><span class="tag">&lt;<span class="name">kbd</span>&gt;</span></span> 悖论程序 <span class="language-xml"><span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span> <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#105a3b;&quot;</span>&gt;</span></span>。<span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">从 <span class="code">`God_algo`</span> 出发，导出⼀个新的算法：</span><br><span class="line"><span class="code">```cpp</span></span><br><span class="line"><span class="code">bool Satan_algo(char* program)</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    if (God_algo(program, program)) &#123;</span></span><br><span class="line"><span class="code">        while (1);       // loop forever!</span></span><br><span class="line"><span class="code">        return false;    // can never get here!</span></span><br><span class="line"><span class="code">    &#125;</span></span><br><span class="line"><span class="code">    else</span></span><br><span class="line"><span class="code">        return true;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code"></span></span><br></pre></td></tr></table></figure>
+
+<p>如果程序确实停机，运行它，有限步内就能知道<br>如果程序不停机，我们只能永远等下去</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>可判定（decidable）</th>
+<th>可识别（recognizable）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>能确认</strong></td>
+<td>能确认</td>
+<td>能确认</td>
+</tr>
+<tr>
+<td><strong>⽆法确认</strong></td>
+<td>能确认</td>
+<td>⽆法确认</td>
+</tr>
+</tbody></table>
+<p>停机问题：可识别，但不可判定</p>
+<h2 id="莱斯定理（rice）"><a href="#莱斯定理（rice）" class="headerlink" title="莱斯定理（rice）"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">莱斯定理（rice）</span></h2><p><span style="color:#105a3b;">简单来说就是： 只要你想写个工具来预判一个程序</span> <kbd> “运行时的行为” </kbd> <span style="color:#105a3b;">，这个工具就一定是</span> <kbd> 不可判定 </kbd> <span style="color:#105a3b;">的。</span></p>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>⼯具能做到</th>
+<th>做不到</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>编译器类型检查</strong></td>
+<td>语法语义类型</td>
+<td>运⾏时所有 bug</td>
+</tr>
+<tr>
+<td><strong>静态分析器</strong></td>
+<td>启发式检测</td>
+<td>零误报零漏报</td>
+</tr>
+<tr>
+<td><strong>测试</strong></td>
+<td>验证已测⽤例</td>
+<td>证明所有输⼊正确</td>
+</tr>
+</tbody></table>
+<h2 id="图灵的通⽤计算机"><a href="#图灵的通⽤计算机" class="headerlink" title="图灵的通⽤计算机"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">图灵的通⽤计算机</span></h2><p>(⼀台图灵机单凭自身就可以完成任何图灵机可能做到的任何事情)<br><kbd> 五元组 </kbd>   <kbd> 初始状态 </kbd> <kbd> 注视符号 </kbd> <kbd> 改写符号 </kbd> <kbd> 移动⽅向 </kbd> <kbd> 变化状态 </kbd></p>
+<h2 id="邱奇-图灵论题"><a href="#邱奇-图灵论题" class="headerlink" title="邱奇-图灵论题"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">邱奇-图灵论题</span></h2><span style="color:#105a3b;">
+The Church–Turing thesis states that a function is algorithmically computable if and only if it is computable by a Turing machine
+</span>
+
+<h2 id="Busy-Beaver-忙碌的海狸"><a href="#Busy-Beaver-忙碌的海狸" class="headerlink" title="Busy Beaver ( 忙碌的海狸 )"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">Busy Beaver ( 忙碌的海狸 )</span></h2><p><span style="color:#022d1f;"><strong>定义:</strong></span> 在所有只有 $n$ 个状态（指令）且最终能停机的图灵机程序中，寻找那个运行步数最多的“冠军”。它是一个确定的自然数（比如 $BB(4)&#x3D;107$），但它是一个不可计算函数。<br><span style="color:#022d1f;"><strong>Q: 为什么它“不可计算”?</strong></span><br><kbd> 前提：</kbd> 想要算出 $BB(n)$，你必须先从所有程序中剔除那些“死循环（不停机）”的程序。但图灵停机问题证明了：不存在一个通用的算法能 100% 判定一个程序是否死循环。既然你分不清谁是“跑得久”谁是“死循环”，你就永远无法确定谁才是真正的 $BB(n)$。所以，$BB(n)$ 无法通过算法得到。总之，$BB(n)$ 是一个确定的数（就像宇宙中确实存在最忙的那只海狸）。但“得到这个数”的操作是违法的（因为它违反了停机问题的逻辑底层）。<br><kbd> 应用： </kbd><br>Adam Yedidia 把哥德巴赫猜想编码为有 4888 个状态的 Busy Beaver 图灵机：如果让这台图灵机跑起来，只要跑了 $BB(4888)$ 步后还没有停机，那就证明了哥德巴赫猜想为真！他还写了⼀个验证黎曼猜想的图灵机，有 5372 个状态</p>
+<h2 id="⾃然数的⽪亚诺公理系统"><a href="#⾃然数的⽪亚诺公理系统" class="headerlink" title="⾃然数的⽪亚诺公理系统"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">⾃然数的⽪亚诺公理系统</span></h2><p><kbd> 1 </kbd>  1是⾃然数<br><kbd> 2 </kbd> 每⼀个确定的⾃然数 $a$，都有一个确定的后继数 $a’$，$a’$ 也是⾃然数<br><kbd> 3 </kbd>  如果⾃自然数 $b$、$c$ 的后继数都是 $a$，那么 $b &#x3D; c$<br><kbd> 4 </kbd>  1 不是任何⾃然数的后继数<br><kbd> 5 </kbd> 任意关于⾃然数的命题，如果证明了它对 1 是对的，⼜假定它对 $n$ 为真时，可以证明它对<br>$n’$ 也真，那么命题对所有⾃然数都真。（数学归纳法）<br>(若将 0 也视作⾃然数，则公理中的 1 要换成 0。)</p>
+<h2 id="原始递归函数"><a href="#原始递归函数" class="headerlink" title="原始递归函数"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">原始递归函数</span></h2><p><kbd> 常数函数 </kbd> 0 元常数函数 0 是原始递归的<br><kbd> 后继函数 </kbd> <code>S</code> 接受一个参数，返回后继数 <code>S(n) = n + 1</code><br><kbd> 投影函数 $P_i^n$ </kbd> 接受 $n$ 个参数，返回第 $i$ 个</p>
+<p><strong>加法的递归定义</strong></p>
+<p><strong>直觉上</strong>我们把加法递归定义为：<br><kbd> add(0,x) = x </kbd><br><kbd> add(n+1,x) = add(n,x) + 1 </kbd></p>
+<p><strong>严格</strong>的原始递归定义：<br><kbd> add(0,x) = P₁¹(x) </kbd><br><kbd> add(S(n),x) = S(P₁³(add(n,x), n, x))   (= S(add(n, x))) </kbd><br>(<code>S(n)</code> 就是“后继函数”，它的唯一功能就是把自然数 $n$ 变成它的下一个数，也就是 $n+1$)</p>
+<p><strong>减法的递归定义(同理)</strong><br>⾸先定义前驱函数：<br><kbd> pred(0) = 0 </kbd><br><kbd> pred(S(n)) = P₂²(pred(n), n) </kbd><br>然后定义有限减法（截⽌到 0）：<br><kbd> sub(0,x) = P₁¹(x) </kbd><br><kbd> sub(S(n),x) = pred(P₁³(sub(n,x), n, x)) </kbd></p>
+<h2 id="阿克曼函数"><a href="#阿克曼函数" class="headerlink" title="阿克曼函数"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">阿克曼函数</span></h2><p>它证明了：存在一种逻辑，它比任何多项式、指数、阶乘都要高级。这迫使科学家定义了更广义的“全递归函数”。但它仍是可计算函数。</p>
+<h2 id="μ算子"><a href="#μ算子" class="headerlink" title="μ算子"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">μ算子</span></h2><p><span style="color:#022d1f;">Q: 原始递归（for 循环）不够用？</span><br>在原始递归的世界里，所有的循环都是这样的：<code>for (int i = 0; i &lt; n; i++) &#123; ... &#125;</code><br>在循环开始之前，你就已经知道它最多跑 $n$ 次。它必然会停机 , 它被叫全函数（Total Function）。<br>但是阿克曼函数告诉我们，有些计算逻辑极其复杂，你根本没法预先拍脑袋说“它一定在 $n$ 步内算完”。所以需要引入 <strong>μ算子</strong>。</p>
+<p><span style="color:#022d1f;">μ 算子：</span> 引入了<strong>无界搜索（Unbounded Search）</strong>。它的逻辑用 C++ 伪代码写出来就是：</p>
+<div class="note default no-icon flat"><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> μ_operator(<span class="type">int</span> x) &#123;</span><br><span class="line">    <span class="type">int</span> y = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">f</span>(y, x) != <span class="number">0</span>) &#123; <span class="comment">// 只要结果不是 0</span></span><br><span class="line">        y++;               <span class="comment">// 就一直试下一个 y</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> y;              <span class="comment">// 找到了，返回最先找到的那个 y（y的最小值）</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p><strong>一大典型的区别（μ算子与原始递归之间）：</strong><br>（全函数（total） ：对所有输⼊都有定义，必然停机<br>（部分函数（partial）： 仅对部分输⼊有定义，其余不停机）<br>**Q:为什么我们需要这个“危险”的算子？**因为只有允许了“不停机”的可能性，我们的计算系统才拥有了模拟宇宙中所有逻辑的能力。这就是著名的 “邱奇-图灵论题” 的数学表达：所有能被人类大脑或计算机处理的算法，本质上都可以用“原始递归 + μ 算子”来表达。</p>
+<h2 id="lambda-演算（暂时看不懂，略去）"><a href="#lambda-演算（暂时看不懂，略去）" class="headerlink" title="lambda 演算（暂时看不懂，略去）"></a><span style="color:#022d1f; background:#60be77; padding:2px 6px; border-radius:3px;">lambda 演算（暂时看不懂，略去）</span></h2><p><span style="color:#022d1f;">图灵机 ：</span></p>
+<p>⼀台图灵机是⼀个七元有序组 （现代标准定义）（（五元组（图灵原始形式）））</p>
+<p>转移函数 的具体展开。每一行的格式都是： 当前状态, 读到的符号 -&gt; 新状态, 写入的符号, 移动方向</p>
+<p><span style="color:#022d1f;">图灵机与寄存器的等价：</span></p>
+<p>纸带 &#x3D; 数字想象图灵机的纸带上有无限 de 0 和 1。左侧纸带 $m$：把左边所有的 0 和 1 看成一个二进制数。当前格子 $s$：当前读写头下的数字。右侧纸带 $n$：把右边所有的 0 和 1 看成另一个二进制数。关键点来了：读写头右移，相当于把 $n$ 的最后一位“挤”给了 $s$，把旧的 $s$ “挤”进了 $m$ 的末尾。在数学上，往末尾塞一个数就是 乘以 2 再加这个数；从末尾拿掉一个数就是 除以 2 取余数。2. 读写头移动的“数学公式” (PPT 61页)当你右移一格时，发生了三件事：左边变大了：$m’ &#x3D; 2m + s$（旧的 $s$ 贴到了 $m$ 的屁股后面）。当前变了：$s’ &#x3D; n \pmod 2$（从右边的 $n$ 里抠出最后一位）。右边变小了：$n’ &#x3D; n &#x2F; 2$（$n$ 删掉了刚才被抠走的那一位）。结论：图灵机所有的“左右移动”和“改写符号”，在寄存器机里全都变成了加、减、乘、除。</p>
+<p>两个寄存器是怎么做到的？ 这里用到了<strong>哥德尔数（Gödelization）的天才想法：我们可以用素数的幂次方来打包数据。比如用一个寄存器 $r$ 存储一个巨大的数字：$r &#x3D; 2^m \cdot 3^s \cdot 5^n$</strong> 想知道 $s$ 是多少？看 $r$ 能被 3 整除几次。想改 $s$？通过乘除法调整 3 的指数。另一个寄存器 $z$ 永远保持为 0，专门用来配合 <code>decjmpreg</code> 实现无条件跳转。</p>
+<p><span style="color:#022d1f;">如何实现“加法”？</span><br>假设你想算 $A + B$，结果存在 $B$ 里。你的策略是：只要 $A$ 还没空，我就从 $A$ 里拿走一个，往 $B$ 里放一个。 目标：$B &#x3D; B + A$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LOOP: decjmpreg A, NEXT    ; 尝试从 A 拿走 1，成功则去 NEXT，失败（A=0）则跳出</span><br><span class="line">      jmp HALT             ; A 拿空了，停机</span><br><span class="line">NEXT: inc B                ; 给 B 加 1</span><br><span class="line">      jmp LOOP             ; 回去继续拿</span><br><span class="line">HALT: hlt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>没有用 <code>ADD</code> 指令，只用 <code>inc</code> 和 <code>dec</code> 就完成了加法。</p>
+<p><span style="color:#022d1f;">如何实现“乘 2”？（双倍搬运）</span><br>假设要把 $A$翻倍，结果存入 $B$。策略：每从 $A$里拿走 1 个，就往 $B$里丢 2 个。 目标：$B &#x3D; A \cdot 2$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">L3: decjmpreg A, L4        ; 从 A 拿走 1 个（成功去 L4，失败去停机）</span><br><span class="line">    jmp HALT</span><br><span class="line">L4: inc B                  ; 第 1 个 inc</span><br><span class="line">    inc B                  ; 第 2 个 inc（疯狂双倍！）</span><br><span class="line">    jmp L3                 ; 回去继续，直到 A 被搬空</span><br><span class="line">HALT: hlt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><span style="color:#022d1f;">如何实现“除以 2”？（分批搬运）</span><br>这是最巧妙的。你想知道 $A$ 里面有几个 2，余数是多少。我每次尝试从 $A$ 里连续拿走 2 个球。如果能拿够 2 个，我就给商（<code>Result</code>）加 1；如果最后只剩下 1 个拿不够了，那它就是余数。 目标：$Result &#x3D; A &#x2F; 2, Remainder &#x3D; A \pmod 2$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">START:  mov Remainder, 0    ; 先假设余数为 0</span><br><span class="line">LOOP:   decjmpreg A, TRY_2  ; 尝试拿第 1 个</span><br><span class="line">        jmp FINISH          ; 1 个都拿不出，整除，结束</span><br><span class="line">TRY_2:  inc Remainder       ; 暂时记余数为 1（因为拿出了 1 个）</span><br><span class="line">        decjmpreg A, GOT_2  ; 尝试拿第 2 个</span><br><span class="line">        jmp FINISH          ; 拿不出第 2 个，余数确定是 1，结束</span><br><span class="line">GOT_2:  mov Remainder, 0    ; 拿够了 2 个，余数归零</span><br><span class="line">        inc Result          ; 商加 1</span><br><span class="line">        jmp LOOP            ; 继续下一轮尝试</span><br><span class="line">FINISH: hlt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>怎么实现 jmp</strong> 用一个 <code>while</code> 循环：只要 <code>reg</code> 不是 0，就一直 <code>dec</code> 它。最后它一定会变成 0。这就是那个寄存器 $z$ 的妙用。我们规定 $z$ 永远是 0。当你执行 <code>decjmpreg z, lab</code>，因为它一定是 0，所以它永远会直接跳转到 <code>lab</code>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Zzm_Leslie ⚡️</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/03/14/software-1-lesson-2/">http://example.com/2026/03/14/software-1-lesson-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/image/rana2.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/02/21/about-khalil-about-love/" title="about Khalil ,about love"><img class="cover" src="/image/soulboy.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">about Khalil ,about love</div></div><div class="info-2"><div class="info-item-1">离去  前段时间，耳机里随机切到大同的歌。恍惚间，我意识到他离开我们竟然快一年了。眼泪一瞬间决堤，我的思绪仿佛又回到了去年 3 月 1 日那个沉闷的下午。  大同是我最爱的歌手，他的歌陪伴了我很久。 爱爱爱  初二那年，第一次听到《爱爱爱》。我也不懂什么复杂的乐理，只觉得那种舒缓的旋律里，藏着大同对世界最纯粹的理解——“我爱故我在”。于是，我开始试着在他的歌里去感受爱、理解爱。  后来，偶然听到《枫叶做的风铃》，那是很温暖的一首歌。像是在秋日午后，空气中氤氲着阳光的味道，恋人牵手漫步在红枫林中，等风吹过，叶片沙沙作响，一切都好像漂浮在暖橙色上。透过作品，我能感受到大同灵魂深处的温柔和平和。 从 DT 到 Khalil  初中时，我几乎是同时知晓大同与陶喆的。那时年少，还是更向往 David Tao 音乐里的自由与洒脱，还有那些充满个性、桀骜不驯的“怪叫”（）。而大同的音乐偏向内敛，那时的我尚未有所感触。直到步入高中，我才真正沉下心来，开始认真倾听“颗粒哦”的音乐。  刚“入坑”时，我去了听出道专《Soulboy》。那是一张 R&amp;B 与 Soul 韵味极浓的专辑。老实说，起...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/rana2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zzm_Leslie ⚡️</div><div class="author-info-description">外号野猫 花咲川女子学园初中三年级学生  喜欢泡在LIVE HOUSE 喜欢抹茶芭菲 喜欢荞麦面 喜欢猫猫 </div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zzmleslie"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B1%E6%96%AF%E5%AE%9A%E7%90%86%EF%BC%88rice%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">莱斯定理（rice）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%81%B5%E7%9A%84%E9%80%9A%E2%BD%A4%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">2.</span> <span class="toc-text">图灵的通⽤计算机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%82%B1%E5%A5%87-%E5%9B%BE%E7%81%B5%E8%AE%BA%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">邱奇-图灵论题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Busy-Beaver-%E5%BF%99%E7%A2%8C%E7%9A%84%E6%B5%B7%E7%8B%B8"><span class="toc-number">4.</span> <span class="toc-text">Busy Beaver ( 忙碌的海狸 )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%BE%83%E7%84%B6%E6%95%B0%E7%9A%84%E2%BD%AA%E4%BA%9A%E8%AF%BA%E5%85%AC%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="toc-number">5.</span> <span class="toc-text">⾃然数的⽪亚诺公理系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%A7%8B%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0"><span class="toc-number">6.</span> <span class="toc-text">原始递归函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BF%E5%85%8B%E6%9B%BC%E5%87%BD%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text">阿克曼函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%CE%BC%E7%AE%97%E5%AD%90"><span class="toc-number">8.</span> <span class="toc-text">μ算子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lambda-%E6%BC%94%E7%AE%97%EF%BC%88%E6%9A%82%E6%97%B6%E7%9C%8B%E4%B8%8D%E6%87%82%EF%BC%8C%E7%95%A5%E5%8E%BB%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">lambda 演算（暂时看不懂，略去）</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/14/software-1-lesson-2/" title="Untitled">Untitled</a><time datetime="2026-03-14T13:55:17.883Z" title="Created 2026-03-14 21:55:17">2026-03-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/02/21/about-khalil-about-love/" title="about Khalil ,about love"><img src="/image/soulboy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="about Khalil ,about love"/></a><div class="content"><a class="title" href="/2026/02/21/about-khalil-about-love/" title="about Khalil ,about love">about Khalil ,about love</a><time datetime="2026-02-21T02:10:28.000Z" title="Created 2026-02-21 10:10:28">2026-02-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/02/14/my-first-blog/" title="my first blog !"><img src="/image/rana3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="my first blog !"/></a><div class="content"><a class="title" href="/2026/02/14/my-first-blog/" title="my first blog !">my first blog !</a><time datetime="2026-02-14T06:44:39.000Z" title="Created 2026-02-14 14:44:39">2026-02-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/14/hello-world/" title="Hello World">Hello World</a><time datetime="2026-02-14T04:51:03.535Z" title="Created 2026-02-14 12:51:03">2026-02-14</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Zzm_Leslie ⚡️</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><div id="my-rana" style="position:fixed;left: 40px;bottom: 40px;z-index: 999;pointer-events: none;"> <img src="/image/rana.gif" style="width: 100px;"> </div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
