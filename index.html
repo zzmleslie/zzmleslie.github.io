@@ -152,8 +152,25 @@
   }
 
   @media (max-width: 768px) {
-    .nav-links { right: 6vw; gap: 14px; }
+    .hero-text {
+      left: 50%;
+      top: 22%;
+      transform: translate(-50%, 0);
+      text-align: center;
+    }
+    .hero-text .line1 { font-size: 1.6em; }
+    .hero-text .line2 { font-size: 1.2em; }
+    .hero-text .line3 { font-size: 1.0em; }
+    .nav-links {
+      right: 50%;
+      top: auto;
+      bottom: 14%;
+      transform: translate(50%, 0);
+      align-items: center;
+      gap: 10px;
+    }
     .nav-links a { font-size: 1em; padding: 8px 18px; }
+    .hint { bottom: 24px; font-size: 0.75em; }
   }
 </style>
 </head>
