@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zzm's Garden</title>
 <style>
+  /* ====== 自定义字体 ====== */
+  @font-face {
+    font-family: 'huiwen';
+    src: url('/font/huiwen.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
   :root {
     --bg: #0a0a0f;
     --text: rgba(255,255,255,0.85);
@@ -19,7 +28,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-family: 'huiwen', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     height: 100vh;
     overflow: hidden;
     cursor: default;
@@ -65,7 +74,7 @@
   /* ====== 右侧导航 ====== */
   .nav-links {
     position: fixed;
-    right: 80px;
+    right: 8vw;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
@@ -121,7 +130,7 @@
   /* ====== 左侧大标题 ====== */
   .hero-text {
     position: fixed;
-    left: 80px;
+    left: 8vw;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
@@ -168,9 +177,9 @@
 
   /* ====== 响应式 ====== */
   @media (max-width: 768px) {
-    .hero-text { left: 24px; }
+    .hero-text { left: 6vw; }
     .hero-text .title { font-size: 2.2em; }
-    .nav-links { right: 24px; gap: 14px; }
+    .nav-links { right: 6vw; gap: 14px; }
     .nav-links a { font-size: 1em; padding: 8px 18px; }
   }
 </style>
