@@ -86,7 +86,7 @@
   if (siteData) {
     const quote = document.createElement('div')
     quote.className = 'site-quote'
-    quote.innerHTML = '<p>" 有好些年，我一直想要遵照所有人的道德标准来生活，<br>我强迫自己去过和所有人一样的日子，强迫自己和所有人相似。<br>如今，我在碎片中游荡，没有任何法则，四分五裂，<br>于是不再抗拒我的独特和残缺，<br>我去我也该去重建一个真相——<br>在某种谎言中过了一辈子之后。 "</p><span class="quote-author">—— 阿尔贝·加缪</span>'
+    quote.innerHTML = '<p>" 有好些年，<br>我一直想要遵照所有人的道德标准来生活，<br>我强迫自己去过和所有人一样的日子，<br>强迫自己和所有人相似。<br>如今，<br>我在碎片中游荡，<br>没有任何法则，<br>四分五裂，<br>于是不再抗拒我的独特和残缺，<br>而且我也该去重建一个真相——<br>在某种谎言中过了一辈子之后。 "</p><span class="quote-author">—— 阿尔贝·加缪</span>'
     siteData.replaceWith(quote)
   }
 
