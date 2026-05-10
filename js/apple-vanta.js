@@ -46,9 +46,9 @@
         color: 0x3A8891, backgroundColor: 0x0A0A0F,
         points: 10, maxDistance: 20, spacing: 16, showDots: true }),
 
-      projects: () => VANTA.GLOBE({ ...base,
-        color: 0x4A8891, color2: 0xB83B8D, backgroundColor: 0x0A0A0F,
-        size: 1.2, points: 12, maxDistance: 28, spacing: 18 }),
+      projects: () => VANTA.NET({ ...base,
+        color: 0x4A8891, backgroundColor: 0x0A0A0F,
+        points: 14, maxDistance: 24, spacing: 14, showDots: true }),
 
       archives: () => VANTA.NET({ ...base,
         color: 0x5A7080, backgroundColor: 0x0A0A0F,

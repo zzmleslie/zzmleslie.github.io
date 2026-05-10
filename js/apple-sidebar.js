@@ -9,7 +9,7 @@
   try {
     const pt = GLOBAL_CONFIG_SITE && GLOBAL_CONFIG_SITE.pageType
     if (pt) {
-      const cls = 'type-' + pt
+      const cls = 'type-' + (pt === 'archive' ? 'archives' : pt)
       document.getElementById('body-wrap').classList.add(cls)
       document.body.classList.add(cls)
     }
