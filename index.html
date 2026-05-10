@@ -47,10 +47,10 @@
     z-index: 1;
     pointer-events: none;
     background: radial-gradient(ellipse at center,
-      transparent 35%,
-      rgba(10,10,15,0.2) 55%,
-      rgba(10,10,15,0.5) 75%,
-      rgba(10,10,15,0.85) 100%
+      transparent 40%,
+      rgba(10,10,15,0.15) 60%,
+      rgba(10,10,15,0.35) 80%,
+      rgba(10,10,15,0.6) 100%
     );
   }
 
@@ -227,24 +227,24 @@ class Particle {
   }
 }
 
-// -- 环形轨道粒子（阳光音符晕染） --
-const noteGlyphs = ['♪', '♫', '♩', '✦', '·', '☀']
+// -- 环形轨道粒子（音符） --
+const noteGlyphs = ['♪', '♫', '♩']
 class RingParticle {
   constructor(cx, cy, radius, speed, size, opacity, glyph, ellipY) {
     this.cx = cx; this.cy = cy
     this.radius = radius
     this.angle = Math.random() * Math.PI * 2
-    this.speed = speed * (Math.random() * 0.4 + 0.8)
+    this.speed = speed * (Math.random() * 0.3 + 0.85)
     this.size = size
     this.opacity = opacity
     this.glyph = glyph
-    this.wobbleR = Math.random() * 10
-    this.wobbleA = Math.random() * 0.1
+    this.wobbleR = Math.random() * 12 + 4
+    this.wobbleA = Math.random() * 0.08
     this.ellipY = ellipY
   }
   update() {
     this.angle += this.speed
-    this.wobbleA += 0.02
+    this.wobbleA += 0.015
   }
   draw() {
     const r = this.radius + Math.sin(this.wobbleA) * this.wobbleR
@@ -256,17 +256,16 @@ class RingParticle {
   }
 }
 
-// 中心点 — 右下区域
-const ringCX = canvas.width * 0.62
-const ringCY = canvas.height * 0.55
+// 中心点 — 页面正中
+const ringCX = canvas.width * 0.5
+const ringCY = canvas.height * 0.5
 function createRings() {
   rings = []
-  const cx = canvas.width * 0.62, cy = canvas.height * 0.55
-  // 3 层同心光环 — 阳光金色 + 椭圆
+  const cx = canvas.width * 0.5, cy = canvas.height * 0.5
+  // 2 层大环 — 铺满页面，中间空心
   const ringConfigs = [
-    { r: 140, n: 18, speed: 0.009, size: 22, op: 0.7, ey: 0.75 },
-    { r: 240, n: 28, speed: 0.006, size: 19, op: 0.55, ey: 0.65 },
-    { r: 360, n: 38, speed: 0.004, size: 16, op: 0.4, ey: 0.55 }
+    { r: Math.min(canvas.width, canvas.height) * 0.35, n: 14, speed: 0.004, size: 20, op: 0.55, ey: 0.65 },
+    { r: Math.min(canvas.width, canvas.height) * 0.44, n: 10, speed: 0.0025, size: 18, op: 0.35, ey: 0.58 }
   ]
   ringConfigs.forEach(cfg => {
     for (let i = 0; i < cfg.n; i++) {
@@ -279,7 +278,7 @@ createRings()
 window.addEventListener('resize', () => { resize(); createRings() })
 
 // 初始化上升粒子
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 30; i++) {
   const p = new Particle()
   p.y = Math.random() * canvas.height
   particles.push(p)
@@ -287,16 +286,18 @@ for (let i = 0; i < 60; i++) {
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  // 环形晕染光晕 — 阳光暖金椭圆形
-  const cx2 = canvas.width * 0.62, cy2 = canvas.height * 0.55
-  const glow = ctx.createRadialGradient(cx2, cy2, 100, cx2, cy2, 420)
-  glow.addColorStop(0, 'rgba(255,210,140,0.15)')
-  glow.addColorStop(0.3, 'rgba(255,180,100,0.10)')
-  glow.addColorStop(0.6, 'rgba(255,150,60,0.05)')
-  glow.addColorStop(0.85, 'rgba(200,120,50,0.02)')
+  // 环形晕染 — 页面正中大甜甜圈光晕
+  const cx2 = canvas.width * 0.5, cy2 = canvas.height * 0.5
+  const maxR = Math.min(canvas.width, canvas.height) * 0.48
+  const innerR = maxR * 0.55
+  const glow = ctx.createRadialGradient(cx2, cy2, innerR, cx2, cy2, maxR)
+  glow.addColorStop(0, 'transparent')
+  glow.addColorStop(0.15, 'rgba(255,210,140,0.06)')
+  glow.addColorStop(0.5, 'rgba(255,180,100,0.10)')
+  glow.addColorStop(0.8, 'rgba(255,150,60,0.04)')
   glow.addColorStop(1, 'transparent')
   ctx.fillStyle = glow
-  ctx.beginPath(); ctx.ellipse(cx2, cy2, 420, 280, 0, 0, Math.PI*2); ctx.fill()
+  ctx.beginPath(); ctx.ellipse(cx2, cy2, maxR, maxR * 0.65, 0, 0, Math.PI*2); ctx.fill()
 
   rings.forEach(p => { p.update(); p.draw() })
   particles.forEach(p => { p.update(); p.draw() })
