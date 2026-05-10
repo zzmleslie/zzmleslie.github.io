@@ -24,7 +24,55 @@ body ,#article-container, #site-name{
 
 /* ========================================
    Apple Music 风格配色方案
+/* ========================================
+   各页面 Header 与 Vanta 背景衔接
+   从上到下：微光渐隐，融入动态背景
    ======================================== */
+
+/* Notes — 紫雾渐隐 */
+.type-notes #page-header {
+    background: linear-gradient(180deg,
+        rgba(184,59,141,0.12) 0%,
+        rgba(74,32,96,0.06) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/* Gallery — 暖金渐隐 */
+.type-gallery #page-header {
+    background: linear-gradient(180deg,
+        rgba(210,195,184,0.12) 0%,
+        rgba(210,195,184,0.04) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/* Library — 青蓝渐隐 */
+.type-library #page-header {
+    background: linear-gradient(180deg,
+        rgba(58,136,145,0.12) 0%,
+        rgba(58,136,145,0.05) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/* Projects — 青蓝粉渐隐 */
+.type-projects #page-header {
+    background: linear-gradient(180deg,
+        rgba(74,136,145,0.10) 0%,
+        rgba(184,59,141,0.04) 60%,
+        transparent 100%
+    ) !important;
+}
+
+/* Archives — 灰蓝渐隐 */
+.type-archives #page-header {
+    background: linear-gradient(180deg,
+        rgba(90,112,128,0.10) 0%,
+        rgba(90,112,128,0.04) 50%,
+        transparent 100%
+    ) !important;
+}
 :root {
     /* 核心底色 */
     --apple-body-bg: #0a0a0f;
