@@ -22,19 +22,68 @@ body ,#article-container, #site-name{
 }
 
 
-/*修改背景的颜色*/
+/* ========================================
+   Apple Music 风格配色方案
+   ======================================== */
 :root {
-    --global-bg: #89ac9b;/* 全局背景色 */
-    --light-blue: #39a088;/* Butterfly 的主色变量名比较特殊，叫 light-blue */
-    --text-selection: #521779;/* 文字选中颜色 */
-    --bnt-bg: #b0cabd; /* 按钮颜色 */
-    --bnt-hover-color: #f1f159;/* 按钮悬停颜色 */
+    /* 核心底色 */
+    --apple-body-bg: #0a0a0f;
+    --apple-card-bg: rgba(255, 255, 255, 0.05);
+    --apple-card-hover: rgba(255, 255, 255, 0.09);
 
+    /* 文字 */
+    --apple-text: rgba(255, 255, 255, 0.88);
+    --apple-text-dim: rgba(255, 255, 255, 0.55);
+    --apple-text-subtle: rgba(255, 255, 255, 0.35);
+
+    /* 点缀色 */
+    --apple-accent-cyan: #64CEDC;
+    --apple-accent-pink: #B83B8D;
+    --apple-accent-warm: #D2C3B8;
+
+    /* 毛玻璃 */
+    --apple-glass-bg: rgba(255, 255, 255, 0.06);
+    --apple-glass-border: rgba(255, 255, 255, 0.10);
+    --apple-glass-hover: rgba(255, 255, 255, 0.12);
+    --apple-blur: blur(20px) saturate(180%);
+
+    /* 阴影 */
+    --apple-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --apple-shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --apple-shadow-glow: 0 0 40px rgba(100, 206, 220, 0.08);
+
+    /* Butterfly 变量映射 */
+    --global-bg: var(--apple-body-bg);
+    --light-blue: var(--apple-accent-cyan);
+    --text-selection: var(--apple-accent-pink);
+    --bnt-bg: var(--apple-glass-bg);
+    --bnt-hover-color: var(--apple-accent-cyan);
+
+    /* 圆角 */
+    --apple-radius-sm: 10px;
+    --apple-radius-md: 16px;
+    --apple-radius-lg: 24px;
+    --apple-radius-pill: 9999px;
 }
 
+/* ========================================
+   全局背景 & 正文
+   ======================================== */
+body {
+    background: var(--apple-body-bg) !important;
+    color: var(--apple-text) !important;
+}
+
+/* ========================================
+   卡片组件 - Apple 暗黑毛玻璃
+   ======================================== */
 .card-widget {
-    border-radius: 10px !important;
-    box-shadow: 0 4px 8px rgba(179, 215, 52, 0.80);
+    border-radius: var(--apple-radius-md) !important;
+    background: var(--apple-glass-bg) !important;
+    backdrop-filter: var(--apple-blur) !important;
+    -webkit-backdrop-filter: var(--apple-blur) !important;
+    border: 1px solid var(--apple-glass-border) !important;
+    box-shadow: var(--apple-shadow-sm) !important;
 }
 
 /* 使得侧栏从右边转为左边 ,并向左对齐*/
@@ -51,49 +100,267 @@ body ,#article-container, #site-name{
 }
 
 .recent-post-item:hover, .card-widget:hover {
-    /* recent-post-item 是post的博客文章 card-widget 是侧边栏的工具卡片
-hover 表示当悬浮时 属性成立*/
-    box-shadow: 0 8px 20px rgba(0 , 0 , 0 , 0.15) !important;
-    /* px arguments : arg[0]表示四周发散 arg[1] 表示向下投影 arg[2]表示模糊半径 
-    ！important 表示强制覆盖*/
-    transform: translateY(-5px); /* transform 变换属性 translateY纵向移动，在屏幕坐标系中，向上是负方向）
-    */
-    transition: all 0.3s;
-    /*所有的属性变化持续0.3s，形成动画效果*/
-
+    box-shadow: var(--apple-shadow-md), var(--apple-shadow-glow) !important;
+    transform: translateY(-4px);
+    transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
-/*磨砂效果*/ /*强制*/
-#aside-content .card-widget, /* aside-content 是侧边栏的大类（仅一个） 而.card.wdget则是小卡片，可以有多个*/
-#recent-posts > .recent-post-item, /*定位recent-post-item*/
-.layout_page >div:first-child:not(.recent-posts),
-.layout_post > #post,/* 定位具体文章的正文的volume*/
-#page, 
-.category-lists, 
-.tag-cloud-list, 
+/* ========================================
+   毛玻璃效果 - 内容卡片（Apple 暗黑风）
+   ======================================== */
+#aside-content .card-widget,
+#recent-posts > .recent-post-item,
+.layout_page > div:first-child:not(.recent-posts),
+.layout_post > #post,
+#page,
+.category-lists,
+.tag-cloud-list,
 .archive-list {
-    background: rgba(255 , 255 , 255 , 0.7) !important;
-    backdrop-filter: blur(10px) saturate(180%) !important ; /* blur 高斯模糊 saturate 饱和度提升*/
-    -webkit-backdrop-filter: blur(10px) saturate(180%) !important;/* -webkit时浏览器的前缀，为了兼容safari */
-    border-radius: 12px !important;
-    border: 2px solid rgba(255 , 255 , 255 , 0.3) !important;
-    /* border 格式： border: [width] [snytax] [color(即rgba(,,,))] solid样式表示实线 */
-    box-shadow: 0 8px 20px 0 rgba(31 , 38 , 135 , 0.07) !important;
+    background: var(--apple-glass-bg) !important;
+    backdrop-filter: var(--apple-blur) !important;
+    -webkit-backdrop-filter: var(--apple-blur) !important;
+    border-radius: var(--apple-radius-md) !important;
+    border: 1px solid var(--apple-glass-border) !important;
+    box-shadow: var(--apple-shadow-sm) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
 }
+
+#recent-posts > .recent-post-item:hover {
+    background: var(--apple-card-hover) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    box-shadow: var(--apple-shadow-md), var(--apple-shadow-glow) !important;
+    transform: translateY(-4px);
+}
+
 #post,
 .layout_post > #post,
 #article-container {
-    background: rgba(255 , 255 , 255 , 0.7) !important;
-    backdrop-filter: blur(10px) saturate(180%) !important ; /* blur 高斯模糊 saturate 饱和度提升*/
-    -webkit-backdrop-filter: blur(10px) saturate(180%) !important;/* -webkit时浏览器的前缀，为了兼容safari */
-    border-radius: 12px !important;
-    border: 2px solid rgba(255 , 255 , 255 , 0.3) !important;
-    /* border 格式： border: [width] [snytax] [color(即rgba(,,,))] solid样式表示实线 */
-    box-shadow: 0 8px 20px 0 rgba(31 , 38 , 135 , 0.07) !important;
+    background: var(--apple-glass-bg) !important;
+    backdrop-filter: var(--apple-blur) !important;
+    -webkit-backdrop-filter: var(--apple-blur) !important;
+    border-radius: var(--apple-radius-md) !important;
+    border: 1px solid var(--apple-glass-border) !important;
+    box-shadow: var(--apple-shadow-sm) !important;
     padding: 30px 30px !important;
 }
 
 #article-container h1{
     padding-left: 15px !important;
-    border-left: 5px 
+    border-left: 5px solid var(--apple-accent-cyan);
 }
+
+/* ========================================
+   Apple 风格按钮 - 毛玻璃胶囊
+   ======================================== */
+#card-info-btn,
+.post-meta__tags,
+.card-tag-cloud a,
+#rightside button,
+#rightside a,
+.pagination-related,
+button,
+.btn,
+a.button {
+    background: var(--apple-glass-bg) !important;
+    backdrop-filter: var(--apple-blur) !important;
+    -webkit-backdrop-filter: var(--apple-blur) !important;
+    border: 1px solid var(--apple-glass-border) !important;
+    border-radius: var(--apple-radius-pill) !important;
+    color: var(--apple-text) !important;
+    transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+    text-decoration: none !important;
+}
+
+#card-info-btn:hover,
+.post-meta__tags:hover,
+.card-tag-cloud a:hover,
+#rightside button:hover,
+#rightside a:hover,
+.pagination-related:hover {
+    background: var(--apple-glass-hover) !important;
+    border-color: rgba(255, 255, 255, 0.22) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--apple-shadow-md);
+    color: #fff !important;
+}
+
+/* 标签云特殊处理 */
+.card-tag-cloud a {
+    display: inline-block;
+    padding: 5px 16px;
+    margin: 4px;
+    font-size: 0.9em !important;
+}
+
+/* Follow Me 按钮 */
+#card-info-btn {
+    padding: 8px 24px !important;
+    display: inline-block !important;
+    margin-top: 12px !important;
+}
+
+/* ========================================
+   导航栏 - Apple 半透明毛玻璃
+   ======================================== */
+#nav {
+    background: rgba(10, 10, 15, 0.7) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+#nav a {
+    color: var(--apple-text) !important;
+    transition: color 0.3s ease;
+}
+
+#nav a:hover {
+    color: var(--apple-accent-cyan) !important;
+}
+
+/* ========================================
+   首页 Hero - 标题美化
+   ======================================== */
+#site-title,
+.post-title {
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6) !important;
+}
+
+#site-subtitle {
+    color: var(--apple-text-dim) !important;
+    font-weight: 400 !important;
+}
+
+/* ========================================
+   Header 模糊过渡层样式
+   ======================================== */
+.apple-blur-layer {
+    transition: filter 0.15s ease-out;
+}
+
+.apple-fade-overlay {
+    transition: opacity 0.2s ease-out;
+}
+
+.apple-particle-overlay {
+    transition: opacity 0.2s ease-out;
+}
+
+/* 为主体内容区增加和 header 的无缝衔接 */
+#content-inner {
+    position: relative;
+    z-index: 1;
+    margin-top: -2px !important;
+}
+
+/* ========================================
+   代码块 - 暗黑 Apple 风
+   ======================================== */
+figure.highlight,
+pre {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: var(--apple-radius-sm) !important;
+    box-shadow: var(--apple-shadow-sm) !important;
+}
+
+figure.highlight .gutter {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: var(--apple-text-subtle) !important;
+}
+
+/* ========================================
+   链接 & 文字
+   ======================================== */
+a {
+    color: var(--apple-accent-cyan);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--apple-accent-pink);
+}
+
+.article-title {
+    color: var(--apple-text) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+}
+
+.article-title:hover {
+    color: var(--apple-accent-cyan) !important;
+}
+
+.content, .article-meta-wrap {
+    color: var(--apple-text-dim) !important;
+}
+
+/* ========================================
+   分页器
+   ======================================== */
+.pagination {
+    margin-top: 30px;
+}
+
+.pagination .page-number,
+.pagination .extend {
+    background: var(--apple-glass-bg) !important;
+    border: 1px solid var(--apple-glass-border) !important;
+    border-radius: var(--apple-radius-pill) !important;
+    color: var(--apple-text) !important;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-number.current {
+    background: var(--apple-accent-cyan) !important;
+    color: #0a0a0f !important;
+    border-color: var(--apple-accent-cyan) !important;
+}
+
+.pagination .page-number:hover,
+.pagination .extend:hover {
+    background: var(--apple-glass-hover) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* ========================================
+   滚动条 - 细条暗黑风
+   ======================================== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--apple-body-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ========================================
+   动画工具类
+   ======================================== */
+@keyframes appleFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.recent-post-item {
+    animation: appleFadeIn 0.6s ease-out both;
+}
+
+.recent-post-item:nth-child(1) { animation-delay: 0.05s; }
+.recent-post-item:nth-child(2) { animation-delay: 0.10s; }
+.recent-post-item:nth-child(3) { animation-delay: 0.15s; }
+.recent-post-item:nth-child(4) { animation-delay: 0.20s; }
+.recent-post-item:nth-child(5) { animation-delay: 0.25s; }
+.recent-post-item:nth-child(6) { animation-delay: 0.30s; }
 
