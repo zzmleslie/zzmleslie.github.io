@@ -222,15 +222,15 @@ class Particle {
   draw() {
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(255,255,255,${this.opacity})`
+    ctx.fillStyle = `rgba(255,220,150,${this.opacity})`
     ctx.fill()
   }
 }
 
-// -- 环形轨道粒子（音符晕染感） --
-const noteGlyphs = ['♪', '♫', '♩', '✦', '·']
+// -- 环形轨道粒子（阳光音符晕染） --
+const noteGlyphs = ['♪', '♫', '♩', '✦', '·', '☀']
 class RingParticle {
-  constructor(cx, cy, radius, speed, size, opacity, glyph) {
+  constructor(cx, cy, radius, speed, size, opacity, glyph, ellipY) {
     this.cx = cx; this.cy = cy
     this.radius = radius
     this.angle = Math.random() * Math.PI * 2
@@ -238,8 +238,9 @@ class RingParticle {
     this.size = size
     this.opacity = opacity
     this.glyph = glyph
-    this.wobbleR = Math.random() * 8
+    this.wobbleR = Math.random() * 10
     this.wobbleA = Math.random() * 0.1
+    this.ellipY = ellipY
   }
   update() {
     this.angle += this.speed
@@ -248,9 +249,9 @@ class RingParticle {
   draw() {
     const r = this.radius + Math.sin(this.wobbleA) * this.wobbleR
     const x = this.cx + Math.cos(this.angle) * r
-    const y = this.cy + Math.sin(this.angle) * r * 0.6
+    const y = this.cy + Math.sin(this.angle) * r * this.ellipY
     ctx.font = `${this.size}px sans-serif`
-    ctx.fillStyle = `rgba(255,255,255,${this.opacity})`
+    ctx.fillStyle = `rgba(255,220,150,${this.opacity})`
     ctx.fillText(this.glyph, x, y)
   }
 }
@@ -261,16 +262,16 @@ const ringCY = canvas.height * 0.55
 function createRings() {
   rings = []
   const cx = canvas.width * 0.62, cy = canvas.height * 0.55
-  // 3 层同心环 — 大幅加亮
+  // 3 层同心光环 — 阳光金色 + 椭圆
   const ringConfigs = [
-    { r: 120, n: 18, speed: 0.009, size: 22, op: 0.7 },
-    { r: 200, n: 26, speed: 0.006, size: 19, op: 0.55 },
-    { r: 290, n: 34, speed: 0.004, size: 16, op: 0.4 }
+    { r: 140, n: 18, speed: 0.009, size: 22, op: 0.7, ey: 0.75 },
+    { r: 240, n: 28, speed: 0.006, size: 19, op: 0.55, ey: 0.65 },
+    { r: 360, n: 38, speed: 0.004, size: 16, op: 0.4, ey: 0.55 }
   ]
   ringConfigs.forEach(cfg => {
     for (let i = 0; i < cfg.n; i++) {
       const glyph = noteGlyphs[Math.floor(Math.random() * noteGlyphs.length)]
-      rings.push(new RingParticle(cx, cy, cfg.r, cfg.speed, cfg.size, cfg.opacity, glyph))
+      rings.push(new RingParticle(cx, cy, cfg.r, cfg.speed, cfg.size, cfg.op, glyph, cfg.ey))
     }
   })
 }
@@ -286,15 +287,16 @@ for (let i = 0; i < 60; i++) {
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  // 环形晕染光晕 — 更大更亮
+  // 环形晕染光晕 — 阳光暖金椭圆形
   const cx2 = canvas.width * 0.62, cy2 = canvas.height * 0.55
-  const glow = ctx.createRadialGradient(cx2, cy2, 80, cx2, cy2, 350)
-  glow.addColorStop(0, 'rgba(100,206,220,0.18)')
-  glow.addColorStop(0.4, 'rgba(184,59,141,0.10)')
-  glow.addColorStop(0.7, 'rgba(100,206,220,0.04)')
+  const glow = ctx.createRadialGradient(cx2, cy2, 100, cx2, cy2, 420)
+  glow.addColorStop(0, 'rgba(255,210,140,0.15)')
+  glow.addColorStop(0.3, 'rgba(255,180,100,0.10)')
+  glow.addColorStop(0.6, 'rgba(255,150,60,0.05)')
+  glow.addColorStop(0.85, 'rgba(200,120,50,0.02)')
   glow.addColorStop(1, 'transparent')
   ctx.fillStyle = glow
-  ctx.beginPath(); ctx.arc(cx2, cy2, 320, 0, Math.PI*2); ctx.fill()
+  ctx.beginPath(); ctx.ellipse(cx2, cy2, 420, 280, 0, 0, Math.PI*2); ctx.fill()
 
   rings.forEach(p => { p.update(); p.draw() })
   particles.forEach(p => { p.update(); p.draw() })
