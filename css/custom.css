@@ -802,15 +802,10 @@ a:hover {
 }
 
 /* ========================================
-   全页面动态背景 — Apple Music 几何/射线风格
-   每页独立，铺满全屏，不覆盖内容
+   全页面动态背景 — body::before 铺满全屏
    ======================================== */
 
-#body-wrap {
-    position: relative;
-}
-
-#body-wrap::before {
+body::before {
     content: '';
     position: fixed;
     inset: 0;
@@ -818,8 +813,8 @@ a:hover {
     pointer-events: none;
 }
 
-/* ---- Archives — 时间刻线 (水平格线 + 垂直标记) ---- */
-.type-archives #body-wrap::before {
+/* ---- Archives — 时间刻线 ---- */
+.type-archives body::before {
     background:
         /* 垂直时间标记线 */
         repeating-linear-gradient(90deg,
@@ -846,7 +841,7 @@ a:hover {
 }
 
 /* ---- Notes — 斜向霓虹射线 ---- */
-.type-notes #body-wrap::before {
+.type-notes body::before {
     background:
         repeating-linear-gradient(45deg,
             transparent, transparent 3px,
@@ -870,7 +865,7 @@ a:hover {
 }
 
 /* ---- Gallery — 放射光束 ---- */
-.type-gallery #body-wrap::before {
+.type-gallery body::before {
     background:
         conic-gradient(from 0deg at 50% 40%,
             transparent 0deg, transparent 20deg,
@@ -895,7 +890,7 @@ a:hover {
 }
 
 /* ---- Library — 扫描线 + 水平条纹 ---- */
-.type-library #body-wrap::before {
+.type-library body::before {
     background:
         repeating-linear-gradient(0deg,
             transparent, transparent 2px,
@@ -926,7 +921,7 @@ a:hover {
 }
 
 /* ---- Projects — 蓝图网格 ---- */
-.type-projects #body-wrap::before {
+.type-projects body::before {
     background:
         repeating-linear-gradient(90deg,
             transparent, transparent 79px,
@@ -950,7 +945,7 @@ a:hover {
 }
 
 /* ---- Home (博客首页) — 微粒子星空 ---- */
-.type-home #body-wrap::before {
+.type-home body::before {
     background:
         radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.3), transparent),
         radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.2), transparent),

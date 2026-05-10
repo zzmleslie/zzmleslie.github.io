@@ -4,12 +4,14 @@
  */
 (function () {
   // ========================================
-  // 0. 给 body 添加 page-type class（兼容 Archives 等页面）
+  // 0. 给 body 和 #body-wrap 添加 page-type class
   // ========================================
   try {
     const pt = GLOBAL_CONFIG_SITE && GLOBAL_CONFIG_SITE.pageType
     if (pt) {
-      document.getElementById('body-wrap').classList.add('type-' + pt)
+      const cls = 'type-' + pt
+      document.getElementById('body-wrap').classList.add(cls)
+      document.body.classList.add(cls)
     }
   } catch (e) {}
 
