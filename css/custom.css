@@ -69,14 +69,21 @@ body ,#article-container, #site-name{
 /* ========================================
    全局背景 & 正文
    ======================================== */
-/* 全局底色 */
+/* 全局底色在 html，body 透明让 Vanta 透上来 */
 html {
     background: var(--apple-body-bg);
 }
 
 body {
-    background: var(--apple-body-bg) !important;
+    background: transparent !important;
     color: var(--apple-text) !important;
+}
+
+/* 确保包裹层不遮挡 Vanta 背景 */
+#body-wrap,
+.page,
+.post {
+    background: transparent !important;
 }
 
 /* ========================================
