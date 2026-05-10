@@ -69,7 +69,7 @@ body ,#article-container, #site-name{
 /* ========================================
    全局背景 & 正文
    ======================================== */
-/* 全局底色放在 html 上 */
+/* 全局底色 */
 html {
     background: var(--apple-body-bg);
 }
@@ -77,11 +77,6 @@ html {
 body {
     background: var(--apple-body-bg) !important;
     color: var(--apple-text) !important;
-}
-
-/* 有 type class 的页面让 body 透明，::before 背景透上来 */
-body[class*="type-"] {
-    background: transparent !important;
 }
 
 /* ========================================
@@ -105,10 +100,10 @@ body[class*="type-"] {
     display: flex;
     flex-direction: row-reverse; /* 侧边栏在左 */
     justify-content: center;
-    max-width: 1100px;
+    max-width: 1150px;
     margin: 0 auto;
     padding: 0 20px;
-    gap: 24px;
+    gap: 36px;
 }
 
 /* 主内容区 */
@@ -123,8 +118,8 @@ body[class*="type-"] {
    配合折叠手风琴保持简洁
 */
 #aside-content {
-    width: 260px !important;
-    min-width: 260px;
+    width: 300px !important;
+    min-width: 300px;
     flex-shrink: 0;
     position: sticky;
     top: 20px;
@@ -812,166 +807,11 @@ a:hover {
 }
 
 /* ========================================
-   全页面动态背景 — body::before 铺满全屏
+   卡片间距
    ======================================== */
 
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-}
-
-/* ---- Archives — 时间刻线 ---- */
-.type-archives body::before {
-    background:
-        /* 垂直时间标记线 */
-        repeating-linear-gradient(90deg,
-            transparent, transparent 199px,
-            rgba(100,206,220,0.06) 199px, rgba(100,206,220,0.06) 200px
-        ),
-        /* 水平刻度线 */
-        repeating-linear-gradient(0deg,
-            transparent, transparent 59px,
-            rgba(255,255,255,0.03) 59px, rgba(255,255,255,0.03) 60px
-        ),
-        /* 光晕 */
-        radial-gradient(ellipse at 50% 15%, rgba(100,206,220,0.1) 0%, transparent 60%),
-        radial-gradient(ellipse at 85% 80%, rgba(184,59,141,0.06) 0%, transparent 50%);
-    animation: archivesLines 20s linear infinite, archivesGlow 8s ease-in-out infinite;
-}
-@keyframes archivesLines {
-    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-    100% { background-position: 0 60px, 0 0, 0 0, 0 0; }
-}
-@keyframes archivesGlow {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-/* ---- Notes — 斜向霓虹射线 ---- */
-.type-notes body::before {
-    background:
-        repeating-linear-gradient(45deg,
-            transparent, transparent 3px,
-            rgba(184,59,141,0.04) 3px, rgba(184,59,141,0.04) 4px
-        ),
-        repeating-linear-gradient(-35deg,
-            transparent, transparent 120px,
-            rgba(100,206,220,0.04) 120px, rgba(100,206,220,0.04) 122px
-        ),
-        radial-gradient(ellipse at 30% 20%, rgba(184,59,141,0.12) 0%, transparent 55%),
-        radial-gradient(ellipse at 70% 60%, rgba(100,206,220,0.08) 0%, transparent 50%);
-    animation: notesRays 15s linear infinite, notesBreathe 6s ease-in-out infinite;
-}
-@keyframes notesRays {
-    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-    100% { background-position: 8px 8px, -60px 30px, 0 0, 0 0; }
-}
-@keyframes notesBreathe {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-}
-
-/* ---- Gallery — 放射光束 ---- */
-.type-gallery body::before {
-    background:
-        conic-gradient(from 0deg at 50% 40%,
-            transparent 0deg, transparent 20deg,
-            rgba(210,195,184,0.03) 20deg, rgba(210,195,184,0.03) 22deg,
-            transparent 22deg, transparent 40deg,
-            rgba(184,59,141,0.03) 40deg, rgba(184,59,141,0.03) 42deg,
-            transparent 42deg, transparent 60deg,
-            rgba(100,206,220,0.03) 60deg, rgba(100,206,220,0.03) 62deg,
-            transparent 62deg, transparent 360deg
-        ),
-        radial-gradient(ellipse at 50% 30%, rgba(210,195,184,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 70%, rgba(184,59,141,0.06) 0%, transparent 50%);
-    animation: galleryRays 30s linear infinite, galleryBreathe 10s ease-in-out infinite;
-}
-@keyframes galleryRays {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-@keyframes galleryBreathe {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 0.9; }
-}
-
-/* ---- Library — 扫描线 + 水平条纹 ---- */
-.type-library body::before {
-    background:
-        repeating-linear-gradient(0deg,
-            transparent, transparent 2px,
-            rgba(100,206,220,0.025) 2px, rgba(100,206,220,0.025) 3px
-        ),
-        linear-gradient(90deg,
-            transparent 0%, transparent 40%,
-            rgba(100,206,220,0.06) 48%,
-            rgba(100,206,220,0.1) 50%,
-            rgba(100,206,220,0.06) 52%,
-            transparent 60%, transparent 100%
-        ),
-        radial-gradient(ellipse at 50% 20%, rgba(100,206,220,0.08) 0%, transparent 55%);
-    background-size: 100% 100%, 250% 100%, 100% 100%;
-    animation: libraryScanlines 3s linear infinite, libraryBeam 5s ease-in-out infinite, libraryGlow 8s ease-in-out infinite;
-}
-@keyframes libraryScanlines {
-    0% { background-position: 0 0, 0 0, 0 0; }
-    100% { background-position: 0 3px, 0 0, 0 0; }
-}
-@keyframes libraryBeam {
-    0% { background-position: 0 0, 120% 0, 0 0; }
-    100% { background-position: 0 0, -20% 0, 0 0; }
-}
-@keyframes libraryGlow {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-/* ---- Projects — 蓝图网格 ---- */
-.type-projects body::before {
-    background:
-        repeating-linear-gradient(90deg,
-            transparent, transparent 79px,
-            rgba(100,206,220,0.05) 79px, rgba(100,206,220,0.05) 80px
-        ),
-        repeating-linear-gradient(0deg,
-            transparent, transparent 79px,
-            rgba(100,206,220,0.05) 79px, rgba(100,206,220,0.05) 80px
-        ),
-        radial-gradient(circle at 30% 40%, rgba(100,206,220,0.08) 0%, transparent 50%),
-        radial-gradient(circle at 70% 60%, rgba(184,59,141,0.05) 0%, transparent 45%);
-    animation: projectsGrid 25s linear infinite, projectsGlow 7s ease-in-out infinite;
-}
-@keyframes projectsGrid {
-    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-    100% { background-position: 80px 80px, 80px 80px, 0 0, 0 0; }
-}
-@keyframes projectsGlow {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.9; }
-}
-
-/* ---- Home (博客首页) — 微粒子星空 ---- */
-.type-home body::before {
-    background:
-        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.3), transparent),
-        radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.2), transparent),
-        radial-gradient(1.5px 1.5px at 55% 15%, rgba(100,206,220,0.3), transparent),
-        radial-gradient(1px 1px at 70% 45%, rgba(255,255,255,0.25), transparent),
-        radial-gradient(1px 1px at 85% 70%, rgba(184,59,141,0.2), transparent),
-        radial-gradient(2px 2px at 20% 80%, rgba(100,206,220,0.2), transparent),
-        radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.15), transparent),
-        radial-gradient(1.5px 1.5px at 45% 35%, rgba(210,195,184,0.2), transparent),
-        radial-gradient(ellipse at 40% 25%, rgba(100,206,220,0.05) 0%, transparent 60%),
-        radial-gradient(ellipse at 65% 60%, rgba(184,59,141,0.04) 0%, transparent 55%);
-    animation: homeStars 12s ease-in-out infinite;
-}
-@keyframes homeStars {
-    0%, 100% { opacity: 0.5; }
-    33% { opacity: 0.85; }
-    66% { opacity: 0.6; }
+/* 使侧边栏卡片间距更舒适 */
+#aside-content .card-widget {
+    margin-bottom: 12px;
 }
 
