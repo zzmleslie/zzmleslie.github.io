@@ -46,13 +46,14 @@
         color: 0x3A8891, backgroundColor: 0x0A0A0F,
         points: 10, maxDistance: 20, spacing: 16, showDots: true }),
 
-      projects: () => VANTA.NET({ ...base,
-        color: 0x4A8891, backgroundColor: 0x0A0A0F,
-        points: 14, maxDistance: 24, spacing: 14, showDots: true }),
+      projects: () => VANTA.HALO({ ...base,
+        baseColor: 0x0A0A0F, backgroundColor: 0x0A0A0F,
+        amplitudeFactor: 2.0, xOffset: 0.2, yOffset: 0.2, size: 1.5 }),
 
-      archives: () => VANTA.NET({ ...base,
-        color: 0x5A7080, backgroundColor: 0x0A0A0F,
-        points: 8, maxDistance: 22, spacing: 20, showDots: false }),
+      archives: () => VANTA.FOG({ ...base,
+        highlightColor: 0x908070, midtoneColor: 0x3A3030,
+        lowlightColor: 0x1A1510, baseColor: 0x0A0A0F,
+        blurFactor: 0.6, speed: 0.4, zoom: 0.85 }),
 
       post: () => VANTA.WAVES({ ...base,
         color: 0x1A3A40, shininess: 25, waveHeight: 10, waveSpeed: 0.4, zoom: 1.0 })
