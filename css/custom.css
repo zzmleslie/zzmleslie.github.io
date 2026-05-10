@@ -802,132 +802,171 @@ a:hover {
 }
 
 /* ========================================
-   各页面动态 Header 背景 — Apple Music 风格
-   每页独立的流体渐变 + 光晕呼吸
+   全页面动态背景 — Apple Music 几何/射线风格
+   每页独立，铺满全屏，不覆盖内容
    ======================================== */
 
-/* 通用基底 */
-.not-home-page {
+#body-wrap {
     position: relative;
-    overflow: hidden;
-    background: transparent !important;
 }
 
-.not-home-page::before {
+#body-wrap::before {
     content: '';
-    position: absolute;
+    position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
 }
 
-/* ---- Notes — 霓虹紫雾 (Lo-Fi / 私密治愈) ---- */
-.type-notes #page-header::before {
+/* ---- Archives — 时间刻线 (水平格线 + 垂直标记) ---- */
+.type-archives #body-wrap::before {
     background:
-        radial-gradient(ellipse at 25% 30%, rgba(184,59,141,0.18) 0%, transparent 55%),
-        radial-gradient(ellipse at 70% 60%, rgba(100,206,220,0.10) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, rgba(210,195,184,0.06) 0%, transparent 45%);
-    animation: notesFluid 8s ease-in-out infinite;
-}
-@keyframes notesFluid {
-    0%, 100% { opacity: 0.7; transform: scale(1) translate(0, 0); }
-    33%  { opacity: 1; transform: scale(1.08) translate(2%, -1%); }
-    66%  { opacity: 0.75; transform: scale(0.95) translate(-1%, 1%); }
-}
-
-/* ---- Gallery — 暖金流霞 (艺术画廊) ---- */
-.type-gallery #page-header::before {
-    background:
-        radial-gradient(ellipse at 40% 20%, rgba(210,195,184,0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 65% 55%, rgba(184,59,141,0.10) 0%, transparent 45%),
-        radial-gradient(ellipse at 30% 70%, rgba(100,206,220,0.06) 0%, transparent 40%);
-    animation: galleryAurora 10s ease-in-out infinite;
-}
-@keyframes galleryAurora {
-    0%, 100% { opacity: 0.65; filter: hue-rotate(0deg) brightness(1); }
-    25%  { opacity: 0.9; filter: hue-rotate(8deg) brightness(1.08); }
-    50%  { opacity: 0.7; filter: hue-rotate(-4deg) brightness(0.95); }
-    75%  { opacity: 0.95; filter: hue-rotate(5deg) brightness(1.05); }
-}
-
-/* ---- Library — 青蓝扫描光 (知识聚焦) ---- */
-.type-library #page-header::before {
-    background:
-        linear-gradient(105deg, 
-            transparent 38%, 
-            rgba(100,206,220,0.04) 42%, 
-            rgba(100,206,220,0.10) 48%,
-            rgba(100,206,220,0.04) 52%,
-            transparent 56%
+        /* 垂直时间标记线 */
+        repeating-linear-gradient(90deg,
+            transparent, transparent 199px,
+            rgba(100,206,220,0.06) 199px, rgba(100,206,220,0.06) 200px
         ),
-        radial-gradient(ellipse at 30% 50%, rgba(100,206,220,0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 30%, rgba(210,195,184,0.04) 0%, transparent 45%);
-    background-size: 220% 100%, 100% 100%, 100% 100%;
-    animation: libraryBeam 6s ease-in-out infinite, libraryGlow 8s ease-in-out infinite;
+        /* 水平刻度线 */
+        repeating-linear-gradient(0deg,
+            transparent, transparent 59px,
+            rgba(255,255,255,0.03) 59px, rgba(255,255,255,0.03) 60px
+        ),
+        /* 光晕 */
+        radial-gradient(ellipse at 50% 15%, rgba(100,206,220,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 80%, rgba(184,59,141,0.06) 0%, transparent 50%);
+    animation: archivesLines 20s linear infinite, archivesGlow 8s ease-in-out infinite;
+}
+@keyframes archivesLines {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 0 60px, 0 0, 0 0, 0 0; }
+}
+@keyframes archivesGlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* ---- Notes — 斜向霓虹射线 ---- */
+.type-notes #body-wrap::before {
+    background:
+        repeating-linear-gradient(45deg,
+            transparent, transparent 3px,
+            rgba(184,59,141,0.04) 3px, rgba(184,59,141,0.04) 4px
+        ),
+        repeating-linear-gradient(-35deg,
+            transparent, transparent 120px,
+            rgba(100,206,220,0.04) 120px, rgba(100,206,220,0.04) 122px
+        ),
+        radial-gradient(ellipse at 30% 20%, rgba(184,59,141,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 60%, rgba(100,206,220,0.08) 0%, transparent 50%);
+    animation: notesRays 15s linear infinite, notesBreathe 6s ease-in-out infinite;
+}
+@keyframes notesRays {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 8px 8px, -60px 30px, 0 0, 0 0; }
+}
+@keyframes notesBreathe {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* ---- Gallery — 放射光束 ---- */
+.type-gallery #body-wrap::before {
+    background:
+        conic-gradient(from 0deg at 50% 40%,
+            transparent 0deg, transparent 20deg,
+            rgba(210,195,184,0.03) 20deg, rgba(210,195,184,0.03) 22deg,
+            transparent 22deg, transparent 40deg,
+            rgba(184,59,141,0.03) 40deg, rgba(184,59,141,0.03) 42deg,
+            transparent 42deg, transparent 60deg,
+            rgba(100,206,220,0.03) 60deg, rgba(100,206,220,0.03) 62deg,
+            transparent 62deg, transparent 360deg
+        ),
+        radial-gradient(ellipse at 50% 30%, rgba(210,195,184,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(184,59,141,0.06) 0%, transparent 50%);
+    animation: galleryRays 30s linear infinite, galleryBreathe 10s ease-in-out infinite;
+}
+@keyframes galleryRays {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes galleryBreathe {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.9; }
+}
+
+/* ---- Library — 扫描线 + 水平条纹 ---- */
+.type-library #body-wrap::before {
+    background:
+        repeating-linear-gradient(0deg,
+            transparent, transparent 2px,
+            rgba(100,206,220,0.025) 2px, rgba(100,206,220,0.025) 3px
+        ),
+        linear-gradient(90deg,
+            transparent 0%, transparent 40%,
+            rgba(100,206,220,0.06) 48%,
+            rgba(100,206,220,0.1) 50%,
+            rgba(100,206,220,0.06) 52%,
+            transparent 60%, transparent 100%
+        ),
+        radial-gradient(ellipse at 50% 20%, rgba(100,206,220,0.08) 0%, transparent 55%);
+    background-size: 100% 100%, 250% 100%, 100% 100%;
+    animation: libraryScanlines 3s linear infinite, libraryBeam 5s ease-in-out infinite, libraryGlow 8s ease-in-out infinite;
+}
+@keyframes libraryScanlines {
+    0% { background-position: 0 0, 0 0, 0 0; }
+    100% { background-position: 0 3px, 0 0, 0 0; }
 }
 @keyframes libraryBeam {
-    0% { background-position: 150% 0, 0 0, 0 0; }
-    100% { background-position: -50% 0, 0 0, 0 0; }
+    0% { background-position: 0 0, 120% 0, 0 0; }
+    100% { background-position: 0 0, -20% 0, 0 0; }
 }
 @keyframes libraryGlow {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
 }
 
-/* ---- Projects — 几何光斑 (实验室) ---- */
-.type-projects #page-header::before {
+/* ---- Projects — 蓝图网格 ---- */
+.type-projects #body-wrap::before {
     background:
-        radial-gradient(circle at 25% 35%, rgba(100,206,220,0.12) 0%, transparent 35%),
-        radial-gradient(circle at 72% 55%, rgba(184,59,141,0.09) 0%, transparent 30%),
-        radial-gradient(circle at 50% 75%, rgba(210,195,184,0.05) 0%, transparent 40%);
-    animation: projectsOrbit 9s ease-in-out infinite;
+        repeating-linear-gradient(90deg,
+            transparent, transparent 79px,
+            rgba(100,206,220,0.05) 79px, rgba(100,206,220,0.05) 80px
+        ),
+        repeating-linear-gradient(0deg,
+            transparent, transparent 79px,
+            rgba(100,206,220,0.05) 79px, rgba(100,206,220,0.05) 80px
+        ),
+        radial-gradient(circle at 30% 40%, rgba(100,206,220,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(184,59,141,0.05) 0%, transparent 45%);
+    animation: projectsGrid 25s linear infinite, projectsGlow 7s ease-in-out infinite;
 }
-@keyframes projectsOrbit {
-    0%, 100% { opacity: 0.6; transform: scale(1) rotate(0deg); }
-    33%  { opacity: 1; transform: scale(1.06) rotate(1deg); }
-    66%  { opacity: 0.7; transform: scale(0.96) rotate(-1deg); }
+@keyframes projectsGrid {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 80px 80px, 80px 80px, 0 0, 0 0; }
 }
-
-/* ---- Archives — 时间流光 (归档/时间轴) ---- */
-.type-archives #page-header::before {
-    background:
-        radial-gradient(ellipse at 50% 40%, rgba(210,195,184,0.10) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 65%, rgba(100,206,220,0.06) 0%, transparent 40%),
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 38px,
-            rgba(255,255,255,0.015) 38px,
-            rgba(255,255,255,0.015) 39px
-        );
-    animation: archivesTimeline 10s ease-in-out infinite;
-}
-@keyframes archivesTimeline {
+@keyframes projectsGlow {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 0.9; }
 }
 
-/* ---- Home (博客首页) — 深邃星空呼吸 ---- */
-.type-home #page-header.full_page {
-    background: linear-gradient(180deg, 
-        #0a0a0f 0%, 
-        #0d0d18 40%, 
-        #0a0a0f 100%
-    ) !important;
-}
-.type-home #page-header.full_page::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
+/* ---- Home (博客首页) — 微粒子星空 ---- */
+.type-home #body-wrap::before {
     background:
-        radial-gradient(ellipse at 35% 25%, rgba(100,206,220,0.07) 0%, transparent 55%),
-        radial-gradient(ellipse at 70% 65%, rgba(184,59,141,0.05) 0%, transparent 50%);
-    animation: homeBreathe 8s ease-in-out infinite;
-    pointer-events: none;
+        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1.5px 1.5px at 55% 15%, rgba(100,206,220,0.3), transparent),
+        radial-gradient(1px 1px at 70% 45%, rgba(255,255,255,0.25), transparent),
+        radial-gradient(1px 1px at 85% 70%, rgba(184,59,141,0.2), transparent),
+        radial-gradient(2px 2px at 20% 80%, rgba(100,206,220,0.2), transparent),
+        radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.15), transparent),
+        radial-gradient(1.5px 1.5px at 45% 35%, rgba(210,195,184,0.2), transparent),
+        radial-gradient(ellipse at 40% 25%, rgba(100,206,220,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse at 65% 60%, rgba(184,59,141,0.04) 0%, transparent 55%);
+    animation: homeStars 12s ease-in-out infinite;
 }
-@keyframes homeBreathe {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.85; }
+@keyframes homeStars {
+    0%, 100% { opacity: 0.5; }
+    33% { opacity: 0.85; }
+    66% { opacity: 0.6; }
 }
 
