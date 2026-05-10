@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zzm's Garden</title>
+<title>Only Twenty Three</title>
 <style>
-  /* ====== 自定义字体 ====== */
   @font-face {
     font-family: 'huiwen';
     src: url('/font/huiwen.ttf') format('truetype');
@@ -15,18 +14,17 @@
   }
 
   :root {
-    --bg: #0a0a0f;
     --text: rgba(255,255,255,0.85);
     --dim: rgba(255,255,255,0.5);
     --cyan: #64CEDC;
     --pink: #B83B8D;
-    --glass: rgba(255,255,255,0.05);
-    --glass-border: rgba(255,255,255,0.08);
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.10);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--bg);
+    background: #0a0a0f;
     color: var(--text);
     font-family: 'huiwen', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     height: 100vh;
@@ -34,41 +32,35 @@
     cursor: default;
   }
 
-  /* ====== Canvas 粒子背景 ====== */
+  /* ====== 全幅背景图 ====== */
+  .bg-image {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: url('/image/Only_Twenty_Threel.jpg') center/cover no-repeat;
+  }
+
+  /* ====== 暗角晕染遮罩 ====== */
+  .vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center,
+      transparent 35%,
+      rgba(10,10,15,0.2) 55%,
+      rgba(10,10,15,0.5) 75%,
+      rgba(10,10,15,0.85) 100%
+    );
+  }
+
+  /* ====== Canvas 粒子 ====== */
   #particles {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
+    inset: 0;
+    z-index: 2;
     pointer-events: none;
-  }
-
-  /* ====== 光晕装饰 ====== */
-  .aurora {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.15;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .aurora-1 {
-    width: 600px; height: 600px;
-    background: var(--cyan);
-    top: -200px; right: -100px;
-    animation: auroraFloat 12s ease-in-out infinite;
-  }
-  .aurora-2 {
-    width: 500px; height: 500px;
-    background: var(--pink);
-    bottom: -150px; left: -100px;
-    animation: auroraFloat 15s ease-in-out infinite reverse;
-  }
-
-  @keyframes auroraFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(40px, -30px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.95); }
+    opacity: 0.4;
   }
 
   /* ====== 右侧导航 ====== */
@@ -83,7 +75,6 @@
     gap: 20px;
     align-items: flex-end;
   }
-
   .nav-links a {
     text-decoration: none;
     color: var(--dim);
@@ -94,13 +85,12 @@
     border-radius: 9999px;
     background: var(--glass);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     position: relative;
     overflow: hidden;
   }
-
   .nav-links a::before {
     content: '';
     position: absolute;
@@ -110,59 +100,16 @@
     opacity: 0;
     transition: opacity 0.4s ease;
   }
-
   .nav-links a:hover {
     color: #fff;
-    border-color: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.22);
     transform: translateX(-8px);
     box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(100,206,220,0.08);
   }
+  .nav-links a:hover::before { opacity: 1; }
+  .nav-links a .icon { margin-right: 8px; font-size: 0.9em; }
 
-  .nav-links a:hover::before {
-    opacity: 1;
-  }
-
-  .nav-links a .icon {
-    margin-right: 8px;
-    font-size: 0.9em;
-  }
-
-  /* ====== 左侧大标题 ====== */
-  .hero-text {
-    position: fixed;
-    left: 8vw;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
-
-  .hero-text .greeting {
-    font-size: 1.1em;
-    color: var(--dim);
-    margin-bottom: 8px;
-    letter-spacing: 0.08em;
-  }
-
-  .hero-text .title {
-    font-size: 3.5em;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(210,195,184,0.8) 50%, rgba(100,206,220,0.6) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-text .subtitle {
-    font-size: 1em;
-    color: var(--dim);
-    margin-top: 16px;
-    letter-spacing: 0.04em;
-    opacity: 0.7;
-  }
-
-  /* ====== 底部提示 ====== */
+  /* ====== 底部 ====== */
   .hint {
     position: fixed;
     bottom: 40px;
@@ -175,10 +122,7 @@
     opacity: 0.5;
   }
 
-  /* ====== 响应式 ====== */
   @media (max-width: 768px) {
-    .hero-text { left: 6vw; }
-    .hero-text .title { font-size: 2.2em; }
     .nav-links { right: 6vw; gap: 14px; }
     .nav-links a { font-size: 1em; padding: 8px 18px; }
   }
@@ -186,21 +130,10 @@
 </head>
 <body>
 
-<!-- 光晕 -->
-<div class="aurora aurora-1"></div>
-<div class="aurora aurora-2"></div>
-
-<!-- 粒子画布 -->
+<div class="bg-image"></div>
+<div class="vignette"></div>
 <canvas id="particles"></canvas>
 
-<!-- 左侧文字 -->
-<div class="hero-text">
-  <div class="greeting">✦ 欢迎来到</div>
-  <div class="title">Zzm's<br>Garden</div>
-  <div class="subtitle">一个正在学习的技术小白 ( ⁄•⁄ω⁄•⁄ )</div>
-</div>
-
-<!-- 右侧导航 -->
 <div class="nav-links">
   <a href="/home/"><span class="icon">🏠</span>Home</a>
   <a href="/notes/"><span class="icon">💬</span>Notes</a>
@@ -210,7 +143,6 @@
   <a href="/archives/"><span class="icon">📦</span>Archives</a>
 </div>
 
-<!-- 底部 -->
 <div class="hint">在千寻之外，你依然存在，永远的怀念</div>
 
 <script>
