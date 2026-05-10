@@ -10,6 +10,7 @@
   // 1. Archives / Tags / Webinfo 折叠手风琴
   // ========================================
   const collapsibleCards = [
+    '.card-recent-post',
     '.card-archives',
     '.card-tags',
     '.card-webinfo'
@@ -38,7 +39,8 @@
     // 默认折叠 Archives 和 Webinfo
     const cardType = selector.replace('.card-', '')
     const savedState = localStorage.getItem('aside-collapse-' + cardType)
-    const defaultOpen = (cardType === 'tags') // Tags 默认展开
+    // 默认展开：recent-post, tags；默认折叠：archives, webinfo
+    const defaultOpen = (cardType === 'recent-post' || cardType === 'tags')
     const isOpen = savedState !== null ? savedState === 'open' : defaultOpen
 
     if (!isOpen) {
