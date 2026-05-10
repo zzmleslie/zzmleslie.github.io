@@ -182,10 +182,10 @@
 <div class="hint">在千寻之外，你依然存在，永远的怀念</div>
 
 <script>
-// ====== 粒子系统 + 环形音符轨道 ======
+// ====== 粒子系统 ======
 const canvas = document.getElementById('particles')
 const ctx = canvas.getContext('2d')
-let particles = [], rings = []
+let particles = []
 let mouseX = 0, mouseY = 0
 
 function resize() {
@@ -195,7 +195,6 @@ function resize() {
 resize()
 window.addEventListener('resize', resize)
 
-// -- 上升粒子 --
 class Particle {
   constructor() {
     this.reset()
@@ -204,81 +203,30 @@ class Particle {
   reset() {
     this.x = Math.random() * canvas.width
     this.y = -10
-    this.size = Math.random() * 1.8 + 0.5
-    this.speed = Math.random() * 0.35 + 0.08
-    this.opacity = Math.random() * 0.5 + 0.15
+    this.size = Math.random() * 1.5 + 0.5
+    this.speed = Math.random() * 0.4 + 0.1
+    this.opacity = Math.random() * 0.4 + 0.1
     this.wobble = Math.random() * Math.PI * 2
-    this.wobbleSpeed = Math.random() * 0.008 + 0.002
+    this.wobbleSpeed = Math.random() * 0.01 + 0.002
   }
   update() {
     this.y += this.speed
     this.wobble += this.wobbleSpeed
-    this.x += Math.sin(this.wobble) * 0.2
+    this.x += Math.sin(this.wobble) * 0.3
     const dx = mouseX - this.x
     const dy = mouseY - this.y
-    if (Math.sqrt(dx*dx+dy*dy) < 120) { this.x += dx*0.0008; this.y += dy*0.0008 }
+    if (Math.sqrt(dx*dx+dy*dy) < 150) { this.x += dx*0.001; this.y += dy*0.001 }
     if (this.y > canvas.height + 10) this.reset()
   }
   draw() {
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(255,220,150,${this.opacity})`
+    ctx.fillStyle = `rgba(255,255,255,${this.opacity})`
     ctx.fill()
   }
 }
 
-// -- 环形轨道粒子（音符） --
-const noteGlyphs = ['♪', '♫', '♩']
-class RingParticle {
-  constructor(cx, cy, radius, speed, size, opacity, glyph, ellipY) {
-    this.cx = cx; this.cy = cy
-    this.radius = radius
-    this.angle = Math.random() * Math.PI * 2
-    this.speed = speed * (Math.random() * 0.3 + 0.85)
-    this.size = size
-    this.opacity = opacity
-    this.glyph = glyph
-    this.wobbleR = Math.random() * 12 + 4
-    this.wobbleA = Math.random() * 0.08
-    this.ellipY = ellipY
-  }
-  update() {
-    this.angle += this.speed
-    this.wobbleA += 0.015
-  }
-  draw() {
-    const r = this.radius + Math.sin(this.wobbleA) * this.wobbleR
-    const x = this.cx + Math.cos(this.angle) * r
-    const y = this.cy + Math.sin(this.angle) * r * this.ellipY
-    ctx.font = `${this.size}px sans-serif`
-    ctx.fillStyle = `rgba(255,220,150,${this.opacity})`
-    ctx.fillText(this.glyph, x, y)
-  }
-}
-
-// 中心点 — 页面正中
-const ringCX = canvas.width * 0.5
-const ringCY = canvas.height * 0.5
-function createRings() {
-  rings = []
-  const cx = canvas.width * 0.5, cy = canvas.height * 0.5
-  // 2 层大环 — 铺满页面，中间空心
-  const ringConfigs = [
-    { r: Math.min(canvas.width, canvas.height) * 0.35, n: 14, speed: 0.004, size: 20, op: 0.55, ey: 0.65 },
-    { r: Math.min(canvas.width, canvas.height) * 0.44, n: 10, speed: 0.0025, size: 18, op: 0.35, ey: 0.58 }
-  ]
-  ringConfigs.forEach(cfg => {
-    for (let i = 0; i < cfg.n; i++) {
-      const glyph = noteGlyphs[Math.floor(Math.random() * noteGlyphs.length)]
-      rings.push(new RingParticle(cx, cy, cfg.r, cfg.speed, cfg.size, cfg.op, glyph, cfg.ey))
-    }
-  })
-}
-createRings()
-window.addEventListener('resize', () => { resize(); createRings() })
-
-// 初始化上升粒子
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 60; i++) {
   const p = new Particle()
   p.y = Math.random() * canvas.height
   particles.push(p)
@@ -286,20 +234,6 @@ for (let i = 0; i < 30; i++) {
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  // 环形晕染 — 页面正中大甜甜圈光晕
-  const cx2 = canvas.width * 0.5, cy2 = canvas.height * 0.5
-  const maxR = Math.min(canvas.width, canvas.height) * 0.48
-  const innerR = maxR * 0.55
-  const glow = ctx.createRadialGradient(cx2, cy2, innerR, cx2, cy2, maxR)
-  glow.addColorStop(0, 'transparent')
-  glow.addColorStop(0.15, 'rgba(255,210,140,0.06)')
-  glow.addColorStop(0.5, 'rgba(255,180,100,0.10)')
-  glow.addColorStop(0.8, 'rgba(255,150,60,0.04)')
-  glow.addColorStop(1, 'transparent')
-  ctx.fillStyle = glow
-  ctx.beginPath(); ctx.ellipse(cx2, cy2, maxR, maxR * 0.65, 0, 0, Math.PI*2); ctx.fill()
-
-  rings.forEach(p => { p.update(); p.draw() })
   particles.forEach(p => { p.update(); p.draw() })
   requestAnimationFrame(animate)
 }
