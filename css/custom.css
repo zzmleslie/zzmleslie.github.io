@@ -69,9 +69,19 @@ body ,#article-container, #site-name{
 /* ========================================
    全局背景 & 正文
    ======================================== */
+/* 全局底色放在 html 上 */
+html {
+    background: var(--apple-body-bg);
+}
+
 body {
     background: var(--apple-body-bg) !important;
     color: var(--apple-text) !important;
+}
+
+/* 有 type class 的页面让 body 透明，::before 背景透上来 */
+body[class*="type-"] {
+    background: transparent !important;
 }
 
 /* ========================================
