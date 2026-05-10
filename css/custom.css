@@ -451,30 +451,40 @@ a:hover {
     transition: color 0.3s ease;
 }
 
-/* 折叠指示箭头 */
-.accordion-headline::after {
-    content: '\f107'; /* fa-angle-down */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    right: 4px;
-    top: 50%;
-    transform: translateY(-50%) rotate(0deg);
-    transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
-    font-size: 0.85em;
-    opacity: 0.5;
-}
-
-.accordion-headline.collapsed::after {
-    transform: translateY(-50%) rotate(-90deg);
-}
-
 .accordion-headline:hover {
     color: var(--apple-accent-cyan) !important;
 }
 
+/* 折叠指示器 - 圆形 +/- 按钮 */
+.accordion-headline::after {
+    content: '−';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.5);
+    transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    font-family: inherit;
+}
+
+.accordion-headline.collapsed::after {
+    content: '+';
+    background: rgba(255,255,255,0.05);
+}
+
 .accordion-headline:hover::after {
-    opacity: 1;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
 }
 
 /* 折叠内容区 */
