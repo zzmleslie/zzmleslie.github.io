@@ -109,16 +109,38 @@ body {
 }
 
 /*
-   侧边栏 - 自然流动，与内容区协调
-   配合折叠手风琴，保持简洁
+   侧边栏 - 屏幕相对固定（sticky），丝滑跟随
+   配合折叠手风琴保持简洁
 */
 #aside-content {
     width: 260px !important;
     min-width: 260px;
     flex-shrink: 0;
+    position: sticky;
+    top: 20px;
     align-self: flex-start;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
     margin-right: 0 !important;
     margin-left: 0 !important;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    /* 丝滑关键：硬件加速 */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 侧边栏自定义滚动条 */
+#aside-content::-webkit-scrollbar {
+    width: 3px;
+}
+#aside-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+#aside-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
 }
 
 /* 使侧边栏卡片间距更舒适 */
@@ -264,75 +286,29 @@ a.button {
 }
 
 /* ========================================
-   首页 Hero - Apple 风格标题
+   首页 - 隐藏全屏 Hero，直接展示内容
    ======================================== */
-
-/* Hero 背景：深空渐变 + 微光粒子感 */
-#page-header.full_page {
-    background: linear-gradient(180deg, 
-        #0a0a0f 0%, 
-        #0f0f1a 30%, 
-        #0a0a0f 100%
-    ) !important;
-    position: relative;
+.page #page-header.full_page {
+    height: auto !important;
+    min-height: unset !important;
+    background: transparent !important;
+    padding: 0 !important;
 }
 
-/* 微妙的光晕装饰 */
-#page-header.full_page::before {
-    content: '';
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(ellipse, 
-        rgba(100,206,220,0.06) 0%, 
-        rgba(184,59,141,0.04) 30%,
-        transparent 70%
-    );
-    pointer-events: none;
+.page #page-header.full_page #site-info,
+.page #page-header.full_page #scroll-down {
+    display: none !important;
 }
 
-#site-title,
-.post-title {
-    font-weight: 600 !important;
-    font-size: 2.8em !important;
-    letter-spacing: -0.03em !important;
-    text-shadow: none !important;
-    background: linear-gradient(135deg, 
-        rgba(255,255,255,0.95) 0%, 
-        rgba(210,195,184,0.85) 50%,
-        rgba(100,206,220,0.7) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: heroShimmer 8s ease-in-out infinite;
+.page #page-header.full_page #nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-@keyframes heroShimmer {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.15); }
-}
-
-#site-subtitle {
-    color: var(--apple-text-dim) !important;
-    font-weight: 400 !important;
-    font-size: 1.1em !important;
-    letter-spacing: 0.05em;
-    opacity: 0.8;
-}
-
-/* 向下滚动指示器美化 */
-#scroll-down {
-    opacity: 0.5;
-    animation: scrollBounce 2s ease-in-out infinite;
-}
-
-@keyframes scrollBounce {
-    0%, 100% { transform: translateY(0); opacity: 0.4; }
-    50% { transform: translateY(8px); opacity: 0.7; }
+/* 首页内容区直接紧跟导航栏 */
+.page #content-inner {
+    padding-top: 20px;
 }
 
 /* ========================================

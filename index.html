@@ -1,245 +1,276 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵) - 一个正在学习的技术小白( ⁄•⁄ω⁄•⁄ )</title><meta name="author" content="Zzm_Leslie ⚡️"><meta name="copyright" content="Zzm_Leslie ⚡️"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="喜欢猫猫、睦子米和波奇酱~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zzm&#39;s Blog (✧ω✧) (๑˃̵ᴗ˂̵)">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Zzm&#39;s Blog (✧ω✧) (๑˃̵ᴗ˂̵)">
-<meta property="og:description" content="喜欢猫猫、睦子米和波奇酱~">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/image/rana2.png">
-<meta property="article:author" content="Zzm_Leslie ⚡️">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/image/rana2.png"><script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵)",
-  "alternateName": [
-    "一个正在学习的技术小白( ⁄•⁄ω⁄•⁄ )",
-    "example.com"
-  ],
-  "url": "http://example.com/"
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
-    (() => {
-      
-    const saveToLocal = {
-      set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
-      },
-      get: key => {
-        const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return value
-      }
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zzm's Garden</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --text: rgba(255,255,255,0.85);
+    --dim: rgba(255,255,255,0.5);
+    --cyan: #64CEDC;
+    --pink: #B83B8D;
+    --glass: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  /* ====== Canvas 粒子背景 ====== */
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ====== 光晕装饰 ====== */
+  .aurora {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .aurora-1 {
+    width: 600px; height: 600px;
+    background: var(--cyan);
+    top: -200px; right: -100px;
+    animation: auroraFloat 12s ease-in-out infinite;
+  }
+  .aurora-2 {
+    width: 500px; height: 500px;
+    background: var(--pink);
+    bottom: -150px; left: -100px;
+    animation: auroraFloat 15s ease-in-out infinite reverse;
+  }
+
+  @keyframes auroraFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, -30px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+  }
+
+  /* ====== 右侧导航 ====== */
+  .nav-links {
+    position: fixed;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--dim);
+    font-size: 1.3em;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-links a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, rgba(100,206,220,0.15), rgba(184,59,141,0.1));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .nav-links a:hover {
+    color: #fff;
+    border-color: rgba(255,255,255,0.2);
+    transform: translateX(-8px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(100,206,220,0.08);
+  }
+
+  .nav-links a:hover::before {
+    opacity: 1;
+  }
+
+  .nav-links a .icon {
+    margin-right: 8px;
+    font-size: 0.9em;
+  }
+
+  /* ====== 左侧大标题 ====== */
+  .hero-text {
+    position: fixed;
+    left: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .hero-text .greeting {
+    font-size: 1.1em;
+    color: var(--dim);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-text .title {
+    font-size: 3.5em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(210,195,184,0.8) 50%, rgba(100,206,220,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-text .subtitle {
+    font-size: 1em;
+    color: var(--dim);
+    margin-top: 16px;
+    letter-spacing: 0.04em;
+    opacity: 0.7;
+  }
+
+  /* ====== 底部提示 ====== */
+  .hint {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--dim);
+    font-size: 0.85em;
+    letter-spacing: 0.06em;
+    z-index: 10;
+    opacity: 0.5;
+  }
+
+  /* ====== 响应式 ====== */
+  @media (max-width: 768px) {
+    .hero-text { left: 24px; }
+    .hero-text .title { font-size: 2.2em; }
+    .nav-links { right: 24px; gap: 14px; }
+    .nav-links a { font-size: 1em; padding: 8px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 光晕 -->
+<div class="aurora aurora-1"></div>
+<div class="aurora aurora-2"></div>
+
+<!-- 粒子画布 -->
+<canvas id="particles"></canvas>
+
+<!-- 左侧文字 -->
+<div class="hero-text">
+  <div class="greeting">✦ 欢迎来到</div>
+  <div class="title">Zzm's<br>Garden</div>
+  <div class="subtitle">一个正在学习的技术小白 ( ⁄•⁄ω⁄•⁄ )</div>
+</div>
+
+<!-- 右侧导航 -->
+<div class="nav-links">
+  <a href="/home/"><span class="icon">🏠</span>Home</a>
+  <a href="/about/"><span class="icon">👤</span>About</a>
+  <a href="/archives/"><span class="icon">📦</span>Archives</a>
+  <a href="/tags/"><span class="icon">🏷️</span>Tags</a>
+</div>
+
+<!-- 底部 -->
+<div class="hint">scroll or click to explore ↓</div>
+
+<script>
+// ====== 粒子系统 ======
+const canvas = document.getElementById('particles')
+const ctx = canvas.getContext('2d')
+let particles = []
+let mouseX = 0, mouseY = 0
+
+function resize() {
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+}
+resize()
+window.addEventListener('resize', resize)
+
+class Particle {
+  constructor() {
+    this.reset()
+    this.y = Math.random() * canvas.height
+  }
+  reset() {
+    this.x = Math.random() * canvas.width
+    this.y = -10
+    this.size = Math.random() * 1.5 + 0.5
+    this.speed = Math.random() * 0.4 + 0.1
+    this.opacity = Math.random() * 0.4 + 0.1
+    this.wobble = Math.random() * Math.PI * 2
+    this.wobbleSpeed = Math.random() * 0.01 + 0.002
+  }
+  update() {
+    this.y += this.speed
+    this.wobble += this.wobbleSpeed
+    this.x += Math.sin(this.wobble) * 0.3
+    // 鼠标吸引
+    const dx = mouseX - this.x
+    const dy = mouseY - this.y
+    const dist = Math.sqrt(dx * dx + dy * dy)
+    if (dist < 150) {
+      this.x += dx * 0.001
+      this.y += dy * 0.001
     }
-
-    window.btf = {
-      saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
-        }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
-        }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
-      addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
-        const globalFn = parent.globalFn || {}
-        globalFn[key] = globalFn[key] || {}
-        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
-        parent.globalFn = globalFn
-      }
-    }
-  
-      
-      const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
-        }
-      }
-      const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
-        }
-      }
-
-      btf.activateDarkMode = activateDarkMode
-      btf.activateLightMode = activateLightMode
-
-      const theme = saveToLocal.get('theme')
-    
-          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
-        
-      
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
-      }
-    
-      
-    const detectApple = () => {
-      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-  
-    })()
-  </script><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
-  copy: {
-    success: 'Copy Successful',
-    error: 'Copy Failed',
-    noSupport: 'Browser Not Supported'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: 'Just now',
-    min: 'minutes ago',
-    hour: 'hours ago',
-    day: 'days ago',
-    month: 'months ago'
-  },
-  copyright: undefined,
-  lightbox: 'null',
-  Snackbar: undefined,
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
-    buttonText: 'Load More'
-  },
-  isPhotoFigcaption: false,
-  islazyloadPlugin: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Zzm\'s Blog (✧ω✧) (๑˃̵ᴗ˂̵)',
-  isHighlightShrink: false,
-  isToc: false,
-  pageType: 'home'
-}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵)</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">Zzm's Blog (✧ω✧) (๑˃̵ᴗ˂̵)</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2026/05/08/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/" title="添加评论功能"><img class="post-bg" src="/image/giscus.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="添加评论功能"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/05/08/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/" title="添加评论功能">添加评论功能</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2026-05-08T03:46:37.000Z" title="Created 2026-05-08 11:46:37">2026-05-08</time></span></div><div class="content">wwwgemini胡乱指导我用vercel以及supabase，结果一直构建失败，(gemini还是太高看我这种菜鸡了)在akn点拨下，改用了github自带的discussion区，终于成功了（好耶！这次用的是giscus(ui简陋了一点，但是真的很方便www适合小白)  </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/05/05/java-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" title="java 语法笔记（1）"><img class="post-bg" src="/image/java_cover_from_sunset_rollercoaster.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java 语法笔记（1）"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/05/05/java-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" title="java 语法笔记（1）">java 语法笔记（1）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2026-05-05T02:42:48.000Z" title="Created 2026-05-05 10:42:48">2026-05-05</time></span></div><div class="content">如题，这是我的jvav语法笔记  基本数据类型：String语法    12345678910111213141516171819202122232425262728293031323334353637383940String.isEmpty() //String 是否为空 ，注意 ： “     ” 不是空串！！string.isBlank() //是否为空串 （更强） string.strip();  //去除两边的空格；string.stripLeading();    // 去除右括号string.stripTrailing();		//去除左括号string.trim() //去除空格（仅ascii的空格）string.repeat(times);  	//String 重复 times 次string.lines().forEach(System.out::println);	//切分为 Stream 再对每一行进行操作（打印）；string.equals(string2) // 比较内容string.split(sep) // 按照 sep 分割数组string.s...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/04/27/%E5%A5%BD%E6%83%B3%E7%9D%A1%E8%A7%89/" title="好想睡觉"><img class="post-bg" src="/image/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="好想睡觉"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/04/27/%E5%A5%BD%E6%83%B3%E7%9D%A1%E8%A7%89/" title="好想睡觉">好想睡觉</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2026-04-27T12:03:55.000Z" title="Created 2026-04-27 20:03:55">2026-04-27</time></span></div><div class="content">26.4.27 20：04 现在在听67讲课，但是晕晕的，想睡觉，想念我的小床（wwww） （以及，附上我这几天的一些事情：）（好像传不上来着qwq，待会再传）（又可以了，遂上传：是一些在散步的时候拍的风景捏~最近cortis回归了，依旧西海岸（）和之前的go一样，编曲很简单，编舞也是，但是很有记忆点（）（以及，很上头（））  这是今天在软工i课前去散步的时候拍的，狗狗祟祟跟踪一只meme() 小咪可爱捏~~ 周日散步的时候看到的（好像）花花其实小小的（）  花丛中光影交界处很美（www词穷了）  一样的小花   北大楼爬满叶子的一隅  好像是周四早上在教室自修的时候拍的（有会当凌绝顶的感觉）  这个自行车在发光耶( •̀ ω •́ )y！  前段时间开始看的，一个很古老的番（终结的炽天使）：红莲大人！  前段时间看到的一个很有阴湿感的miku  4.18 akn来南京比赛给我带的生日礼物（贴贴  以及akn的npy给我做的bocchi酱  不记得什么时间拍的了，meme  纯白色的杜鹃花，还有粉红的，第一次看见（） end  </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/03/29/StreamKV/" title="StreamKV"><img class="post-bg" src="/image/streamkv.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="StreamKV"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/03/29/StreamKV/" title="StreamKV">StreamKV</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2026-03-29T12:24:53.000Z" title="Created 2026-03-29 20:24:53">2026-03-29</time></span></div><div class="content">StreamKV: Streaming Video Question-Answering with Segment-based KV Cache Retrieval and Compression查看论文原文 StreamKV 核心逻辑拆解     > [SYSTEM::LOG]:: Initializing StreamKV Algorithm Framework...     > [STATUS::OK]:: Baseline model LLaVA-OneVision selected.     > [ENV::INFO]:: Running on NVIDIA H20 GPU (96G).    Step Streaming Encoding核心挑战： 如何解决流视频内存装不下的问题？   1.1 语义分块与压缩原理 (Semantic Partitioning)视频是由许多帧组成的，对于输入的每一帧，我们利用 ViT，压平映射，形成一个 f_{im} 向量。通过计算相邻帧的余弦相似度，我们可以判断视频的语意连贯性。 在切割 segment 片段时：  切割判定：  Si...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/02/14/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2026-02-14T04:51:03.535Z" title="Created 2026-02-14 12:51:03">2026-02-14</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/rana2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zzm_Leslie ⚡️</div><div class="author-info-description">喜欢猫猫、睦子米和波奇酱~ </div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zzmleslie"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/08/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/" title="添加评论功能"><img src="/image/giscus.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="添加评论功能"/></a><div class="content"><a class="title" href="/2026/05/08/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/" title="添加评论功能">添加评论功能</a><time datetime="2026-05-08T03:46:37.000Z" title="Created 2026-05-08 11:46:37">2026-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/05/java-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" title="java 语法笔记（1）"><img src="/image/java_cover_from_sunset_rollercoaster.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java 语法笔记（1）"/></a><div class="content"><a class="title" href="/2026/05/05/java-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" title="java 语法笔记（1）">java 语法笔记（1）</a><time datetime="2026-05-05T02:42:48.000Z" title="Created 2026-05-05 10:42:48">2026-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/27/%E5%A5%BD%E6%83%B3%E7%9D%A1%E8%A7%89/" title="好想睡觉"><img src="/image/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="好想睡觉"/></a><div class="content"><a class="title" href="/2026/04/27/%E5%A5%BD%E6%83%B3%E7%9D%A1%E8%A7%89/" title="好想睡觉">好想睡觉</a><time datetime="2026-04-27T12:03:55.000Z" title="Created 2026-04-27 20:03:55">2026-04-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/29/StreamKV/" title="StreamKV"><img src="/image/streamkv.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="StreamKV"/></a><div class="content"><a class="title" href="/2026/03/29/StreamKV/" title="StreamKV">StreamKV</a><time datetime="2026-03-29T12:24:53.000Z" title="Created 2026-03-29 20:24:53">2026-03-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/14/hello-world/" title="Hello World">Hello World</a><time datetime="2026-02-14T04:51:03.535Z" title="Created 2026-02-14 12:51:03">2026-02-14</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/streaming-video/" style="font-size: 1.1em; color: #999">-streaming_video</a> <a href="/tags/sleep/" style="font-size: 1.1em; color: #999">-sleep</a> <a href="/tags/tech/" style="font-size: 1.1em; color: #999">-tech</a> <a href="/tags/java/" style="font-size: 1.1em; color: #999">java</a></div></div><div class="card-widget card-archives">
-    <div class="item-headline">
-      <i class="fas fa-archive"></i>
-      <span>Archives</span>
-      
-    </div>
-  
-    <ul class="card-archive-list">
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2026/05/">
-            <span class="card-archive-list-date">
-              May 2026
-            </span>
-            <span class="card-archive-list-count">2</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2026/04/">
-            <span class="card-archive-list-date">
-              April 2026
-            </span>
-            <span class="card-archive-list-count">1</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2026/03/">
-            <span class="card-archive-list-date">
-              March 2026
-            </span>
-            <span class="card-archive-list-count">1</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2026/02/">
-            <span class="card-archive-list-date">
-              February 2026
-            </span>
-            <span class="card-archive-list-count">1</span>
-          </a>
-        </li>
-      
-    </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-10T07:25:14.313Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Zzm_Leslie ⚡️</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>window.typedJSFn = {
-  init: str => {
-    window.typed = new Typed('#subtitle', Object.assign({
-      strings: str,
-      startDelay: 300,
-      typeSpeed: 150,
-      loop: true,
-      backSpeed: 50,
-    }, null))
-  },
-  run: subtitleType => {
-    if (false) {
-      if (typeof Typed === 'function') {
-        subtitleType()
-      } else {
-        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js@3.0.0/dist/typed.umd.min.js').then(subtitleType)
-      }
-    } else {
-      subtitleType()
-    }
-  },
-  processSubtitle: (content, extraContents = []) => {
-    if (false) {
-      const sub = ["一个正在学习的技术小白 ( ⁄•⁄ω⁄•⁄ )","喜欢猫猫、睦子米和波奇酱~"].slice()
-
-      if (extraContents.length > 0) {
-        sub.unshift(...extraContents)
-      }
-
-      if (typeof content === 'string') {
-        sub.unshift(content)
-      } else if (Array.isArray(content)) {
-        sub.unshift(...content)
-      }
-
-      sub.length > 0 && typedJSFn.init(sub)
-    } else {
-      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
-        (Array.isArray(content) && content.length > 0 ? content[0] : '')
-    }
+    if (this.y > canvas.height + 10) this.reset()
+  }
+  draw() {
+    ctx.beginPath()
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(255,255,255,${this.opacity})`
+    ctx.fill()
   }
 }
-btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
-</script><script>function subtitleType () {
-  typedJSFn.processSubtitle(["一个正在学习的技术小白 ( ⁄•⁄ω⁄•⁄ )","喜欢猫猫、睦子米和波奇酱~"])
+
+// 初始化粒子
+for (let i = 0; i < 80; i++) {
+  const p = new Particle()
+  p.y = Math.random() * canvas.height
+  particles.push(p)
 }
-typedJSFn.run(subtitleType)</script></div><div id="my-rana" style="position:fixed;left: 40px;bottom: 40px;z-index: 999;pointer-events: none;"> <img src="/image/rana.gif" style="width: 100px;"> </div><script src="/js/apple-header-blur.js"></script><script src="/js/apple-sidebar.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  particles.forEach(p => { p.update(); p.draw() })
+  requestAnimationFrame(animate)
+}
+animate()
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX
+  mouseY = e.clientY
+})
+</script>
+
+</body>
+</html>
