@@ -173,8 +173,8 @@ body {
    配合折叠手风琴保持简洁
 */
 #aside-content {
-    width: 330px !important;
-    min-width: 330px;
+    width: 360px !important;
+    min-width: 360px;
     flex-shrink: 0;
     position: sticky;
     top: 20px;
