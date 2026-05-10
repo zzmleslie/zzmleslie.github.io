@@ -444,8 +444,19 @@ a:hover {
 .recent-post-item:nth-child(6) { animation-delay: 0.30s; }
 
 /* ========================================
-   侧边栏折叠手风琴
+   侧边栏作者名言
    ======================================== */
+.site-quote {
+    position: relative;
+    animation: appleFadeIn 0.8s ease-out;
+}
+
+.site-quote span {
+    background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(210,195,184,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
 .accordion-headline {
     position: relative;
     transition: color 0.3s ease;

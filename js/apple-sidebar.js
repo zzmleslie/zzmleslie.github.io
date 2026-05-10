@@ -80,6 +80,18 @@
   })
 
   // ========================================
+  // 5. 替换 site-data 为名言
+  // ========================================
+  const siteData = aside.querySelector('.site-data')
+  if (siteData) {
+    const quote = document.createElement('div')
+    quote.className = 'site-quote'
+    quote.innerHTML = '<span>" 求知若饥，虚心若愚 "</span>'
+    quote.style.cssText = 'padding: 12px 0; color: var(--apple-text-dim); font-size: 0.9em; letter-spacing: 0.04em; font-style: italic; text-align: center;'
+    siteData.replaceWith(quote)
+  }
+
+  // ========================================
   // 4. 近期文章缩略图悬浮放大
   // ========================================
   const recentThumbs = aside.querySelectorAll('.aside-list-item .thumbnail img')
