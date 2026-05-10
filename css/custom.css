@@ -768,3 +768,110 @@ a:hover {
     color: var(--apple-text-dim);
 }
 
+/* ========================================
+   返回 Landing 浮动按钮
+   ======================================== */
+.back-to-landing {
+    position: fixed;
+    right: 24px;
+    bottom: 140px;
+    z-index: 998;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--apple-glass-bg);
+    backdrop-filter: var(--apple-blur);
+    -webkit-backdrop-filter: var(--apple-blur);
+    border: 1px solid var(--apple-glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--apple-text-dim);
+    font-size: 1em;
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    box-shadow: var(--apple-shadow-sm);
+}
+
+.back-to-landing:hover {
+    background: var(--apple-glass-hover);
+    border-color: rgba(255,255,255,0.25);
+    color: var(--apple-accent-cyan);
+    transform: translateY(-3px);
+    box-shadow: var(--apple-shadow-md), 0 0 24px rgba(100,206,220,0.15);
+}
+
+/* ========================================
+   各页面动态 Header 背景
+   ======================================== */
+
+/* 通用：非首页 header 添加动态背景 */
+.not-home-page {
+    position: relative;
+    overflow: hidden;
+}
+
+.not-home-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Notes —— 柔紫呼吸光 */
+.type-notes #page-header::before {
+    background: radial-gradient(ellipse at 60% 40%, rgba(184,59,141,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(100,206,220,0.08) 0%, transparent 50%);
+    animation: notesBreathe 6s ease-in-out infinite;
+}
+@keyframes notesBreathe {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Gallery —— 暖色流光 */
+.type-gallery #page-header::before {
+    background: radial-gradient(ellipse at 50% 30%, rgba(210,195,184,0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 60%, rgba(184,59,141,0.1) 0%, transparent 50%);
+    animation: galleryShift 8s ease-in-out infinite;
+}
+@keyframes galleryShift {
+    0%, 100% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(15deg); }
+}
+
+/* Library —— 横向扫描光 */
+.type-library #page-header::before {
+    background: linear-gradient(90deg, transparent 0%, rgba(100,206,220,0.06) 45%, rgba(100,206,220,0.1) 50%, rgba(100,206,220,0.06) 55%, transparent 100%);
+    background-size: 200% 100%;
+    animation: libraryScan 5s ease-in-out infinite;
+}
+@keyframes libraryScan {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Projects —— 几何网格呼吸 */
+.type-projects #page-header::before {
+    background: 
+        radial-gradient(circle at 30% 50%, rgba(100,206,220,0.1) 0%, transparent 40%),
+        radial-gradient(circle at 70% 40%, rgba(184,59,141,0.06) 0%, transparent 35%);
+    animation: projectsPulse 7s ease-in-out infinite;
+}
+@keyframes projectsPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Archives —— 沉稳微光 */
+.type-archives #page-header::before {
+    background: radial-gradient(ellipse at 50% 60%, rgba(210,195,184,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 30%, rgba(100,206,220,0.05) 0%, transparent 50%);
+    animation: archivesGlow 10s ease-in-out infinite;
+}
+@keyframes archivesGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
+}
+
