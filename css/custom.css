@@ -23,7 +23,43 @@ body ,#article-container, #site-name{
 
 
 /* ========================================
-   Apple Music 风格配色方案
+   Apple Music 风格配色方案/* ========================================
+   Archives 主内容区毛玻璃
+   ======================================== */
+#archive {
+    background: var(--apple-glass-bg) !important;
+    backdrop-filter: var(--apple-blur) !important;
+    -webkit-backdrop-filter: var(--apple-blur) !important;
+    border-radius: var(--apple-radius-md) !important;
+    border: 1px solid var(--apple-glass-border) !important;
+    box-shadow: var(--apple-shadow-sm) !important;
+    padding: 24px 28px !important;
+}
+
+.article-sort-title {
+    color: var(--apple-text) !important;
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--apple-glass-border);
+}
+
+.article-sort-item {
+    background: transparent;
+    border-radius: var(--apple-radius-sm);
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    margin: 2px 0;
+}
+
+.article-sort-item:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+.article-sort-item-img img {
+    border-radius: 6px;
+}
    ======================================== */
 :root {
     /* 核心底色 */
