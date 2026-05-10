@@ -3,6 +3,16 @@
  * 侧边栏折叠手风琴 + 交互增强
  */
 (function () {
+  // ========================================
+  // 0. 给 body 添加 page-type class（兼容 Archives 等页面）
+  // ========================================
+  try {
+    const pt = GLOBAL_CONFIG_SITE && GLOBAL_CONFIG_SITE.pageType
+    if (pt) {
+      document.getElementById('body-wrap').classList.add('type-' + pt)
+    }
+  } catch (e) {}
+
   const aside = document.getElementById('aside-content')
   if (!aside) return
 
