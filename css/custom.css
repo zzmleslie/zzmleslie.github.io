@@ -161,8 +161,9 @@ body {
     gap: 44px;
 }
 
-/* 主内容区 */
-#recent-posts {
+/* 主内容区（首页文章列表 + 独立页面如 Gallery/Notes/Library 等） */
+#recent-posts,
+#page {
     flex: 1;
     min-width: 0; /* 防止 flex 溢出 */
     max-width: 700px;
@@ -222,7 +223,8 @@ body {
         max-height: none;
         overflow-y: visible;
     }
-    #recent-posts {
+    #recent-posts,
+    #page {
         max-width: 100%;
     }
 }
@@ -274,6 +276,15 @@ body {
 #article-container h1{
     padding-left: 15px !important;
     border-left: 5px solid var(--apple-accent-cyan);
+}
+
+/* ========================================
+   首页文章标题 - 加大加粗
+   ======================================== */
+#recent-posts .article-title {
+    font-size: 1.4em !important;
+    font-weight: 700 !important;
+    line-height: 1.4;
 }
 
 /* ========================================
