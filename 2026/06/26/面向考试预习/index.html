@@ -1,0 +1,567 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>面向考试预习 | Zzm's Blog &lt;(￣︶￣)↗[GO!]</title><meta name="author" content="Zzm_Leslie ⚡️"><meta name="copyright" content="Zzm_Leslie ⚡️"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="我完蛋了，根本预习不完。。。但秉持开源精神，整理了一份考前突击资料，大家有需自取吧  1. JVM 内存区域划分与存储位置核心区域划分及存储内容 栈（Stack &#x2F; 线程栈）：每个线程私有。存放局部变量表（基本数据类型、对象引用 reference）、操作数栈、方法出口等。方法执行完自动释放。 堆（Heap）：所有线程共享。存放所有的对象实例（无论是谁创建的）以及数组。是垃圾回收（GC）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向考试预习">
+<meta property="og:url" content="http://zzmleslie.github.io/2026/06/26/%E9%9D%A2%E5%90%91%E8%80%83%E8%AF%95%E9%A2%84%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Zzm&#39;s Blog &lt;(￣︶￣)↗[GO!]">
+<meta property="og:description" content="我完蛋了，根本预习不完。。。但秉持开源精神，整理了一份考前突击资料，大家有需自取吧  1. JVM 内存区域划分与存储位置核心区域划分及存储内容 栈（Stack &#x2F; 线程栈）：每个线程私有。存放局部变量表（基本数据类型、对象引用 reference）、操作数栈、方法出口等。方法执行完自动释放。 堆（Heap）：所有线程共享。存放所有的对象实例（无论是谁创建的）以及数组。是垃圾回收（GC）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zzmleslie.github.io/image/rana2.png">
+<meta property="article:published_time" content="2026-06-26T03:49:14.000Z">
+<meta property="article:modified_time" content="2026-06-26T03:51:10.606Z">
+<meta property="article:author" content="Zzm_Leslie ⚡️">
+<meta property="article:tag" content="se">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zzmleslie.github.io/image/rana2.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "面向考试预习",
+  "url": "http://zzmleslie.github.io/2026/06/26/%E9%9D%A2%E5%90%91%E8%80%83%E8%AF%95%E9%A2%84%E4%B9%A0/",
+  "image": "http://zzmleslie.github.io/image/rana2.png",
+  "datePublished": "2026-06-26T03:49:14.000Z",
+  "dateModified": "2026-06-26T03:51:10.606Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Zzm_Leslie ⚡️",
+      "url": "http://zzmleslie.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://zzmleslie.github.io/2026/06/26/%E9%9D%A2%E5%90%91%E8%80%83%E8%AF%95%E9%A2%84%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '面向考试预习',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/rana2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/home/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-comment-dots"></i><span> Notes</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-palette"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page" href="/library/"><i class="fa-fw fas fa-bookmark"></i><span> Library</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-flask"></i><span> Projects</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Zzm's Blog &lt;(￣︶￣)↗[GO!]</span></a><a class="nav-page-title" href="/"><span class="site-name">面向考试预习</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/home/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-comment-dots"></i><span> Notes</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-palette"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page" href="/library/"><i class="fa-fw fas fa-bookmark"></i><span> Library</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-flask"></i><span> Projects</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">面向考试预习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-06-26T03:49:14.000Z" title="Created 2026-06-26 11:49:14">2026-06-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-06-26T03:51:10.606Z" title="Updated 2026-06-26 11:51:10">2026-06-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>我完蛋了，根本预习不完。。。<br>但秉持开源精神，整理了一份考前突击资料，大家有需自取吧</p>
+<hr>
+<h2 id="1-JVM-内存区域划分与存储位置"><a href="#1-JVM-内存区域划分与存储位置" class="headerlink" title="1. JVM 内存区域划分与存储位置"></a>1. JVM 内存区域划分与存储位置</h2><h3 id="核心区域划分及存储内容"><a href="#核心区域划分及存储内容" class="headerlink" title="核心区域划分及存储内容"></a>核心区域划分及存储内容</h3><ul>
+<li><strong>栈（Stack &#x2F; 线程栈）</strong>：每个线程私有。存放<strong>局部变量表</strong>（基本数据类型、对象引用 <code>reference</code>）、操作数栈、方法出口等。方法执行完自动释放。</li>
+<li><strong>堆（Heap）</strong>：所有线程共享。存放<strong>所有的对象实例</strong>（无论是谁创建的）以及<strong>数组</strong>。是垃圾回收（GC）的主战场。</li>
+<li><strong>方法区（Method Area &#x2F; 元空间 Metaspace）</strong>：所有线程共享。存放<strong>类信息</strong>（结构、字段、方法字节码）、<strong>静态变量（<code>static</code>）</strong>、<strong>常量池</strong>（包括运行时常量池）。</li>
+</ul>
+<h3 id="常见高频面试-考试辨析"><a href="#常见高频面试-考试辨析" class="headerlink" title="常见高频面试&#x2F;考试辨析"></a>常见高频面试&#x2F;考试辨析</h3><ul>
+<li><p><strong>基本数据类型存哪？</strong></p>
+</li>
+<li><p>如果作为<strong>局部变量</strong>（在方法中声明）：存在<strong>栈</strong>的局部变量表中。</p>
+</li>
+<li><p>如果作为<strong>成员变量</strong>（在类中声明）：作为对象的一部分，存在<strong>堆</strong>中。</p>
+</li>
+<li><p><strong>对象存哪？</strong></p>
+</li>
+<li><p><strong>对象实例永远在堆中</strong>。栈里存的只是指向该对象的<strong>引用（指针&#x2F;地址）</strong>。</p>
+</li>
+<li><p><strong>字符串（String）存哪？</strong></p>
+</li>
+<li><p>字面量（如 <code>String s = &quot;abc&quot;</code>）：存在方法区（具体在<strong>字符串常量池</strong>）中。</p>
+</li>
+<li><p><code>new</code> 出来的字符串（如 <code>new String(&quot;abc&quot;)</code>）：在<strong>堆</strong>中创建新对象。</p>
+</li>
+</ul>
+<hr>
+<h2 id="2-3-初始化顺序与分派绑定原则"><a href="#2-3-初始化顺序与分派绑定原则" class="headerlink" title="2. &amp; 3. 初始化顺序与分派绑定原则"></a>2. &amp; 3. 初始化顺序与分派绑定原则</h2><h3 id="初始化顺序（口诀：父类静态-rightarrow-子类静态-rightarrow-父类构造-rightarrow-子类构造）"><a href="#初始化顺序（口诀：父类静态-rightarrow-子类静态-rightarrow-父类构造-rightarrow-子类构造）" class="headerlink" title="初始化顺序（口诀：父类静态 $\rightarrow$ 子类静态 $\rightarrow$ 父类构造 $\rightarrow$ 子类构造）"></a>初始化顺序（口诀：父类静态 $\rightarrow$ 子类静态 $\rightarrow$ 父类构造 $\rightarrow$ 子类构造）</h3><p>当创建一个子类对象时，严格执行以下顺序（同一级别的按代码先后顺序执行）：</p>
+<ol>
+<li><strong>父类</strong>静态变量初始化 &#x2F; 静态代码块</li>
+<li><strong>子类</strong>静态变量初始化 &#x2F; 静态代码块</li>
+<li><strong>父类</strong>实例变量初始化 &#x2F; 普通代码块</li>
+<li><strong>父类</strong>构造方法</li>
+<li><strong>子类</strong>实例变量初始化 &#x2F; 普通代码块</li>
+<li><strong>子类</strong>构造方法</li>
+</ol>
+<blockquote>
+<p><strong>注意：</strong> 静态代码块和静态变量在<strong>类加载（Class Loading）<strong>时执行，且</strong>只执行一次</strong>。普通代码块和构造方法在每次 <code>new</code> 对象时都会执行。</p>
+</blockquote>
+<h3 id="Overloading（重载）的多分派顺序"><a href="#Overloading（重载）的多分派顺序" class="headerlink" title="Overloading（重载）的多分派顺序"></a>Overloading（重载）的多分派顺序</h3><ul>
+<li>编译期决定。如果有多个重载方法，编译器会按照“参数类型匹配度”从高到低寻找（精确匹配 $\rightarrow$ 基本类型自动转换升型 $\rightarrow$ 自动装箱 $\rightarrow$ 父类&#x2F;接口 $\rightarrow$ 变长参数 <code>...</code>）。</li>
+</ul>
+<h3 id="分派与绑定原则（重点：软工一必考）"><a href="#分派与绑定原则（重点：软工一必考）" class="headerlink" title="分派与绑定原则（重点：软工一必考）"></a>分派与绑定原则（重点：软工一必考）</h3><ul>
+<li><p><strong>静态绑定（Static Binding &#x2F; 早期绑定）</strong>：在<strong>编译期</strong>就能确定具体调用哪个方法。依据的是<strong>声明类型（静态类型）</strong>。</p>
+</li>
+<li><p>适用于：<code>static</code> 方法、<code>private</code> 方法、<code>final</code> 方法、构造器、以及 <strong>Overloading（重载）</strong>。</p>
+</li>
+<li><p><strong>动态绑定（Dynamic Binding &#x2F; 晚期绑定）</strong>：在<strong>运行期</strong>根据对象的实际类型（Runtime Type）来决定调用哪个方法。</p>
+</li>
+<li><p>适用于：<strong>Overriding（重写）</strong>（即虚方法调用）。</p>
+</li>
+</ul>
+<hr>
+<h2 id="4-编译器与-JVM-如何决定运行哪个方法"><a href="#4-编译器与-JVM-如何决定运行哪个方法" class="headerlink" title="4. 编译器与 JVM 如何决定运行哪个方法"></a>4. 编译器与 JVM 如何决定运行哪个方法</h2><h3 id="编译器的处理（编译期）"><a href="#编译器的处理（编译期）" class="headerlink" title="编译器的处理（编译期）"></a>编译器的处理（编译期）</h3><ol>
+<li>检查接收者的<strong>声明类型</strong>（静态类型）。</li>
+<li>根据方法名和填入的参数，通过静态绑定（Overloading 分派逻辑）在类中找到匹配的方法签名（Method Signature）。</li>
+<li>将其编译为对应的字节码指令，并把方法符号引用写入常量池。</li>
+</ol>
+<h3 id="JVM-的处理（运行期）"><a href="#JVM-的处理（运行期）" class="headerlink" title="JVM 的处理（运行期）"></a>JVM 的处理（运行期）</h3><ol>
+<li>JVM 拿到字节码指令。如果是虚方法，它会先获取运行时对象的<strong>实际类型</strong>。</li>
+<li>在实际类型的方法表（Virtual Method Table &#x2F; vtable）中查找与符号引用一致的方法。</li>
+<li>如果找到则执行，找不到则顺着继承树往上（父类）找。</li>
+</ol>
+<hr>
+<h2 id="5-基础字节码含义与真题解析"><a href="#5-基础字节码含义与真题解析" class="headerlink" title="5. 基础字节码含义与真题解析"></a>5. 基础字节码含义与真题解析</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ul>
+<li><strong>操作数栈（Operand Stack）</strong>：用于存放计算过程中的临时操作数和中间结果，后进先出。</li>
+<li><strong>局部变量表（Local Variable Table）</strong>：存放方法参数和方法内部定义的局部变量（<code>slot 0</code> 通常是 <code>this</code> 引用）。</li>
+<li><strong>PC 寄存器（Program Counter）</strong>：记录当前线程正在执行的字节码指令地址。</li>
+</ul>
+<h3 id="四大调用指令"><a href="#四大调用指令" class="headerlink" title="四大调用指令"></a>四大调用指令</h3><ul>
+<li><code>invokestatic</code>：调用静态方法。</li>
+<li><code>invokespecial</code>：调用私有方法、构造方法（<code>&lt;init&gt;</code>）、父类方法（<code>super.method()</code>）。</li>
+<li><code>invokevirtual</code>：调用所有虚方法（公开&#x2F;保护的普通实例方法），涉及动态绑定。</li>
+<li><code>invokeinterface</code>：调用接口方法，运行期会再次检查实现类是否实现了该接口。</li>
+</ul>
+<hr>
+<h3 id="📝-真题解析"><a href="#📝-真题解析" class="headerlink" title="📝 真题解析"></a>📝 真题解析</h3><blockquote>
+<p><strong>题目</strong>：说明 <code>a.foo(100)</code> 和 <code>a.foo(&quot;helloworld&quot;)</code> 方法在编译器编译成字节码后，可能是哪两条指令？</p>
+</blockquote>
+<p><strong>正确答案：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">invokevirtual #24</span><br><span class="line">invokevirtual #25</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>理由：</strong></p>
+<ol>
+<li><code>foo</code> 是普通实例方法（未指明是静态或私有），属于虚方法，因此必须使用 <strong><code>invokevirtual</code></strong>。</li>
+<li>这两个方法属于 <strong>Overloading（重载）</strong>，参数类型不同（一个是 <code>int</code>，一个是 <code>String</code>）。在编译期，编译器已经根据参数类型将它们分派到了不同的方法签名上，因此在常量池中对应<strong>两个不同的编号</strong>（如 <code>#24</code> 和 <code>#25</code>）。</li>
+</ol>
+<hr>
+<h2 id="6-测试与调试（Test-vs-Debug）"><a href="#6-测试与调试（Test-vs-Debug）" class="headerlink" title="6. 测试与调试（Test vs Debug）"></a>6. 测试与调试（Test vs Debug）</h2><table>
+<thead>
+<tr>
+<th>特征&#x2F;维度</th>
+<th>测试 (Testing)</th>
+<th>调试 (Debugging)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目的</strong></td>
+<td><strong>发现</strong>程序中是否存在错误（证明有错）。</td>
+<td><strong>定位并修复</strong>已知的错误（找出原因并解决）。</td>
+</tr>
+<tr>
+<td><strong>触发时机</strong></td>
+<td>贯穿开发全生命周期，看到现象。</td>
+<td>发现 Bug 之后才进行。</td>
+</tr>
+<tr>
+<td><strong>执行者</strong></td>
+<td>通常由测试人员或开发人员（单元测试）执行。</td>
+<td>必须由<strong>开发人员</strong>执行（需要看代码）。</td>
+</tr>
+<tr>
+<td><strong>思维方式</strong></td>
+<td>破坏性的、找茬的。</td>
+<td>推理性的、解谜的。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="7-面向对象三特征一句话概括"><a href="#7-面向对象三特征一句话概括" class="headerlink" title="7. 面向对象三特征一句话概括"></a>7. 面向对象三特征一句话概括</h2><ul>
+<li><strong>封装 (Encapsulation)</strong>：隐藏对象的属性和实现细节，仅对外公开接口（通过访问控制符 <code>private/protected/public</code>），<strong>保证数据安全与高内聚</strong>。</li>
+<li><strong>继承 (Inheritance)</strong>：子类复用父类的属性和方法，并通过扩展实现代码重用，<strong>体现 “is-a” 关系</strong>。</li>
+<li><strong>多态 (Polymorphism)</strong>：允许同一引用类型在运行时指向不同的实现对象，执行不同的行为，<strong>解耦了“做什么”和“怎么做”</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>补充重要概念：</strong></p>
+<ul>
+<li><strong>抽象 (Abstraction)</strong>：忽略与当前目标无关的细节，只关注实体的核心特征。</li>
+<li><strong>高内聚低耦合 (High Cohesion, Low Coupling)</strong>：软件设计的终极目标。模块内部职责单一且紧密，模块之间依赖尽可能少。</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="8-用例图四要素与绘制规范"><a href="#8-用例图四要素与绘制规范" class="headerlink" title="8. 用例图四要素与绘制规范"></a>8. 用例图四要素与绘制规范</h2><h3 id="用例图-4-要素"><a href="#用例图-4-要素" class="headerlink" title="用例图 4 要素"></a>用例图 4 要素</h3><ol>
+<li><strong>参与者 (Actor)</strong>：在系统之外，与系统进行交互的人或外部系统。</li>
+<li><strong>用例 (Use Case)</strong>：系统为参与者提供的一项完整的功能&#x2F;服务（椭圆表示）。</li>
+<li><strong>系统边界 (System Boundary)</strong>：区分系统内部和外部的方框。</li>
+<li><strong>关系 (Relationship)</strong>：</li>
+</ol>
+<ul>
+<li>关联（Actor 与 Use Case 连线）</li>
+<li>包含 (<code>&lt;&lt;include&gt;&gt;</code>：基础用例必选子用例)</li>
+<li>扩展 (<code>&lt;&lt;extend&gt;&gt;</code>：基础用例可选&#x2F;特定条件下触发的子用例，<strong>箭头指向基础用例</strong>)</li>
+<li>泛化（继承关系）</li>
+</ul>
+<h3 id="💡-判错标准提示"><a href="#💡-判错标准提示" class="headerlink" title="💡 判错标准提示"></a>💡 判错标准提示</h3><p>如果试卷给出用例图让你挑错，90% 的坑在：</p>
+<ul>
+<li><strong>Actor 连了 Actor</strong>（错！Actor 之间只能有泛化关系，不能直接关联）。</li>
+<li><strong>Use Case 连了 Use Case</strong>（错！它们之间只能是 <code>&lt;&lt;include&gt;&gt;</code>、<code>&lt;&lt;extend&gt;&gt;</code> 或泛化，不能用普通实线）。</li>
+<li><strong><code>&lt;&lt;extend&gt;&gt;</code> 箭头画反了</strong>（记住：扩展用例指向基础用例）。</li>
+<li><strong>Actor 放到了系统方框内部</strong>（错！Actor 必须在边界外面）。</li>
+</ul>
+<hr>
+<h2 id="9-类图要素、规范、设计方法（核心大题大分点）"><a href="#9-类图要素、规范、设计方法（核心大题大分点）" class="headerlink" title="9. 类图要素、规范、设计方法（核心大题大分点）"></a>9. 类图要素、规范、设计方法（核心大题大分点）</h2><h3 id="静态关系速查（考试画线千万别画错！）"><a href="#静态关系速查（考试画线千万别画错！）" class="headerlink" title="静态关系速查（考试画线千万别画错！）"></a>静态关系速查（考试画线千万别画错！）</h3><ul>
+<li><strong>依赖 (Dependency)</strong>：局部变量、方法参数。<code>A ------&gt; B</code>（虚线箭头）。</li>
+<li><strong>关联 (Association)</strong>：成员变量。<code>A ——————&gt; B</code>（实线箭头）。</li>
+<li><strong>聚合 (Aggregation)</strong>：整体与部分，可分离（如学校和老师）。<code>A ◇——————&gt; B</code>（空心菱形实线）。</li>
+<li><strong>组合 (Composition)</strong>：整体与部分，不可分离，同生共死（如鸟和翅膀）。<code>A ◆——————&gt; B</code>（实心菱形实线）。</li>
+<li><strong>继承&#x2F;实现 (Inheritance&#x2F;Realization)</strong>：<code>——————▷</code>（空心三角实线为继承，虚线为实现）。</li>
+</ul>
+<h3 id="协作对象角色-GRASP-职责驱动设计"><a href="#协作对象角色-GRASP-职责驱动设计" class="headerlink" title="协作对象角色 (GRASP &#x2F; 职责驱动设计)"></a>协作对象角色 (GRASP &#x2F; 职责驱动设计)</h3><ul>
+<li><strong>Client</strong>：发起请求者。</li>
+<li><strong>Server</strong>：提供核心服务者。</li>
+<li><strong>Manager</strong>：管理、创建、协调多个对象。</li>
+<li><strong>Delegate</strong>：受托人，替别人干活以实现解耦。</li>
+</ul>
+<hr>
+<h3 id="📝-真题解析-1：销售合计职责归谁？"><a href="#📝-真题解析-1：销售合计职责归谁？" class="headerlink" title="📝 真题解析 1：销售合计职责归谁？"></a>📝 真题解析 1：销售合计职责归谁？</h3><blockquote>
+<p><strong>题目</strong>：Sale 有多个 SalesLineItem，每个 SalesLineItem 关联一个 Product（包含单价）。求此次销售的合计是哪个类的职责？说明原因。</p>
+</blockquote>
+<p><strong>正确答案：</strong><br>应归属于 <strong><code>Sale</code> 类</strong>。<br><strong>原因（依据信息专家模式 Information Expert）：</strong></p>
+<ul>
+<li><strong>信息专家模式</strong>规定：职责应该分配给拥有完成该职责所需信息的类。</li>
+<li>要计算总额，需要遍历所有的 <code>SalesLineItem</code> 并累加它们的小计。</li>
+<li><code>Sale</code> 对象作为“整体”，拥有（或组合了）所有的 <code>SalesLineItem</code> 列表（“部分”），它是最拥有完整信息的类，因此计算合计是 <code>Sale</code> 的天然职责。<br><em>(注：<code>SalesLineItem</code> 负责计算自身的小计 &#x3D; <code>Product.getPrice() * quantity</code>，然后 <code>Sale</code> 负责调用并汇总。)</em></li>
+</ul>
+<hr>
+<h3 id="📝-真题解析-2：鸟与狼的类设计与类图"><a href="#📝-真题解析-2：鸟与狼的类设计与类图" class="headerlink" title="📝 真题解析 2：鸟与狼的类设计与类图"></a>📝 真题解析 2：鸟与狼的类设计与类图</h3><blockquote>
+<p><strong>题目</strong>：实现 Animal、Bird、Wolf，包含 beat(), fly(), run()。</p>
+</blockquote>
+<h4 id="Java-属性与方法定义伪代码"><a href="#Java-属性与方法定义伪代码" class="headerlink" title="Java 属性与方法定义伪代码"></a>Java 属性与方法定义伪代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">beat</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">breathe</span><span class="params">()</span> &#123; &#125; <span class="comment">// 假设呼吸也是 breathe</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Bird</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">fly</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Wolf</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="类图绘制规范提示（脑补标准-UML）"><a href="#类图绘制规范提示（脑补标准-UML）" class="headerlink" title="类图绘制规范提示（脑补标准 UML）"></a>类图绘制规范提示（脑补标准 UML）</h4><ul>
+<li>画三个类框，分为三层：类名、属性、方法。</li>
+<li><code>Animal</code>（如果是抽象类，类名用<em>斜体</em>或加 <code>&lt;&lt;abstract&gt;&gt;</code>）。</li>
+<li><code>Bird</code> 和 <code>Wolf</code> 各画一条**实线+空心三角箭头 <code>——————▷**</code> 指向 <code>Animal</code>。</li>
+<li>方法前加符号：<code>+</code> 表示 <code>public</code>，<code>-</code> 表示 <code>private</code>。</li>
+</ul>
+<hr>
+<h2 id="10-11-面向接口编程与对象职责"><a href="#10-11-面向接口编程与对象职责" class="headerlink" title="10. &amp; 11. 面向接口编程与对象职责"></a>10. &amp; 11. 面向接口编程与对象职责</h2><h3 id="面向接口编程的基本概念"><a href="#面向接口编程的基本概念" class="headerlink" title="面向接口编程的基本概念"></a>面向接口编程的基本概念</h3><ul>
+<li><strong>核心思想</strong>：开闭原则（OCP）的基石。上层模块不应该依赖底层模块的具象实现，而应该依赖抽象的接口。这样当底层实现改变时，上层代码完全不需要修改。</li>
+</ul>
+<h3 id="常考题（接口定义和实现的伪代码）"><a href="#常考题（接口定义和实现的伪代码）" class="headerlink" title="常考题（接口定义和实现的伪代码）"></a>常考题（接口定义和实现的伪代码）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 定义接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Flyable</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">fly</span><span class="params">()</span>; <span class="comment">// 默认是 public abstract</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 实现接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteBird</span> <span class="keyword">implements</span> <span class="title class_">Flyable</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">fly</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Bird is flying.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 面向接口调用（得分点：声明类型必须是接口！）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Flyable</span> <span class="variable">bird</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteBird</span>(); <span class="comment">// 声明为接口类型</span></span><br><span class="line">        bird.fly();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>既然目标是 90+，针对大题（设计纠错、用例图、类图），阅卷老师手里都是有<strong>标准采分点（Rubric）<strong>的。为了让你明天答题稳准狠，下面直接为你模块化拆解这三个核心大题的</strong>通关秘籍与标准作答模板</strong>。</p>
+<hr>
+<h2 id="12-设计纠错大题：通关策略与黄金答题模板"><a href="#12-设计纠错大题：通关策略与黄金答题模板" class="headerlink" title="12. 设计纠错大题：通关策略与黄金答题模板"></a>12. 设计纠错大题：通关策略与黄金答题模板</h2><p>这类题目通常会给一段“烂代码”或一个“糟糕的设计类图”，让你指出问题并给出重构建议。</p>
+<h3 id="🚨-核心审查清单（拿着这个清单去代码里挑刺）"><a href="#🚨-核心审查清单（拿着这个清单去代码里挑刺）" class="headerlink" title="🚨 核心审查清单（拿着这个清单去代码里挑刺）"></a>🚨 核心审查清单（拿着这个清单去代码里挑刺）</h3><ol>
+<li><strong>违背单一职责原则 (SRP)</strong>：一个类干了两个完全不相关的事（例如：<code>Order</code> 类既算价格，又负责拼 SQL 存数据库，还负责发短信）。</li>
+<li><strong>硬编码依赖 &#x2F; 违背依赖倒置原则 (DIP)</strong>：类内部直接 <code>new</code> 了一个具体的实现类（例如：<code>private MySQLDriver driver = new MySQLDriver();</code>）。这导致无法切换底层实现。</li>
+<li><strong>大段代码重复 (Code Duplication)</strong>：几个方法里除了两三行不一样，其余长得一模一样。应该抽象成公共方法或父类方法。</li>
+<li><strong>死板的控制结构 &#x2F; 缺少多态</strong>：代码里出现大量的 <code>if-else</code> 或 <code>switch-case</code> 来判断对象的类型（例如：<code>if(bird.type == &quot;Pigeon&quot;) ... else if(bird.type == &quot;Ostrich&quot;)</code>）。<strong>这是最明显的期末考点：必须用多态（Polymorphism）重构！</strong></li>
+<li><strong>不合理的封装</strong>：字段全用 <code>public</code>；或者滥用全局静态变量（<code>public static</code>）传递状态，导致系统混乱。</li>
+</ol>
+<h3 id="📝-拿满分的标准答题模板（按这个格式写，老师最喜欢）"><a href="#📝-拿满分的标准答题模板（按这个格式写，老师最喜欢）" class="headerlink" title="📝 拿满分的标准答题模板（按这个格式写，老师最喜欢）"></a>📝 拿满分的标准答题模板（按这个格式写，老师最喜欢）</h3><p>考试时，切忌一句话概括。每指出一个错误，都要按照“现状 $\rightarrow$ 危害 $\rightarrow$ 改进方案”三步走：</p>
+<blockquote>
+<p><strong>[第 $X$ 处错误极其重构方案]</strong></p>
+<ul>
+<li><strong>问题（现状）</strong>：类 <code>XXX</code> 的 <code>methodA</code> 方法中使用了大量的 <code>if-else</code> 结构来判断对象的类型。</li>
+<li><strong>违背的原则</strong>：违背了**开闭原则（OCP）**和面向对象的多态思想。</li>
+<li><strong>危害</strong>：当系统需要增加新的类型时，必须修改该方法的源代码，导致系统脆弱、不易扩展且容易引入新 Bug。</li>
+<li><strong>重构方案</strong>：将具体的类型抽象为接口或父类，定义统一的抽象方法。让不同的子类各自实现该方法，在调用时通过**动态绑定（Dynamic Binding）**实现多态调用，消除 <code>if-else</code>。</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="13-用例图：绘制规范与手把手方法指导"><a href="#13-用例图：绘制规范与手把手方法指导" class="headerlink" title="13. 用例图：绘制规范与手把手方法指导"></a>13. 用例图：绘制规范与手把手方法指导</h2><p>用例图本质上是<strong>从用户视角定义系统的边界与功能</strong>。</p>
+<h3 id="📐-规范要素细节（一分不扣）"><a href="#📐-规范要素细节（一分不扣）" class="headerlink" title="📐 规范要素细节（一分不扣）"></a>📐 规范要素细节（一分不扣）</h3><ul>
+<li><strong>系统边界 (System Boundary)</strong>：必须画一个巨大的矩形框，框顶写上系统名称。</li>
+<li><strong>参与者 (Actor)</strong>：画在系统边界的<strong>外面</strong>（左侧通常是主 Actor，如用户；右侧通常是次 Actor，如外部系统&#x2F;数据库）。</li>
+<li><strong>用例 (Use Case)</strong>：画在系统边界的<strong>里面</strong>。必须用椭圆，名称必须是<strong>动宾短语</strong>（如 <code>处理订单</code>、<code>修改密码</code>），绝对不能只有名词。</li>
+<li><strong>关系符号（极其严格）</strong>：</li>
+<li><code>Actor ——&gt; Use Case</code>：直线（或带箭头的实线），代表交互。</li>
+<li><code>&lt;&lt;include&gt;&gt;</code>（包含）：基础用例 $\dashrightarrow$ 行为用例（虚线箭头，<strong>箭头指向被包含的子用例</strong>）。</li>
+<li><code>&lt;&lt;extend&gt;&gt;</code>（扩展）：扩展用例 $\dashrightarrow$ 基础用例（虚线箭头，<strong>箭头指向基础用例</strong>，别画反了！）。</li>
+</ul>
+<h3 id="🛠️-具体的建模与绘制五步法"><a href="#🛠️-具体的建模与绘制五步法" class="headerlink" title="🛠️ 具体的建模与绘制五步法"></a>🛠️ 具体的建模与绘制五步法</h3><ol>
+<li><strong>第一步：圈定边界</strong>。先在纸上画一个大方框，写上系统名字。</li>
+<li><strong>第二步：搜寻参与者 (Actors)</strong>：谁来用这个系统？（如：管理员、顾客、定时任务触发器）。把他们画在方框外。</li>
+<li><strong>第三步：提取主用例 (Core Use Cases)</strong>：这些人要用系统干什么核心的事？把它们变成动宾短语的椭圆，扔进方框里，并用实线与 Actor 连起来。</li>
+<li><strong>第四步：做加法（关系梳理）</strong>：</li>
+</ol>
+<ul>
+<li>这些用例有没有<strong>共同的、必须的</strong>前置步骤或必选子流？（如：<code>生成订单</code> 和 <code>查看账单</code> 都包含 <code>登录</code> -&gt;  用 <code>&lt;&lt;include&gt;&gt;</code>）。</li>
+<li>有没有<strong>特殊情况下才会触发</strong>的流程？（如：<code>提交订单</code> 时，如果积分足够可以 <code>使用积分抵扣</code> -&gt;  用 <code>&lt;&lt;extend&gt;&gt;</code>，箭头指向 <code>提交订单</code>）。</li>
+</ul>
+<ol start="5">
+<li><strong>第五步：检查纠错</strong>：检查有没有框外的 Actor 互相连线？有没有框内的用例互相直接连实线？（有就赶紧擦掉，这是零分点）。</li>
+</ol>
+<hr>
+<h2 id="14-类图：绘制规范与面向对象（OOP）设计方法"><a href="#14-类图：绘制规范与面向对象（OOP）设计方法" class="headerlink" title="14. 类图：绘制规范与面向对象（OOP）设计方法"></a>14. 类图：绘制规范与面向对象（OOP）设计方法</h2><p>类图是面向对象静态结构的核心，大题通常要求“根据伪代码画类图”或“根据业务场景设计类图”。</p>
+<h3 id="📐-规范要素细节（严格执行）"><a href="#📐-规范要素细节（严格执行）" class="headerlink" title="📐 规范要素细节（严格执行）"></a>📐 规范要素细节（严格执行）</h3><ul>
+<li><strong>三层矩形框</strong>：</li>
+</ul>
+<ol>
+<li>第一层：<strong>类名</strong>。如果是抽象类&#x2F;接口，类名用<em>斜体</em>，或者在上方加 <code>&lt;&lt;interface&gt;&gt;</code> 或 <code>&lt;&lt;abstract&gt;&gt;</code>。</li>
+<li>第二层：<strong>属性（字段）</strong>。格式：<code>访问修饰符 属性名: 类型</code>（如：<code>- name: String</code>）。</li>
+<li>第三层：<strong>方法（行为）</strong>。格式：<code>访问修饰符 方法名(参数名: 参数类型): 返回值类型</code>（如：<code>+ getName(): String</code>）。</li>
+</ol>
+<ul>
+<li><strong>访问修饰符</strong>：<code>+</code> (public)、<code>-</code> (private)、<code>#</code> (protected)。</li>
+</ul>
+<h3 id="🔗-六大关系的画法与选择（丢分重灾区）"><a href="#🔗-六大关系的画法与选择（丢分重灾区）" class="headerlink" title="🔗 六大关系的画法与选择（丢分重灾区）"></a>🔗 六大关系的画法与选择（丢分重灾区）</h3><p>在设计类图时，如何根据 OOP 思想选择正确的连线？</p>
+<table>
+<thead>
+<tr>
+<th>关系类型</th>
+<th>语义</th>
+<th>UML 线条形状</th>
+<th>什么时候用？（代码特征）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>泛化 (Generalization)</strong></td>
+<td>is-a (继承)</td>
+<td><code>——————▷</code> (实线+空心三角)</td>
+<td><code>class A extends B</code></td>
+</tr>
+<tr>
+<td><strong>实现 (Realization)</strong></td>
+<td>实现接口</td>
+<td><code>------▷</code> (虚线+空心三角)</td>
+<td><code>class A implements B</code></td>
+</tr>
+<tr>
+<td><strong>组合 (Composition)</strong></td>
+<td>强整体与部分 (同生共死)</td>
+<td><code>◆——————&gt;</code> (实心菱形+实线)</td>
+<td><code>A</code> 包含 <code>B</code>，且 <code>A</code> 死了 <code>B</code> 也不能活。通常在 <code>A</code> 的构造函数里 <code>new B()</code>。</td>
+</tr>
+<tr>
+<td><strong>聚合 (Aggregation)</strong></td>
+<td>弱整体与部分 (可分离)</td>
+<td><code>◇——————&gt;</code> (空心菱形+实线)</td>
+<td><code>A</code> 包含 <code>B</code>，但 <code>B</code> 可以独立存在。通常通过 <code>setB(B b)</code> 或构造函数传参传进来。</td>
+</tr>
+<tr>
+<td><strong>关联 (Association)</strong></td>
+<td>拥有关系 (常态化的依赖)</td>
+<td><code>——————&gt;</code> (普通实线箭头)</td>
+<td><code>A</code> 类中有一个成员变量是 <code>B</code> 类型 (<code>private B b;</code>)，但非整体部分关系。</td>
+</tr>
+<tr>
+<td><strong>依赖 (Dependency)</strong></td>
+<td>使用关系 (临时性)</td>
+<td><code>------&gt;</code> (普通虚线箭头)</td>
+<td><code>B</code> 作为 <code>A</code> 类中某个方法的<strong>参数、局部变量</strong>或者返回类型。</td>
+</tr>
+</tbody></table>
+<h3 id="🏗️-面向-OOP-思想的设计方法指导（怎么从零构建类图？）"><a href="#🏗️-面向-OOP-思想的设计方法指导（怎么从零构建类图？）" class="headerlink" title="🏗️ 面向 OOP 思想的设计方法指导（怎么从零构建类图？）"></a>🏗️ 面向 OOP 思想的设计方法指导（怎么从零构建类图？）</h3><p>当你拿到一段业务描述（如“图书管理系统”、“在线购物”），遵循以下 <strong>GRASP&#x2F;面向对象建模</strong> 思路：</p>
+<ol>
+<li><strong>文本分析法（找名词与动词）</strong>：</li>
+</ol>
+<ul>
+<li>读题，把所有的<strong>名词</strong>圈出来 -&gt; 它们是<strong>潜在的类&#x2F;属性</strong>（如：订单、商品、用户、购物车）。</li>
+<li>把所有的<strong>动词</strong>圈出来  -&gt; 它们是<strong>潜在的方法&#x2F;职责</strong>（如：添加商品、计算总价、支付）。</li>
+</ul>
+<ol start="2">
+<li><strong>分配职责（信息专家模式）</strong>：</li>
+</ol>
+<ul>
+<li>不要把所有的方法都写在一个 <code>Manager</code> 类里。<strong>谁拥有数据，谁就负责实现行为</strong>。</li>
+<li><em>例子</em>：计算订单项的小计，需要商品单价和数量，这两者都在 <code>OrderItem</code> 里，所以 <code>calculateSubtotal()</code> 是 <code>OrderItem</code> 的方法。而计算订单总价需要遍历所有订单项，所以 <code>calculateTotal()</code> 是 <code>Order</code> 的方法。</li>
+</ul>
+<ol start="3">
+<li><strong>引入抽象（面向接口编程）</strong>：</li>
+</ol>
+<ul>
+<li>观察是否有相似的行为但实现不同的主体？</li>
+<li><em>例子</em>：系统支持“微信支付”和“支付宝支付”。不要在 <code>Order</code> 类里写 <code>if(type==&quot;WeChat&quot;)</code>。立刻抽象出一个 <code>PaymentStrategy</code> 接口，里面有一个 <code>pay()</code> 方法。然后派生出 <code>WeChatPay</code> 和 <code>AliPay</code> 两个实现类。<code>Order</code> 只关联 <code>PaymentStrategy</code> 接口。</li>
+</ul>
+<ol start="4">
+<li><strong>精细化连线</strong>：</li>
+</ol>
+<ul>
+<li>检查类之间的关系。如果是包含关系，分清是组合（如 <code>Order</code> 和 <code>OrderItem</code>，订单没了订单项也没意义 $\rightarrow$ <strong>组合 ◆</strong>）还是聚合（如 <code>Course</code> 和 <code>Student</code>，课程取消了学生还在 $\rightarrow$ <strong>聚合 ◇</strong>）。</li>
+<li>仅仅是方法里用了一下某个工具类？画<strong>依赖 ——&gt;</strong>。</li>
+</ul>
+<p>画类图一定要确保：</p>
+<ol>
+<li>访问控制符（<code>+/-</code>）没漏；</li>
+<li>箭头的形状（空心、实心、三角、燕尾）精准无误。</li>
+</ol>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://zzmleslie.github.io">Zzm_Leslie ⚡️</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://zzmleslie.github.io/2026/06/26/%E9%9D%A2%E5%90%91%E8%80%83%E8%AF%95%E9%A2%84%E4%B9%A0/">http://zzmleslie.github.io/2026/06/26/%E9%9D%A2%E5%90%91%E8%80%83%E8%AF%95%E9%A2%84%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/se/">se</a></div><div class="post-share"><div class="social-share" data-image="/image/rana2.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/06/20/%E8%BD%AF%E5%B7%A5%E4%B8%80%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="软工一复习小记"><img class="cover" src="/image/leslie.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">软工一复习小记</div></div><div class="info-2"><div class="info-item-1">真是一天酣畅淋漓的软工学习啊！！忍不住还是想要庆祝一下：我终于快复习完了！！好吧，还没有，oop和jvm还没看完qwq这几天的进度如下！      又听起哥哥的歌好温柔晚安安啦（是不是有点早，我还没回寝来着（）明天终于可以再复习我的微积分了喵 </div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/rana2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zzm_Leslie ⚡️</div><div class="author-info-description">喜欢猫猫、波奇酱和超可爱的khalil喵~</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zzmleslie"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-JVM-%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86%E4%B8%8E%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">1. JVM 内存区域划分与存储位置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86%E5%8F%8A%E5%AD%98%E5%82%A8%E5%86%85%E5%AE%B9"><span class="toc-number">1.1.</span> <span class="toc-text">核心区域划分及存储内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%AB%98%E9%A2%91%E9%9D%A2%E8%AF%95-%E8%80%83%E8%AF%95%E8%BE%A8%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">常见高频面试&#x2F;考试辨析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F%E4%B8%8E%E5%88%86%E6%B4%BE%E7%BB%91%E5%AE%9A%E5%8E%9F%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">2. &amp; 3. 初始化顺序与分派绑定原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F%EF%BC%88%E5%8F%A3%E8%AF%80%EF%BC%9A%E7%88%B6%E7%B1%BB%E9%9D%99%E6%80%81-rightarrow-%E5%AD%90%E7%B1%BB%E9%9D%99%E6%80%81-rightarrow-%E7%88%B6%E7%B1%BB%E6%9E%84%E9%80%A0-rightarrow-%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">初始化顺序（口诀：父类静态 $\rightarrow$ 子类静态 $\rightarrow$ 父类构造 $\rightarrow$ 子类构造）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overloading%EF%BC%88%E9%87%8D%E8%BD%BD%EF%BC%89%E7%9A%84%E5%A4%9A%E5%88%86%E6%B4%BE%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.2.</span> <span class="toc-text">Overloading（重载）的多分派顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%B4%BE%E4%B8%8E%E7%BB%91%E5%AE%9A%E5%8E%9F%E5%88%99%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%9A%E8%BD%AF%E5%B7%A5%E4%B8%80%E5%BF%85%E8%80%83%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">分派与绑定原则（重点：软工一必考）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%8E-JVM-%E5%A6%82%E4%BD%95%E5%86%B3%E5%AE%9A%E8%BF%90%E8%A1%8C%E5%93%AA%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">4. 编译器与 JVM 如何决定运行哪个方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E5%A4%84%E7%90%86%EF%BC%88%E7%BC%96%E8%AF%91%E6%9C%9F%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">编译器的处理（编译期）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM-%E7%9A%84%E5%A4%84%E7%90%86%EF%BC%88%E8%BF%90%E8%A1%8C%E6%9C%9F%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">JVM 的处理（运行期）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%9F%BA%E7%A1%80%E5%AD%97%E8%8A%82%E7%A0%81%E5%90%AB%E4%B9%89%E4%B8%8E%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">5. 基础字节码含义与真题解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">4.1.</span> <span class="toc-text">核心概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E5%A4%A7%E8%B0%83%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">4.2.</span> <span class="toc-text">四大调用指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9D-%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="toc-number">4.3.</span> <span class="toc-text">📝 真题解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B0%83%E8%AF%95%EF%BC%88Test-vs-Debug%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">6. 测试与调试（Test vs Debug）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%89%E7%89%B9%E5%BE%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A6%82%E6%8B%AC"><span class="toc-number">6.</span> <span class="toc-text">7. 面向对象三特征一句话概括</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%94%A8%E4%BE%8B%E5%9B%BE%E5%9B%9B%E8%A6%81%E7%B4%A0%E4%B8%8E%E7%BB%98%E5%88%B6%E8%A7%84%E8%8C%83"><span class="toc-number">7.</span> <span class="toc-text">8. 用例图四要素与绘制规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BE%8B%E5%9B%BE-4-%E8%A6%81%E7%B4%A0"><span class="toc-number">7.1.</span> <span class="toc-text">用例图 4 要素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E5%88%A4%E9%94%99%E6%A0%87%E5%87%86%E6%8F%90%E7%A4%BA"><span class="toc-number">7.2.</span> <span class="toc-text">💡 判错标准提示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E7%B1%BB%E5%9B%BE%E8%A6%81%E7%B4%A0%E3%80%81%E8%A7%84%E8%8C%83%E3%80%81%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%EF%BC%88%E6%A0%B8%E5%BF%83%E5%A4%A7%E9%A2%98%E5%A4%A7%E5%88%86%E7%82%B9%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">9. 类图要素、规范、设计方法（核心大题大分点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%85%B3%E7%B3%BB%E9%80%9F%E6%9F%A5%EF%BC%88%E8%80%83%E8%AF%95%E7%94%BB%E7%BA%BF%E5%8D%83%E4%B8%87%E5%88%AB%E7%94%BB%E9%94%99%EF%BC%81%EF%BC%89"><span class="toc-number">8.1.</span> <span class="toc-text">静态关系速查（考试画线千万别画错！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E4%BD%9C%E5%AF%B9%E8%B1%A1%E8%A7%92%E8%89%B2-GRASP-%E8%81%8C%E8%B4%A3%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1"><span class="toc-number">8.2.</span> <span class="toc-text">协作对象角色 (GRASP &#x2F; 职责驱动设计)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9D-%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90-1%EF%BC%9A%E9%94%80%E5%94%AE%E5%90%88%E8%AE%A1%E8%81%8C%E8%B4%A3%E5%BD%92%E8%B0%81%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">📝 真题解析 1：销售合计职责归谁？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9D-%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90-2%EF%BC%9A%E9%B8%9F%E4%B8%8E%E7%8B%BC%E7%9A%84%E7%B1%BB%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%B1%BB%E5%9B%BE"><span class="toc-number">8.4.</span> <span class="toc-text">📝 真题解析 2：鸟与狼的类设计与类图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java-%E5%B1%9E%E6%80%A7%E4%B8%8E%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="toc-number">8.4.1.</span> <span class="toc-text">Java 属性与方法定义伪代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9B%BE%E7%BB%98%E5%88%B6%E8%A7%84%E8%8C%83%E6%8F%90%E7%A4%BA%EF%BC%88%E8%84%91%E8%A1%A5%E6%A0%87%E5%87%86-UML%EF%BC%89"><span class="toc-number">8.4.2.</span> <span class="toc-text">类图绘制规范提示（脑补标准 UML）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-11-%E9%9D%A2%E5%90%91%E6%8E%A5%E5%8F%A3%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%AF%B9%E8%B1%A1%E8%81%8C%E8%B4%A3"><span class="toc-number">9.</span> <span class="toc-text">10. &amp; 11. 面向接口编程与对象职责</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E6%8E%A5%E5%8F%A3%E7%BC%96%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">9.1.</span> <span class="toc-text">面向接口编程的基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%80%83%E9%A2%98%EF%BC%88%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89%E5%92%8C%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%BC%AA%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">9.2.</span> <span class="toc-text">常考题（接口定义和实现的伪代码）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E8%AE%BE%E8%AE%A1%E7%BA%A0%E9%94%99%E5%A4%A7%E9%A2%98%EF%BC%9A%E9%80%9A%E5%85%B3%E7%AD%96%E7%95%A5%E4%B8%8E%E9%BB%84%E9%87%91%E7%AD%94%E9%A2%98%E6%A8%A1%E6%9D%BF"><span class="toc-number">10.</span> <span class="toc-text">12. 设计纠错大题：通关策略与黄金答题模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9A%A8-%E6%A0%B8%E5%BF%83%E5%AE%A1%E6%9F%A5%E6%B8%85%E5%8D%95%EF%BC%88%E6%8B%BF%E7%9D%80%E8%BF%99%E4%B8%AA%E6%B8%85%E5%8D%95%E5%8E%BB%E4%BB%A3%E7%A0%81%E9%87%8C%E6%8C%91%E5%88%BA%EF%BC%89"><span class="toc-number">10.1.</span> <span class="toc-text">🚨 核心审查清单（拿着这个清单去代码里挑刺）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9D-%E6%8B%BF%E6%BB%A1%E5%88%86%E7%9A%84%E6%A0%87%E5%87%86%E7%AD%94%E9%A2%98%E6%A8%A1%E6%9D%BF%EF%BC%88%E6%8C%89%E8%BF%99%E4%B8%AA%E6%A0%BC%E5%BC%8F%E5%86%99%EF%BC%8C%E8%80%81%E5%B8%88%E6%9C%80%E5%96%9C%E6%AC%A2%EF%BC%89"><span class="toc-number">10.2.</span> <span class="toc-text">📝 拿满分的标准答题模板（按这个格式写，老师最喜欢）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E7%94%A8%E4%BE%8B%E5%9B%BE%EF%BC%9A%E7%BB%98%E5%88%B6%E8%A7%84%E8%8C%83%E4%B8%8E%E6%89%8B%E6%8A%8A%E6%89%8B%E6%96%B9%E6%B3%95%E6%8C%87%E5%AF%BC"><span class="toc-number">11.</span> <span class="toc-text">13. 用例图：绘制规范与手把手方法指导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%90-%E8%A7%84%E8%8C%83%E8%A6%81%E7%B4%A0%E7%BB%86%E8%8A%82%EF%BC%88%E4%B8%80%E5%88%86%E4%B8%8D%E6%89%A3%EF%BC%89"><span class="toc-number">11.1.</span> <span class="toc-text">📐 规范要素细节（一分不扣）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E5%85%B7%E4%BD%93%E7%9A%84%E5%BB%BA%E6%A8%A1%E4%B8%8E%E7%BB%98%E5%88%B6%E4%BA%94%E6%AD%A5%E6%B3%95"><span class="toc-number">11.2.</span> <span class="toc-text">🛠️ 具体的建模与绘制五步法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E7%B1%BB%E5%9B%BE%EF%BC%9A%E7%BB%98%E5%88%B6%E8%A7%84%E8%8C%83%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88OOP%EF%BC%89%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-number">12.</span> <span class="toc-text">14. 类图：绘制规范与面向对象（OOP）设计方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%90-%E8%A7%84%E8%8C%83%E8%A6%81%E7%B4%A0%E7%BB%86%E8%8A%82%EF%BC%88%E4%B8%A5%E6%A0%BC%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="toc-number">12.1.</span> <span class="toc-text">📐 规范要素细节（严格执行）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%97-%E5%85%AD%E5%A4%A7%E5%85%B3%E7%B3%BB%E7%9A%84%E7%94%BB%E6%B3%95%E4%B8%8E%E9%80%89%E6%8B%A9%EF%BC%88%E4%B8%A2%E5%88%86%E9%87%8D%E7%81%BE%E5%8C%BA%EF%BC%89"><span class="toc-number">12.2.</span> <span class="toc-text">🔗 六大关系的画法与选择（丢分重灾区）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8F%97%EF%B8%8F-%E9%9D%A2%E5%90%91-OOP-%E6%80%9D%E6%83%B3%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E6%8C%87%E5%AF%BC%EF%BC%88%E6%80%8E%E4%B9%88%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E7%B1%BB%E5%9B%BE%EF%BC%9F%EF%BC%89"><span class="toc-number">12.3.</span> <span class="toc-text">🏗️ 面向 OOP 思想的设计方法指导（怎么从零构建类图？）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/26/%E9%9D%A2%E5%90%91%E8%80%83%E8%AF%95%E9%A2%84%E4%B9%A0/" title="面向考试预习">面向考试预习</a><time datetime="2026-06-26T03:49:14.000Z" title="Created 2026-06-26 11:49:14">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/20/%E8%BD%AF%E5%B7%A5%E4%B8%80%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="软工一复习小记"><img src="/image/leslie.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软工一复习小记"/></a><div class="content"><a class="title" href="/2026/06/20/%E8%BD%AF%E5%B7%A5%E4%B8%80%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="软工一复习小记">软工一复习小记</a><time datetime="2026-06-20T13:30:00.000Z" title="Created 2026-06-20 21:30:00">2026-06-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/01/%E5%85%AD%E4%B8%80%E5%BF%AB%E4%B9%90%E5%91%80/" title="六一快乐~~"><img src="/image/song260601.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="六一快乐~~"/></a><div class="content"><a class="title" href="/2026/06/01/%E5%85%AD%E4%B8%80%E5%BF%AB%E4%B9%90%E5%91%80/" title="六一快乐~~">六一快乐~~</a><time datetime="2026-06-01T13:46:10.000Z" title="Created 2026-06-01 21:46:10">2026-06-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/27/%E9%9A%8F%E6%83%B3/" title="随想">随想</a><time datetime="2026-05-27T10:59:51.000Z" title="Created 2026-05-27 18:59:51">2026-05-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/24/jvm-classFile-note-0524/" title="jvm classFile note 0524"><img src="/image/sleep_meow.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jvm classFile note 0524"/></a><div class="content"><a class="title" href="/2026/05/24/jvm-classFile-note-0524/" title="jvm classFile note 0524">jvm classFile note 0524</a><time datetime="2026-05-24T04:33:44.000Z" title="Created 2026-05-24 12:33:44">2026-05-24</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Zzm_Leslie ⚡️</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'zzmleslie/zzmleslie.github.io',
+      'data-repo-id': 'R_kgDORP80dA',
+      'data-category-id': 'DIC_kwDORP80dM4C8joU',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div id="my-rana" style="position:fixed;left: 40px;bottom: 40px;z-index: 999;pointer-events: none;"> <img src="/image/rana.gif" style="width: 100px;"> </div><script src="/js/apple-header-blur.js"></script><script src="/js/apple-sidebar.js"></script><a href="/" class="back-to-landing" title="← Back to Garden"><i class="fas fa-seedling"></i></a><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.halo.min.js"></script><script src="/js/apple-vanta.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
