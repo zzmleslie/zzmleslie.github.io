@@ -1,114 +1,98 @@
 /**
- * Apple Music Style - Sidebar Accordion + Enhancements
- * 侧边栏折叠手风琴 + 交互增强
+ * Serene Theme — Sidebar accordion + enhancements
+ * Adapted from Butterfly version for new theme DOM.
  */
 (function () {
-  // ========================================
-  // 0. 给 body 和 #body-wrap 添加 page-type class
-  // ========================================
+  // Add page-type class to body and site-wrap
   try {
-    const pt = GLOBAL_CONFIG_SITE && GLOBAL_CONFIG_SITE.pageType
+    var pt = document.body.dataset.pageType
     if (pt) {
-      const cls = 'type-' + (pt === 'archive' ? 'archives' : pt)
-      document.getElementById('body-wrap').classList.add(cls)
+      var cls = 'type-' + (pt === 'archive' ? 'archives' : pt)
+      var wrap = document.getElementById('site-wrap')
+      if (wrap) wrap.classList.add(cls)
       document.body.classList.add(cls)
     }
   } catch (e) {}
 
-  const aside = document.getElementById('aside-content')
+  var aside = document.querySelector('.site-sidebar')
   if (!aside) return
 
-  // ========================================
-  // 1. Archives / Tags / Webinfo 折叠手风琴
-  // ========================================
-  const collapsibleCards = [
-    '.card-recent-post',
-    '.card-archives',
-    '.card-tags',
-    '.card-webinfo'
+  // 1. Collapsible sidebar cards
+  var collapsibleCards = [
+    '.sidebar-recent',
+    '.sidebar-archives',
+    '.sidebar-tags',
+    '.sidebar-info'
   ]
 
-  collapsibleCards.forEach(selector => {
-    const card = aside.querySelector(selector)
+  collapsibleCards.forEach(function (selector) {
+    var card = aside.querySelector(selector)
     if (!card) return
 
-    const headline = card.querySelector('.item-headline')
+    var headline = card.querySelector('.sidebar-card-header')
     if (!headline) return
 
-    // 给标题添加折叠指示箭头
     headline.style.cursor = 'pointer'
     headline.style.userSelect = 'none'
     headline.classList.add('accordion-headline')
 
-    // 找到内容区（标题之后的所有兄弟元素包装起来）
-    const content = document.createElement('div')
+    var content = document.createElement('div')
     content.className = 'accordion-content'
     while (headline.nextSibling) {
       content.appendChild(headline.nextSibling)
     }
     card.appendChild(content)
 
-    // 默认折叠 Archives 和 Webinfo
-    const cardType = selector.replace('.card-', '')
-    const savedState = localStorage.getItem('aside-collapse-' + cardType)
-    // 默认展开：recent-post, tags；默认折叠：archives, webinfo
-    const defaultOpen = (cardType === 'recent-post' || cardType === 'tags')
-    const isOpen = savedState !== null ? savedState === 'open' : defaultOpen
+    var cardType = selector.replace('.sidebar-', '')
+    var savedState = localStorage.getItem('aside-collapse-' + cardType)
+    var defaultOpen = (cardType === 'recent' || cardType === 'tags')
+    var isOpen = savedState !== null ? savedState === 'open' : defaultOpen
 
     if (!isOpen) {
       content.classList.add('collapsed')
       headline.classList.add('collapsed')
     }
 
-    // 点击切换
-    headline.addEventListener('click', () => {
-      const collapsed = content.classList.toggle('collapsed')
+    headline.addEventListener('click', function () {
+      var collapsed = content.classList.toggle('collapsed')
       headline.classList.toggle('collapsed', collapsed)
       localStorage.setItem('aside-collapse-' + cardType, collapsed ? 'closed' : 'open')
     })
   })
 
-  // ========================================
-  // 2. Tags 交互增强 - 随机微光颜色
-  // ========================================
-  const tagLinks = aside.querySelectorAll('.card-tag-cloud a')
-  const accentColors = [
-    'rgba(100,206,220,0.3)',  // cyan
-    'rgba(184,59,141,0.25)',   // pink
-    'rgba(210,195,184,0.25)',  // warm
-    'rgba(120,180,220,0.25)',  // blue
-    'rgba(200,140,180,0.25)'   // lavender
+  // 2. Tag glow colors
+  var tagLinks = aside.querySelectorAll('.tagcloud .tag-item')
+  var accentColors = [
+    'rgba(100,206,220,0.3)',
+    'rgba(184,59,141,0.25)',
+    'rgba(210,195,184,0.25)',
+    'rgba(120,180,220,0.25)',
+    'rgba(200,140,180,0.25)'
   ]
-  tagLinks.forEach((tag, i) => {
+  tagLinks.forEach(function (tag, i) {
     tag.style.setProperty('--tag-glow', accentColors[i % accentColors.length])
   })
 
-  // ========================================
-  // 3. Archives 条目 hover 高亮指示条
-  // ========================================
-  const archiveItems = aside.querySelectorAll('.card-archive-list-item')
-  archiveItems.forEach(item => {
+  // 3. Archives item enhancement
+  var archiveItems = aside.querySelectorAll('.archive-list-item')
+  archiveItems.forEach(function (item) {
     item.classList.add('archive-item-enhanced')
   })
 
-  // ========================================
-  // 5. 替换 site-data 为名言
-  // ========================================
-  const siteData = aside.querySelector('.site-data')
+  // 4. Replace site-data with a quote
+  var siteData = aside.querySelector('.site-data')
   if (siteData) {
-    const quote = document.createElement('div')
+    var quote = document.createElement('div')
     quote.className = 'site-quote'
     quote.innerHTML = '<p>" 有好些年，<br>我一直想要遵照所有人的道德标准来生活，<br>我强迫自己去过和所有人一样的日子，<br>强迫自己和所有人相似。<br>如今，<br>我在碎片中游荡，<br>没有任何法则，<br>四分五裂，<br>于是不再抗拒我的独特和残缺，<br>而且我也该去重建一个真相——<br>在某种谎言中过了一辈子之后。 "</p><span class="quote-author">—— 阿尔贝·加缪</span>'
     siteData.replaceWith(quote)
   }
 
-  // ========================================
-  // 4. 近期文章缩略图悬浮放大
-  // ========================================
-  const recentThumbs = aside.querySelectorAll('.aside-list-item .thumbnail img')
-  recentThumbs.forEach(img => {
+  // 5. Recent post thumbnail hover zoom
+  var recentThumbs = aside.querySelectorAll('.recent-post-thumb')
+  recentThumbs.forEach(function (img) {
     img.style.transition = 'transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1)'
-    img.addEventListener('mouseenter', () => { img.style.transform = 'scale(1.08)' })
-    img.addEventListener('mouseleave', () => { img.style.transform = 'scale(1)' })
+    img.addEventListener('mouseenter', function () { img.style.transform = 'scale(1.08)' })
+    img.addEventListener('mouseleave', function () { img.style.transform = 'scale(1)' })
   })
-})()
+})();
