@@ -310,6 +310,27 @@ a{color:inherit}
   background:rgba(194,138,62,.05);
 }
 .article-content blockquote p{margin:.4em 0}
+
+/* ---------- 诗歌 ---------- */
+.article-content .poem{
+  text-align:center;
+  font-style:italic;
+  font-weight:400;
+  font-family:"MS Mincho","Hiragino Mincho ProN","YuMincho",var(--serif-cn);
+  line-height:1.6;
+  margin:2em 0;
+  color:var(--parchment);
+}
+.article-content .poem .poem-title{
+  font-size:1.05em;
+  margin-bottom:.3em;
+}
+.article-content .poem .poem-author{
+  font-size:.88em;
+  color:var(--paper-dim);
+  margin-bottom:.7em;
+}
+
 .article-content img{max-width:100%;display:block;margin:1.8em auto;box-shadow:0 16px 40px rgba(0,0,0,.4)}
 .article-content hr{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(194,138,62,.25),transparent);margin:2.5em 0}
 .article-content table{width:100%;border-collapse:collapse;margin:1.6em 0;font-size:14px}
