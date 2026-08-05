@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>spring-framework-core-IoC · Zzm&#39;s Blog</title>
+<meta name="description" content="喜欢rana猫猫、波奇酱和超可爱的khalil喵">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Noto+Serif+SC:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+<div class="article-body">
+  <div class="article-topbar">
+  <div class="wrap">
+    <a class="back-link" href="/">← 回到首页</a>
+    <a class="blog-mark" href="/">zzmLeslie<small>CODEX PERSONALIS</small></a>
+  </div>
+</div>
+
+
+  <div class="article-wrap">
+    <header class="article-header">
+      <h1>spring-framework-core-IoC</h1>
+      <div class="article-meta">
+        <time datetime="2026-08-05">2026-08-05</time>
+        
+          <span class="sep">·</span>
+          
+            <a href="/categories/Tech/">Tech</a>
+          
+        
+        
+          <span class="sep">·</span>
+          <a href="/tags/se/">se</a>
+        
+      </div>
+      
+        <div class="article-cover"><img src="/image/spring-framework-core.png" alt="spring-framework-core-IoC"></div>
+      
+    </header>
+
+    <div class="ledger" style="margin:36px 0 44px"></div>
+
+    <div class="article-content">
+      <h3 id="spring-framework-reference为什么会如此之长，看了一些就开始鬼哭狼嚎。没办法，自己选的，还是要读。"><a href="#spring-framework-reference为什么会如此之长，看了一些就开始鬼哭狼嚎。没办法，自己选的，还是要读。" class="headerlink" title="spring-framework&#x2F;reference为什么会如此之长，看了一些就开始鬼哭狼嚎。没办法，自己选的，还是要读。"></a>spring-framework&#x2F;reference为什么会如此之长，看了一些就开始鬼哭狼嚎。没办法，自己选的，还是要读。</h3><p>以下为本人手搓的笔记(别管为什么才读这么一点，实在是很难看)</p>
+<p>在跟着官方教程写到集成测试的时候，遇到了@Autowired注解，用到的知识有IoC。于是在这里，简要补充该知识点。</p>
+<p>IoC,也就是Inversion of Controll控制反转<br>在传统的java代码中，我们人工new创建对象、管理对象，而ioc中，对象创建和管理的权限交给了spring容器（也就是之前提到的，管理所有的bean对象的spring容器）<br>当需要用一个对象的时候，通过依赖注入（DI）。如代码中的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span> </span><br><span class="line"><span class="keyword">private</span> MockMvc mvc;</span><br></pre></td></tr></table></figure>
+<p>可以委托spring在spring容器中查找已有的对象，将该对象放到现在的mvn这个变量中。这样也同时实现了对象和当前类的解耦。<br>这就是简单的IoC的表现。</p>
+<hr>
+<p>以上是简要的IoC&#x2F;DI知识，下面展开对于spring framework core tech的 IoC 部分的详细解读。</p>
+<hr>
+<h2 id="Spring-IoC-容器和-Beans-简介"><a href="#Spring-IoC-容器和-Beans-简介" class="headerlink" title="Spring IoC 容器和 Beans 简介"></a>Spring IoC 容器和 Beans 简介</h2><blockquote>
+<p>IoC 容器在创建 bean 时注入这些依赖项。从本质上讲，这个过程与 bean 本身通过直接构造类或使用诸如服务定位器模式之类的机制来控制其依赖项的实例化或定位的过程正好相反（因此得名“控制反转”）。</p>
+</blockquote>
+<p>这句话解释了IoC和传统控制模式的不同点。传统的控制模式中，类A的依赖项需要通过 直接 new 类B(“直接构造类”) 或 使用诸如服务定位器模式之类的机制 来得到依赖项。而IoC与之相反，它将控制权交给spring中的IoC容器管理。类的依赖项通过spring主动提供。<br>对象的创建、生命周期、关系都因此发生了变化。对象由IoC容器统一在程序启动时创建，在遇到依赖项时通过”注入”得到依赖项，实现了类与类之间的解耦，也实现了面向接口编程。</p>
+<blockquote>
+<p>依赖注入 (DI) 是 IoC 的一种特殊形式，它允许对象仅通过构造函数参数、工厂方法参数或在对象实例构造或从工厂方法返回后设置的属性来定义其依赖项（即它们所操作的其他对象）。</p>
+</blockquote>
+<p>DI，即dependency injection 是IoC最常见的依赖提供的方式。文中提到的三种DI方式。<br>第一种是，constructor arguments injection，下面举一个例子来说明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> UserRepository userRepo;</span><br><span class="line">    <span class="comment">// 通过构造函数声明依赖</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">OrderService</span><span class="params">(UserRepository userRepo)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.userRepo = userRepo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种是，setter&#x2F;property injection:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepo;</span><br><span class="line">    <span class="comment">// 对象构造完后，通过 Setter 注入</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUserRepository</span><span class="params">(UserRepository userRepo)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.userRepo = userRepo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第三种是，factory method injection:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> OrderService <span class="title function_">orderService</span><span class="params">(UserRepository userRepo)</span> &#123; <span class="comment">// 参数由容器注入</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">OrderService</span>(userRepo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>org.springframework.beans 和 org.springframework.context 这两个包是 Spring 框架 IoC 容器的基础。<br>BeanFactory 接口提供了一种高级的配置机制，能够管理任何类型的对象。ApplicationContext 是 BeanFactory 的子接口。它在此基础上增加了：与 Spring AOP 特性的更简便集成、消息资源处理（用于国际化）、事件发布机制、针对应用层的特定上下文（例如用于 Web 应用程序中的WebApplicationContext）。<br>简而言之，BeanFactory 提供了配置框架和基本功能，而 ApplicationContext 则添加了更多针对企业级应用的功能。ApplicationContext 是 BeanFactory 的完全超集.</p>
+</blockquote>
+<p>这里，我们大致的了解到spring框架的两个包.接口BeanFactory更适用于轻量化的java项目，企业级一般用到的是beanfactory的扩展ApplicationContext，也是实际的spring”管家”,这个我们在HelloController的commandLineRunner中学到了基本的用法之一——可以getBean.</p>
+<blockquote>
+<p>在 Spring 中，构成应用程序骨架并由 Spring IoC 容器管理的对象被称为 Bean。Bean 就是一个由 Spring IoC 容器进行实例化、组装和管理的对象。除此之外，Bean 与你应用程序中的许多普通对象没有任何区别。Beans 以及它们之间的依赖关系，都反映在容器所使用的配置元数据（Configuration Metadata）中。</p>
+</blockquote>
+<p>这里要补充的一个知识点————配置元数据。在下一章中有具体的定义。<br>这段话解释了一个很重要的spring概念————Bean是什么。Bean实际上就是java对象，只不过在IoC中它有了一个别称Bean.</p>
+<hr>
+<h2 id="容器概述"><a href="#容器概述" class="headerlink" title="容器概述"></a>容器概述</h2><blockquote>
+<p>配置元数据可以表示为带注解的组件类、带有工厂方法的配置类，或者外部 XML 文件或 Groovy 脚本。</p>
+</blockquote>
+<p>这句话解释了配置元数据（Configuration Metadata）的定义:@Component 等注解、xml&#x2F;yml配置文件等</p>
+<blockquote>
+<p>Spring 核心部分提供了 ApplicationContext 接口的几种实现。<br>在独立应用（Stand-alone applications）中，常见的做法是创建一个 AnnotationConfigApplicationContext 或 ClassPathXmlApplicationContext 的实例。</p>
+</blockquote>
+<p>独立应用阶段需要手动创建多个ApplicationContext实例</p>
+<blockquote>
+<p>在大多数应用场景中，并不需要显式（手动）编写用户代码来实例化一个或多个 Spring IoC 容器实例。例如，在传统的 Web 应用场景中，只需在应用的 web.xml 文件中配置几行简单的样板化 Web 描述符 XML 即可（详见《Web 应用中便捷的 ApplicationContext 实例化》一节）。</p>
+</blockquote>
+<p>web时代需要配置简单的xml</p>
+<blockquote>
+<p>而在 Spring Boot 场景下，应用上下文（ApplicationContext）会根据通用的设置约定为你隐式地完成引导启动（Bootstrap）。</p>
+</blockquote>
+<p>springboot场景下就只用ApplicationContext解决所有配置。</p>
+<blockquote>
+<p>下图展示了 Spring 工作方式的高层级视图。你的业务类（Application Classes）与配置元数据（Configuration Metadata）相结合，当 ApplicationContext 被创建并初始化之后，你就获得了一个配置完整且可执行的系统或应用程序。</p>
+</blockquote>
+<p>以下为手绘图：</p>
+<pre><code class="highlight mermaid">flowchart TB
+    subgraph Input[&quot;输入&quot;]
+        A[&quot;业务类（POJOs）&quot;]
+        B[&quot;配置元数据&quot;]
+    end
+
+    subgraph Spring[&quot;Spring IoC 容器&quot;]
+        C[&quot;ApplicationContext&quot;]
+        C1[&quot;实例化 Bean&quot;]
+        C2[&quot;依赖注入（DI）&quot;]
+        C3[&quot;AOP&quot;]
+    end
+
+    subgraph Output[&quot;输出&quot;]
+        D[&quot;可运行的应用程序&quot;]
+    end
+
+    A --&gt; C
+    B --&gt; C
+
+    C --&gt; C1
+    C --&gt; C2
+    C --&gt; C3
+
+    C --&gt; D</code></pre>
+
+<p>结合图一起看，spring容器（也就是ApplicationContext）自动化完成了配置过程，配置元数据和设计好的业务类，经过spring 容器，得到一个配置完整的可执行应用程序。在传统的spring mvc和现在的springboot中用的都是这个流程。</p>
+<blockquote>
+<p>Spring IoC 容器本身与配置元数据的实际写入格式完全解耦。如今，许多开发人员选择 基于 Java 的Spring 应用程序配置：</p>
+</blockquote>
+<blockquote>
+<p>基于注解的配置：在应用程序的组件类中使用基于注解的配置元数据来定义 bean。</p>
+</blockquote>
+<blockquote>
+<p>基于 Java 的配置：使用基于 Java 的配置类定义应用程序类外部的 bean。要使用这些功能，请参阅 <code>@Configuration</code> @Configuration、<code> @Configuration</code> @Bean、<code>@ Configuration</code>@Import和@DependsOn<code>@Configuration</code> 注解。</p>
+</blockquote>
+<p>这里交代了配置元数据的两种常用的编写格式。一开始可能会觉得有点疑惑。<br>其实，选择 基于annotation的配置 还是 基于 java 的配置，取决于 需要注册为bean 的类是否可以改动源码————是自己实现的，还是第三方库的。<br>自己实现的类，用 基于注解的配置 实现，在该类上一行写上@Service @Component等注解即可，举个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 因为这是你自己写的类，你可以直接在类名上方加上 @Service 注解</span></span><br><span class="line"><span class="comment">// 2. Spring 启动时扫描到这个类，会自动执行：new UserService()，并将其托管为 Bean</span></span><br><span class="line"><span class="meta">@Service</span> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doSomething</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 业务代码</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而基于第三方库的对象，则需要使用 基于java的配置 实现，需要写一个专门的配置类@Configuration ,在@Bean注解的类中返回 new 出来的对象，注册为Bean，同样举个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="comment">// 假设这是第三方 Jar 包中的类（比如 RestTemplate），你无法修改 RestTemplate 的源码</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span> <span class="comment">// 声明这是一个专门用于定义 Bean 的配置类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. @Bean 告诉 Spring：请执行 restTemplate() 这个方法</span></span><br><span class="line">    <span class="comment">// 2. Spring 会把该方法返回的 RestTemplate 对象放入 IoC 容器中</span></span><br><span class="line">    <span class="meta">@Bean</span> </span><br><span class="line">    <span class="keyword">public</span> RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">RestTemplate</span> <span class="variable">restTemplate</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">        <span class="comment">// 你可以在这里调用第三方对象的方法，进行初始化设置</span></span><br><span class="line">        <span class="keyword">return</span> restTemplate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Spring 配置至少包含一个，且通常包含多个必须由容器管理的 Bean 定义。Java 配置通常在带有 @Configuration 注解的类中使用带有 @Bean 注解的方法，其中每个方法都对应一条 Bean 定义。</p>
+</blockquote>
+<p>和上面已经讲的 基于java的配置同样的方式。一个java配置类中可以用@Bean注解注册相应的对象到IoC容器中。</p>
+<blockquote>
+<p>这些 Bean 定义对应于构成您应用程序的实际对象。通常，您会定义服务层对象、持久层对象（例如 Repository 或数据访问对象 DAOs）、表示层对象（例如 Web Controller）、基础设施对象（例如 JPA 的 EntityManagerFactory、JMS 队列等）。<br>通常情况下，人们不会在容器中配置细粒度的领域对象（原文是：fine-grained domain objects），因为创建和加载领域对象通常是 Repository（仓库）和业务逻辑的职责。</p>
+</blockquote>
+<p>这两段话明确了，哪些组成部分该被注册为Bean，哪些不该。<br>该注册为Bean的，是基本的业务逻辑涉及到的固定模块，而不该被注册的，是会产生变动的对象，比如用户、订单等。在这里列举的应该被注册的有：Controller,Repository,Service等等，也验证了我们在之前写Controller的时候注册了Bean</p>
+<blockquote>
+<p>XML 作为外部配置领域专用语言（DSL,Domain Specific Language） 。基于 XML 的配置元数据将这些 Bean 配置为顶层 <beans/> 元素内部的 <bean/> 元素。以下示例展示了基于 XML 的配置元数据的基本结构：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">		https://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;...&quot;</span> <span class="attr">class</span>=<span class="string">&quot;...&quot;</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- collaborators and configuration for this bean go here --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;...&quot;</span> <span class="attr">class</span>=<span class="string">&quot;...&quot;</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- collaborators and configuration for this bean go here --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- more bean definitions go here --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里介绍了spring中xml配置Bean的语法，不展开讲解。</p>
+<blockquote>
+<p>要实例化一个容器，需要向 ClassPathXmlApplicationContext 的构造函数提供 XML 资源文件的一个或多个位置路径，这使得容器能够从各种外部资源（例如本地文件系统、Java CLASSPATH 等）加载配置元数据。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;services.xml&quot;</span>, <span class="string">&quot;daos.xml&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里写到的是前面提到的“独立应用阶段 需要手动创建多个ApplicationContext实例”，需要手写多个 ApplicationContext 的实例。<br>这行代码的意思是让ClassPathXmlApplicationContext根据CLASSPATH找到对应的services.xml和daos.xml，参照这两个配置元数据注册相应的Bean到IoC容器中。<br>（CLASSPATH大家应该都很熟悉喵，java项目编译之后的.class文件和配置文件都在一个根目录下，这个根目录的路径就是CLASSPATH）</p>
+<blockquote>
+<p>NOTE:在你了解了 Spring 的 IoC 容器之后，你可能希望进一步了解 Spring 的 Resource（资源）抽象，它提供了一种便捷的机制，可以通过 URI 语法定义的位置来读取 InputStream（输入流）。特别地，资源路径被用于构建应用上下文，这在《应用上下文与资源路径》章节中有详细描述。</p>
+</blockquote>
+<p>这里不展开Rrc抽象<br>来看两段XML</p>
+<blockquote>
+<p>以下示例展示了服务层对象（services.xml）的配置文件：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">		https://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- services --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;petStore&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.samples.jpetstore.services.PetStoreServiceImpl&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;accountDao&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;accountDao&quot;</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;itemDao&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;itemDao&quot;</span>/&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- more bean definitions for services go here --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以下示例展示了数据访问对象（daos.xml）的配置文件：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">		https://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;accountDao&quot;</span></span></span><br><span class="line"><span class="tag">		<span class="attr">class</span>=<span class="string">&quot;org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao&quot;</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;itemDao&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.samples.jpetstore.dao.jpa.JpaItemDao&quot;</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- more bean definitions for data access objects go here --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在前面的示例中，服务层由 PetStoreServiceImpl 类以及两个类型分别为 JpaAccountDao 和 JpaItemDao 的数据访问对象（基于 JPA 对象关系映射标准）组成。<property> 标签中的 name 属性指的是 JavaBean 的属性名称，而 ref 属性则指的是另一个 Bean 定义的名称。id 与 ref 属性之间的这种关联，表达了互相协作的对象之间的依赖关系。有关配置对象依赖项的详细信息，请参阅“依赖关系”（Dependencies）章节。</p>
+</blockquote>
+<p>这里最有趣的就是DI的相关语法：<property name="" ref=""> ,这里的ref意思是从IoC容器中查找Bean,并注入依赖。这里实际上用到的是前面说的 DI 的第二种方式：property injection</p>
+<blockquote>
+<p>让 Bean 定义跨越多个 XML 文件是非常有用的。通常，每个独立的 XML 配置文件代表你架构中的一个逻辑层或一个模块。<br>你可以使用 ClassPathXmlApplicationContext 构造函数从多个 XML 碎片中加载 Bean 定义。如上一节所示，该构造函数可以接收多个 Resource 位置。或者，使用一个或多个 <import/> 元素从另一个或多个文件中加载 Bean 定义。以下示例展示了如何做到这一点：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">&quot;services.xml&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">&quot;resources/messageSource.xml&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的文字，介绍了两种 合并不同的xml加载出来的Bean 的方式。<br>第一种是，“使用 ClassPathXmlApplicationContext 构造函数”一次加载多个XML；这个过程是在代码启动的时候就实现了的。<br>第二种是，在xml中使用import语法从其他的xml中加载Bean,如上面这个例子所示。一般会写一个主xml，把子xml全部import进来，这样只需要加载该文件即可。</p>
+<blockquote>
+<p>在前面的示例中，外部 Bean 定义是从 services.xml 和 messageSource.xml 文件中加载的。所有的位置路径都是相对于执行导入的那个定义文件而言的。因此，services.xml 必须与执行导入的文件处于同一个目录或 Classpath 位置；而 messageSource.xml 则必须处于执行导入的文件所在位置之下的 resources 目录中。正如你所看到的，开头的斜杠 &#x2F; 会被忽略，但鉴于这些路径是相对路径，最好完全不要使用斜杠。根据 Spring Schema 的规定，被导入的文件内容（包括顶层的 <beans/> 元素）必须是合法的 XML Bean 定义。</p>
+</blockquote>
+<p>以上是一些xml import 的规则</p>
+<blockquote>
+<p>NOTE:跨目录引用父级中的文件（使用相对路径 “..&#x2F;“）是可能的，但不推荐这样做。 这样做会创造对当前应用程序外部文件的依赖。特别地，这种引用极不推荐用于 classpath: URL 中（例如 classpath:..&#x2F;services.xml）。因为在运行时解析过程中，程序会选择“最邻近”的类路径根目录（classpath root），然后查找其父目录。而类路径配置的变更可能会导致程序选择到一个完全不同的、错误的目录。</p>
+</blockquote>
+<p>这段NOTE强调的是resource的路径怎么写的问题，强调不推荐写”..&#x2F;“相对路径，因为打包等过程中，类路径配置可能会变更，CLASSPATH结构变更会带来实际选定的文件错误的问题。</p>
+<blockquote>
+<p>NOTE:你可以随时使用全限定资源位置来替代相对路径：例如 file:C:&#x2F;config&#x2F;services.xml 或 classpath:&#x2F;config&#x2F;services.xml。但是请注意，这样做会将应用程序的配置与具体的绝对路径硬编码（耦合）在一起。通常更推荐的做法是为这类绝对路径保留一层间接引用（indirection）——例如通过 “${…}” 占位符，在运行时根据 JVM 系统属性（System Properties）来动态解析路径。</p>
+</blockquote>
+<p>这段NOTE强调的是绝对路径硬编码的强耦合性（当然也是不推荐了）移植到其他的环境下，会带来路径不匹配的问题。官方推荐的做法是，写动态占位的格式”${…}” 。</p>
+<blockquote>
+<p>命名空间本身就提供了导入指令（import directive）这一特性。 除了纯粹的 Bean 定义之外，Spring 提供的众多 XML 命名空间中还包含了更多丰富的配置特性——例如 context 和 util 命名空间。</p>
+</blockquote>
+<p>这里拓展了xml配置中出来Bean注册的一些其他内容，有context 和 util namespaces</p>
+<blockquote>
+<p>使用容器: ApplicationContext（应用上下文）是一个高级工厂的接口，能够维护不同 Bean 及其依赖项的注册表。通过使用 T getBean(String name, Class<T> requiredType) 方法，你可以检索（获取）你的 Bean 实例。ApplicationContext 允许你读取 Bean 定义并访问它们，如下例所示：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create and configure beans</span></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;services.xml&quot;</span>, <span class="string">&quot;daos.xml&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// retrieve configured instance</span></span><br><span class="line"><span class="type">PetStoreService</span> <span class="variable">service</span> <span class="operator">=</span> context.getBean(<span class="string">&quot;petStore&quot;</span>, PetStoreService.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// use configured instance</span></span><br><span class="line">List&lt;String&gt; userList = service.getUsernameList();</span><br></pre></td></tr></table></figure>
+<p>这里详细讲解了Bean实例（也就是在这个类中的依赖项）是如何找到并注入的。这里依然是以传统的spring语法为例。第一行，是前面讲过的根据xml文件注册Bean到ApplicationContext 中。第二行，使用getBean()找到容器中的PetStoreService，并赋给变量 service 。第三行，是PetStoreService的一些使用。<br>这里，官方推荐的getBean方法的写法是：getBean(String name, Class<T> requiredType)，同时提供Bean的name和class，这样更为安全。<br>因为这里举的例子是传统的spring语法的，而现在的springboot可以直接用过@Autowired注入依赖，正如本文开头写到的。于是上述的代码可以用两行搞定：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> PetStoreService service;</span><br></pre></td></tr></table></figure>
+<p>(赞美spring boot)</p>
+<blockquote>
+<p>对于 Groovy 配置，启动过程非常相似。它使用了一个不同的、可识别 Groovy 的上下文实现类（但该类同时也理解 XML Bean 定义）。以下示例展示了 Groovy 配置：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GenericGroovyApplicationContext</span>(<span class="string">&quot;services.groovy&quot;</span>, <span class="string">&quot;daos.groovy&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>这里提供的另外一种配置文件groovy的Bean注册，可以很清楚的看到不管底层配置文件使用xml还是groovy写的，都可以启动容器，是一个很完美的容器api和配置文件解耦的示例！</p>
+<blockquote>
+<p>最灵活的变体是 GenericApplicationContext 结合读取器委托对象（reader delegates）——例如与用于 XML 文件的 XmlBeanDefinitionReader 配合使用，如下例所示：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">GenericApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GenericApplicationContext</span>();</span><br><span class="line"><span class="comment">// 1. 用 XML 读取器装载数据库相关 Bean</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">XmlBeanDefinitionReader</span>(context).loadBeanDefinitions(<span class="string">&quot;services.xml&quot;</span>, <span class="string">&quot;daos.xml&quot;</span>);</span><br><span class="line"><span class="comment">// 2. 用 Groovy 读取器装载动态脚本 Bean</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">GroovyBeanDefinitionReader</span>(context).loadBeanDefinitions(<span class="string">&quot;services.groovy&quot;</span>);</span><br><span class="line"><span class="comment">// 3. 必须显式调用 refresh() 手动刷新容器，完成 Bean 的实例化与依赖注入</span></span><br><span class="line">context.refresh();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>你可以在同一个 ApplicationContext 上混合搭配使用这些读取器委托对象，从而从多样化的配置源中读取 Bean 定义。随后你可以使用 getBean 来检索你的 Bean 实例。ApplicationContext 接口还提供了一些用于检索 Bean 的其他方法，</p>
+</blockquote>
+<p>看完前面的创建容器时解析xml&#x2F;groovy，我们可以发现一件事情————ClassPathXmlApplicationContext只能解析xml，GenericGroovyApplicationContext只解析groovy,这样很不灵活。<br>于是，我们使用另一种ApplicationContext来创建容器，也就是这一段提到的GenericApplicationContext。GenericApplicationContext与之前两种ApplcationContext不同的地方是，它仅负责维护Bean的注册、生命周期、依赖注入，而不做解析xml&#x2F;groovy等配置文件的事情。解析工作通过 reader delegates机制委托给 XmlBeanDefinitionReader（解析xml）&#x2F; GroovyBeanDefinitionReader(解析Groovy)完成。，因此更为灵活。</p>
+<blockquote>
+<p>但在理想情况下，你的应用程序代码绝对不应该使用它们。事实上，你的应用代码中根本不应该有对 getBean() 方法的任何调用，从而对 Spring 的 API 做到完全零依赖。例如，Spring 与 Web 框架的整合可以为各种 Web 框架组件（如控制器和 JSF 托管的 Bean）提供依赖注入，让你只需通过元数据（例如自动装配注解）即可声明对特定 Bean 的依赖。</p>
+</blockquote>
+<p>这里其实就是说，现在的写法@Autowired 依赖注入是耦合度更低，更合适的一种写法，而传统的getBean()依旧包含 Spring 框架的 API 调用，不推荐使用。</p>
+<h3 id="关于IoC的前两章就读完了，我们对于Bean-IoC-ApplicationContext-等概念也有了初步的理解。这一个知识点完结撒花-★-°-☆-￣▽￣-°★-。"><a href="#关于IoC的前两章就读完了，我们对于Bean-IoC-ApplicationContext-等概念也有了初步的理解。这一个知识点完结撒花-★-°-☆-￣▽￣-°★-。" class="headerlink" title="关于IoC的前两章就读完了，我们对于Bean IoC ApplicationContext 等概念也有了初步的理解。这一个知识点完结撒花*★,°:.☆(￣▽￣)&#x2F;$:.°★* 。"></a>关于IoC的前两章就读完了，我们对于Bean IoC ApplicationContext 等概念也有了初步的理解。这一个知识点完结撒花*★,°<em>:.☆(￣▽￣)&#x2F;$:</em>.°★* 。</h3>
+    </div>
+
+    
+    <nav class="post-nav">
+      <span></span>
+      
+        <a class="post-nav-next" href="/2026/07/29/%E4%BE%9D%E6%97%A7%E5%8F%A8%E5%8F%A8/">依旧叨叨 →</a>
+      
+    </nav>
+    
+
+    
+      <section id="comments" class="comments-block">
+  <div class="ledger"></div>
+  <div class="comments-headline"><span class="latin">Commentarii</span> · 评论</div>
+  <script src="https://giscus.app/client.js"
+    data-repo="zzmleslie/zzmleslie.github.io"
+    data-repo-id="R_kgDORP80dA"
+    data-category="Ideas"
+    data-category-id="DIC_kwDORP80dM4C8joU"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="dark"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async>
+  </script>
+</section>
+
+    
+  </div>
+
+  <footer class="site-footer">
+  <div class="ledger" style="margin:0 0 28px"></div>
+  <p>&copy; 2026 Zzm&#39;s Blog · <span class="latin">Codex Personalis</span></p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var cdn = "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js";
+  var themeName = "dark";
+
+  function extractCode(figure) {
+    var codeCell = figure.querySelector('.code');
+    if (codeCell) return codeCell.textContent || '';
+    var pre = figure.querySelector('pre');
+    return pre ? (pre.textContent || '') : (figure.textContent || '');
+  }
+
+  function upgradeBlocks() {
+    var nodes = [];
+
+    document.querySelectorAll('figure.highlight.mermaid').forEach(function (figure) {
+      var text = extractCode(figure).replace(/\n$/, '');
+      var pre = document.createElement('pre');
+      pre.className = 'mermaid';
+      pre.textContent = text;
+      figure.parentNode.replaceChild(pre, figure);
+      nodes.push(pre);
+    });
+
+    // highlight.exclude_languages: <pre><code class="highlight mermaid">...</code></pre>
+    document.querySelectorAll('pre code.highlight.mermaid, pre code.language-mermaid').forEach(function (code) {
+      var pre = code.parentElement;
+      if (!pre || pre.classList.contains('mermaid')) return;
+      var wrap = document.createElement('pre');
+      wrap.className = 'mermaid';
+      wrap.textContent = code.textContent || '';
+      pre.parentNode.replaceChild(wrap, pre);
+      nodes.push(wrap);
+    });
+
+    document.querySelectorAll('pre.mermaid').forEach(function (pre) {
+      if (nodes.indexOf(pre) === -1) nodes.push(pre);
+    });
+
+    return nodes;
+  }
+
+  function boot() {
+    if (!window.mermaid) return;
+    try {
+      window.mermaid.initialize({ startOnLoad: false, theme: themeName });
+      var nodes = upgradeBlocks();
+      if (nodes.length) {
+        window.mermaid.run({ nodes: nodes });
+      }
+    } catch (err) {
+      if (typeof console !== 'undefined' && console.error) {
+        console.error('[mermaid]', err);
+      }
+    }
+  }
+
+  var s = document.createElement('script');
+  s.src = cdn;
+  s.async = true;
+  s.onload = boot;
+  s.onerror = function () { /* keep highlight DOM */ };
+  document.body.appendChild(s);
+})();
+</script>
+
+
+</body>
+</html>

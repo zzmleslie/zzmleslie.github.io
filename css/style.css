@@ -371,6 +371,15 @@ a{color:inherit}
 .article-content .highlight .attr,.article-content .highlight .attribute,.article-content .highlight .variable{color:var(--parchment-2)}
 .article-content .highlight .meta,.article-content .highlight .deletion{color:var(--paper-dim)}
 
+/* Mermaid 图表（CDN 渲染后） */
+.article-content .mermaid{
+  display:flex;justify-content:center;align-items:center;
+  margin:1.8em 0;padding:12px 0;
+  overflow-x:auto;background:transparent;border:none;
+  font-family:inherit;font-size:inherit;line-height:normal;
+}
+.article-content .mermaid svg{max-width:100%;height:auto}
+
 /* 上一篇 / 下一篇 */
 .post-nav{display:flex;justify-content:space-between;gap:20px;margin-top:56px;font-family:var(--latin);font-style:italic;font-size:14px}
 .post-nav a{color:var(--paper-dim);text-decoration:none;transition:color .3s;max-width:46%}

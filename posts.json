@@ -1,5 +1,17 @@
 [
   {
+    "title": "spring-framework-core-IoC",
+    "date": "2026-08-05",
+    "path": "2026/08/05/spring-framework-core-IoC/",
+    "excerpt": "spring-framework/reference为什么会如此之长，看了一些就开始鬼哭狼嚎。没办法，自己选的，还是要读。 以下为本人手搓的笔记(别管为什么才读这么一点，实在是很难看) 在跟着官方教程写到集成测试的时候，遇到了@Autowi",
+    "tags": [
+      "se"
+    ],
+    "categories": [
+      "Tech"
+    ]
+  },
+  {
     "title": "依旧叨叨",
     "date": "2026-07-29",
     "path": "2026/07/29/依旧叨叨/",
