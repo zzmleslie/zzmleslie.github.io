@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESTful-web · Zzm&#39;s Blog</title>
+<meta name="description" content="喜欢rana猫猫、波奇酱和超可爱的khalil喵">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Noto+Serif+SC:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+<div class="article-body">
+  <div class="article-topbar">
+  <div class="wrap">
+    <a class="back-link" href="/">← 回到首页</a>
+    <a class="blog-mark" href="/">zzmLeslie<small>CODEX PERSONALIS</small></a>
+  </div>
+</div>
+
+
+  <div class="article-wrap">
+    <header class="article-header">
+      <h1>RESTful-web</h1>
+      <div class="article-meta">
+        <time datetime="2026-08-09">2026-08-09</time>
+        
+          <span class="sep">·</span>
+          
+            <a href="/categories/Tech/">Tech</a>
+          
+        
+        
+          <span class="sep">·</span>
+          <a href="/tags/spring/">spring</a>
+        
+      </div>
+      
+    </header>
+
+    <div class="ledger" style="margin:36px 0 44px"></div>
+
+    <div class="article-content">
+      <p>spring guides里面有这样一段话：</p>
+<blockquote>
+<p>传统 MVC 控制器与前面提到的 RESTful Web 服务控制器之间的一个关键区别在于 HTTP 响应体的创建方式。传统 MVC 控制器依赖view技术在服务器端将问候数据渲染成 HTML，而 RESTful Web 服务控制器则直接填充并返回一个Greeting对象。该对象的数据将以 JSON 格式直接写入 HTTP 响应。</p>
+</blockquote>
+<hr>
+<p>之前写过 传统 MVC controller 处理HTTP请求的一小段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GreetingController</span>&#123;</span><br><span class="line">    <span class="comment">//HTTP GET 请求映射</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/greeting&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">greeting</span><span class="params">(</span></span><br><span class="line"><span class="params">        <span class="meta">@RequestParam</span> </span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">        //请求参数name的绑定</span></span><br><span class="line"><span class="params">        (name=<span class="string">&quot;name&quot;</span>, required=<span class="literal">false</span>, defaultValue=<span class="string">&quot;World&quot;</span>)</span> </span><br><span class="line">        <span class="comment">//name=&quot;name&quot;是专门匹配？name=XXXX这个的，required=false表示这个name不是必要的，保证了这个值匹配不到时候不会报错</span></span><br><span class="line"></span><br><span class="line">        String name, Model model)&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Model 是什么？</span></span><br><span class="line"><span class="comment">         * Model是controller和View传递数据的中介</span></span><br><span class="line"><span class="comment">         * 通过在model中写入KV对，我们可以用view引擎，拿model的内容参与html页面渲染，实现请求体参数数据在响应体页面的展示</span></span><br><span class="line"><span class="comment">         * model.addAttribute（&quot;key&quot;,value）就是在做这个</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">            model.addAttribute(<span class="string">&quot;name&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;greeting&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传统MVC控制器使用的是@Controller + Model的形式，数据传递的链路大致为：HTTP请求体 -&gt; @RequestParam（解析url中参数，并绑定）-&gt; (写入)Model -&gt;返回view名称 -&gt; 服务器使用view引擎，拿Model对html模板进行填充，形成完整html -&gt; 服务端渲染html，呈现</p>
+<p>这种架构的弊处是，前后端不分离，耦合性强，而且规定了http响应体返回的格式是html</p>
+<hr>
+<p>而这里我们学到了新的架构——RESTful ,它使用的是@RestController（@COntroller+@ResponseBody的合体）</p>
+<p>举同样的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GreetingController</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">template</span> <span class="operator">=</span> <span class="string">&quot;Hello, %s!&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">AtomicLong</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicLong</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将HTTP GET请求映射到greeting()方法</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/greeting&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Greeting <span class="title function_">greeting</span><span class="params">(<span class="meta">@RequestParam(defaultValue = &quot;World&quot;)</span> String name)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//具体java对象的实例化 Greeting（id，content）</span></span><br><span class="line">        <span class="comment">//responseBody是JackSON的形式返回给前端。由前端决定如何处理JSON文件</span></span><br><span class="line">        <span class="comment">//此处返回的JSON文件格式如下：</span></span><br><span class="line">        <span class="comment">//&#123;</span></span><br><span class="line">        <span class="comment">//    &quot;id&quot;: 1,</span></span><br><span class="line">        <span class="comment">//    &quot;content&quot;: &quot;Hello, User!&quot;</span></span><br><span class="line">        <span class="comment">//&#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Greeting</span>(counter.incrementAndGet(), </span><br><span class="line">        template.formatted(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>RESTful 架构服务的对象不是发起http请求的浏览器，而变成了前端（Vue&#x2F;React之类）以及移动端等等。所以响应体的内容不再是html，而是结构化的JSON数据，HTTP GET响应 大致的数据链路为：</p>
+<p>HTTP请求体 -&gt;<br>内嵌tomcat服务器 -&gt;<br>dispatchedServlet -&gt;<br>处理对应的getmapping的 RestController（处理数据，解析匹配参数）-&gt;<br>返回java对象 -&gt;<br>（spring自动转成json格式） -&gt;<br>交给前端处理JSON数据</p>
+<p>RESTful架构实现了前后端的分离，因此一个后端可以服务于多个不同的前端架构，只需暴露JSON，后端开发也只需要注重业务逻辑处理于api设计而不用考虑html等如何写，使得分工明确，这也是现代开发更倾向于RESTful的原因。</p>
+<hr>
+<p>和之前一样的思路，我们做一个前端发出POST，观察后端REST中数据是如何流动的<br>我们在Controller中加上PostMapping:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * POST：创建客户</span></span><br><span class="line"><span class="comment"> * 浏览器/前端发 JSON → <span class="doctag">@RequestBody</span> 转成 Customer → save → 返回带 id 的对象（再变 JSON）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//只处理/customers的POST请求</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/customers&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Customer <span class="title function_">createCustomer</span><span class="params">(<span class="meta">@RequestBody</span> Customer customer)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> repository.save(customer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了做自动测试，我们在&#x2F;test中写一个REST端点测试,表示我们从前端post一个json文件给服务器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">TestPost</span><span class="params">()</span>&#123;</span><br><span class="line">    client.post()</span><br><span class="line">        .uri(<span class="string">&quot;/customers&quot;</span>)</span><br><span class="line">        .contentType(MediaType.APPLICATION_JSON)</span><br><span class="line">        .body(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            &#123;</span></span><br><span class="line"><span class="string">                &quot;firstName&quot;: &quot;Alice&quot;,</span></span><br><span class="line"><span class="string">                &quot;lastName&quot;: &quot;Smith&quot;</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>)</span><br><span class="line">        .exchangeSuccessfully()</span><br><span class="line">        .expectBody(Customer.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不用自动化测试文件，也可以用powershell中指令代替,效果也是一样的。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">Invoke-RestMethod</span> <span class="literal">-Method</span> Post `</span><br><span class="line">  <span class="literal">-Uri</span> http://localhost:<span class="number">8081</span>/customers `</span><br><span class="line">  <span class="literal">-ContentType</span> <span class="string">&quot;application/json&quot;</span> `</span><br><span class="line">  <span class="literal">-Body</span> <span class="string">&#x27;&#123;&quot;firstName&quot;:&quot;Alice&quot;,&quot;lastName&quot;:&quot;Smith&quot;&#125;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>于是，我们可以知道数据流动链路是这样：</p>
+<p>测试文件发起POST -&gt;<br>内嵌Tomcat服务器 -&gt;<br>DispatchedServlet查找有@POSTMapping映射的controller -&gt;<br>CustomerController -&gt;<br>执行具体createCustomer(@RequestBody Customer customer)方法,从请求体中解析出lastname firstname ，生成id创建customer -&gt;<br>jpa repository 的 save()写入h2数据库 -&gt;<br>返回customer -&gt;<br>spring转成json格式，写入http响应 -&gt;<br>测试捕获结果，检验是否与expectBody格式匹配。</p>
+<p>这样我们就从传统mvc思路出发,搭建了新的RESTful web!</p>
+<hr>
+
+    </div>
+
+    
+    <nav class="post-nav">
+      <span></span>
+      
+        <a class="post-nav-next" href="/2026/08/07/aphasia/">Aphasia →</a>
+      
+    </nav>
+    
+
+    
+      <section id="comments" class="comments-block">
+  <div class="ledger"></div>
+  <div class="comments-headline"><span class="latin">Commentarii</span> · 评论</div>
+  <script src="https://giscus.app/client.js"
+    data-repo="zzmleslie/zzmleslie.github.io"
+    data-repo-id="R_kgDORP80dA"
+    data-category="Ideas"
+    data-category-id="DIC_kwDORP80dM4C8joU"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="dark"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async>
+  </script>
+</section>
+
+    
+  </div>
+
+  <footer class="site-footer">
+  <div class="ledger" style="margin:0 0 28px"></div>
+  <p>&copy; 2026 Zzm&#39;s Blog · <span class="latin">Codex Personalis</span></p>
+</footer>
+
+</div>
+
+
+</body>
+</html>

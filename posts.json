@@ -1,5 +1,17 @@
 [
   {
+    "title": "RESTful-web",
+    "date": "2026-08-09",
+    "path": "2026/08/09/RESTful-web/",
+    "excerpt": "spring guides里面有这样一段话： 传统 MVC 控制器与前面提到的 RESTful Web 服务控制器之间的一个关键区别在于 HTTP 响应体的创建方式。传统 MVC 控制器依赖view技术在服务器端将问候数据渲染成 HTML，",
+    "tags": [
+      "spring"
+    ],
+    "categories": [
+      "Tech"
+    ]
+  },
+  {
     "title": "Aphasia",
     "date": "2026-08-07",
     "path": "2026/08/07/aphasia/",
@@ -17,7 +29,7 @@
     "path": "2026/08/05/spring-framework-core-IoC/",
     "excerpt": "spring-framework/reference为什么会如此之长，看了一些就开始鬼哭狼嚎。没办法，自己选的，还是要读。 以下为本人手搓的笔记(别管为什么才读这么一点，实在是很难看) 在跟着官方教程写到集成测试的时候，遇到了@Autowi",
     "tags": [
-      "se"
+      "spring"
     ],
     "categories": [
       "Tech"
