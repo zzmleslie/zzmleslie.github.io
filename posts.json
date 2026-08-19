@@ -1,5 +1,17 @@
 [
   {
+    "title": "DispatcherServlet 简单介绍",
+    "date": "2026-08-19",
+    "path": "2026/08/19/DispatcherServlet简单介绍/",
+    "excerpt": "继续缝缝补补 原文 An Intro to the Spring DispatcherServlet Introduction 不展开 DispatcherServlet Request Processing 原文：Essentially,",
+    "tags": [
+      "spring"
+    ],
+    "categories": [
+      "Tech"
+    ]
+  },
+  {
     "title": "意义也需要假日",
     "date": "2026-08-12",
     "path": "2026/08/12/意义也需要假日/",

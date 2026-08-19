@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DispatcherServlet 简单介绍 · Zzm&#39;s Blog</title>
+<meta name="description" content="喜欢rana猫猫、波奇酱和超可爱的khalil喵">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Noto+Serif+SC:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+<div class="article-body">
+  <div class="article-topbar">
+  <div class="wrap">
+    <a class="back-link" href="/">← 回到首页</a>
+    <a class="blog-mark" href="/">zzmLeslie<small>CODEX PERSONALIS</small></a>
+  </div>
+</div>
+
+
+  <div class="article-wrap">
+    <header class="article-header">
+      <h1>DispatcherServlet 简单介绍</h1>
+      <div class="article-meta">
+        <time datetime="2026-08-19">2026-08-19</time>
+        
+          <span class="sep">·</span>
+          
+            <a href="/categories/Tech/">Tech</a>
+          
+        
+        
+          <span class="sep">·</span>
+          <a href="/tags/spring/">spring</a>
+        
+      </div>
+      
+    </header>
+
+    <div class="ledger" style="margin:36px 0 44px"></div>
+
+    <div class="article-content">
+      <p>继续缝缝补补</p>
+<blockquote>
+<p>原文 An Intro to the Spring DispatcherServlet </p>
+</blockquote>
+<ol>
+<li><p>Introduction 不展开</p>
+</li>
+<li><p>DispatcherServlet Request Processing</p>
+<blockquote>
+<p>原文：Essentially, a DispatcherServlet handles an incoming HttpRequest, delegates the request, and processes that request according to the configured HandlerAdapter interfaces that have been implemented within the Spring application along with accompanying annotations specifying handlers, controller endpoints, and response objects.<br>Let’s get more in-depth about how a DispatcherServlet processes a component:<br>the WebApplicationContext associated to a DispatcherServlet under the key DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE is searched for and made available to all of the elements of the process<br>The DispatcherServlet finds all implementations of the HandlerAdapter interface configured for your dispatcher using getHandler() – each found and configured implementation handles the request via handle() through the remainder of the process<br>the LocaleResolver is optionally bound to the request to enable elements in the process to resolve the locale<br>the ThemeResolver is optionally bound to the request to let elements, such as views, determine which theme to use<br>if a MultipartResolver is specified, the request is inspected for MultipartFiles – any found are wrapped in a MultipartHttpServletRequest for further processing<br>HandlerExceptionResolver implementations declared in the WebApplicationContext picks up exceptions that are thrown during processing of the request</p>
+</blockquote>
+</li>
+<li><p>HandlerAdapter Interfaces 不展开</p>
+</li>
+</ol>
+<hr>
+<p>在详细解读dispatcherServlet是如何处理请求之前，我们需要先建立一个spring mvc工作的流程：</p>
+<p>浏览器<br>   │<br>   │ HTTP Request<br>   ▼<br>DispatcherServlet<br>   │<br>   │ 找：这个 URL 应该交给谁？<br>   ▼<br>HandlerMapping（根据 请求找到对应的handler）<br>   │<br>   │ 找到 Controller 方法<br>   ▼<br>Handler<br>   │<br>   │ 但是 Controller 方法怎么调用？<br>   ▼<br>HandlerAdapter（handler调用适配器，DispatcherServlet通过HandleAdapter调用Handler）<br>   │<br>   │ 调用<br>   ▼<br>Controller 方法<br>   │<br>   │ 返回结果<br>   ▼<br>DispatcherServlet<br>   │<br>   ▼<br>HTTP Response</p>
+<hr>
+<p>原文翻译：</p>
+<ol start="2">
+<li>DispatcherServlet 的请求处理</li>
+</ol>
+<p>本质上，DispatcherServlet 接收一个传入的 HttpRequest，然后根据 Spring 应用中配置好的 HandlerAdapter 接口实现，以及相关的注解（这些注解用于声明处理器、Controller 端点和响应对象），将请求委派出去并对请求进行处理。</p>
+<blockquote>
+<p>这段话交代了DispatcherServlet的职责：接受http请求，调度HandlerMapping找到handler,调度HandlerAdapter调用Handler响应请求。它自己只负责调度，将任务委托给其他模块。</p>
+</blockquote>
+<p>进一步来看，DispatcherServlet 处理一个组件&#x2F;请求时，大致会经历以下过程：</p>
+<p>首先，会查找与 DispatcherServlet 关联的 WebApplicationContext。这个上下文会以 DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE 为 key 保存，并提供给整个处理流程中的各个组件使用。<br>DispatcherServlet 会通过 getHandler() 找到当前 Dispatcher 配置的 HandlerAdapter 实现。找到合适的实现后，在后续处理过程中通过它的 handle() 方法来处理请求。</p>
+<blockquote>
+<p>这段话具体解释HandlerMapping是如何工作的，它通过WebApplicationContext（也就是我们一开始就讲到的spring容器，还记得@Bean public CommandLineRunner demo(CustomerRepository repository){}这个方法吗？就是从这里我们开始了解到Spring容器ApplicationContext的，它里面有所有的Bean等）找到对应的Handler,</p>
+</blockquote>
+<p>如果配置了 LocaleResolver，它会被绑定到当前请求，使处理流程中的其他组件能够确定当前请求所对应的语言&#x2F;地区（Locale）。</p>
+<p>如果配置了 ThemeResolver，它会被绑定到当前请求，使诸如 View 之类的组件能够确定应该使用什么主题。</p>
+<p>如果配置了 MultipartResolver，Spring 会检查当前请求是否包含 MultipartFile（例如文件上传）。如果存在，就会把原始请求包装成 MultipartHttpServletRequest，供后续处理。</p>
+<p>在请求处理过程中，如果抛出了异常，那么在 WebApplicationContext 中声明的 HandlerExceptionResolver 实现会负责处理这些异常。</p>
+<hr>
+<p>在理解了这些之后，我们把这个和之前学过的Controller拼接起来，形成spring mvc 处理请求的完整链路：</p>
+<p>Tomcat<br>  ↓<br>DispatcherServlet<br>  ↓<br>HandlerMapping<br>  ↓<br>Handler<br>  ↓<br>HandlerAdapter<br>  ↓<br>Controller<br>  ↓<br>返回值处理<br>  ↓<br>HttpMessageConverter<br>  ↓<br>HTTP Response</p>
+<hr>
+
+    </div>
+
+    
+    <nav class="post-nav">
+      <span></span>
+      
+        <a class="post-nav-next" href="/2026/08/12/%E6%84%8F%E4%B9%89%E4%B9%9F%E9%9C%80%E8%A6%81%E5%81%87%E6%97%A5/">意义也需要假日 →</a>
+      
+    </nav>
+    
+
+    
+      <section id="comments" class="comments-block">
+  <div class="ledger"></div>
+  <div class="comments-headline"><span class="latin">Commentarii</span> · 评论</div>
+  <script src="https://giscus.app/client.js"
+    data-repo="zzmleslie/zzmleslie.github.io"
+    data-repo-id="R_kgDORP80dA"
+    data-category="Ideas"
+    data-category-id="DIC_kwDORP80dM4C8joU"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="dark"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async>
+  </script>
+</section>
+
+    
+  </div>
+
+  <footer class="site-footer">
+  <div class="ledger" style="margin:0 0 28px"></div>
+  <p>&copy; 2026 Zzm&#39;s Blog · <span class="latin">Codex Personalis</span></p>
+</footer>
+
+</div>
+
+
+</body>
+</html>
