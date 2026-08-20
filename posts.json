@@ -1,5 +1,17 @@
 [
   {
+    "title": "Properties-and-Configuration",
+    "date": "2026-08-20",
+    "path": "2026/08/20/Properties-and-Configuration/",
+    "excerpt": "在学习Properties和Configuration之前，我们先要熟悉spring框架。可以从springinitialzr拉一个框架来观察。这里建议在跟教程的时候多写几个简单的项目，这样框架就会自然而然熟悉起来。 这里我把maven编译",
+    "tags": [
+      "-spring"
+    ],
+    "categories": [
+      "Tech"
+    ]
+  },
+  {
     "title": "DispatcherServlet 简单介绍",
     "date": "2026-08-19",
     "path": "2026/08/19/DispatcherServlet简单介绍/",

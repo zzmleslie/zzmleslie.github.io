@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Properties-and-Configuration · Zzm&#39;s Blog</title>
+<meta name="description" content="喜欢rana猫猫、波奇酱和超可爱的khalil喵">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Noto+Serif+SC:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+<div class="article-body">
+  <div class="article-topbar">
+  <div class="wrap">
+    <a class="back-link" href="/">← 回到首页</a>
+    <a class="blog-mark" href="/">zzmLeslie<small>CODEX PERSONALIS</small></a>
+  </div>
+</div>
+
+
+  <div class="article-wrap">
+    <header class="article-header">
+      <h1>Properties-and-Configuration</h1>
+      <div class="article-meta">
+        <time datetime="2026-08-20">2026-08-20</time>
+        
+          <span class="sep">·</span>
+          
+            <a href="/categories/Tech/">Tech</a>
+          
+        
+        
+          <span class="sep">·</span>
+          <a href="/tags/spring/">-spring</a>
+        
+      </div>
+      
+    </header>
+
+    <div class="ledger" style="margin:36px 0 44px"></div>
+
+    <div class="article-content">
+      <p>在学习Properties和Configuration之前，我们先要熟悉spring框架。可以从springinitialzr拉一个框架来观察。这里建议在跟教程的时候多写几个简单的项目，这样框架就会自然而然熟悉起来。<br>这里我把maven编译的spring项目架构画了在这里。</p>
+<h1 id="springboot-项目架构"><a href="#springboot-项目架构" class="headerlink" title="springboot 项目架构 "></a>springboot 项目架构 <maven></h1><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">demo</span><br><span class="line">├── .mvn (放 maven-wrapper.properties)</span><br><span class="line">├── src</span><br><span class="line">│   ├── main (生产)</span><br><span class="line">│   │   ├── java (\com\example\demo 放 .java 文件)</span><br><span class="line">│   │   └── resources ─────────────────────────────┐</span><br><span class="line">│   │       ├── static                             │</span><br><span class="line">│   │       ├── templates (放 .html、.jsp 模板)     │(编译、拷贝)</span><br><span class="line">│   │       └── application.yml (或 .properties)   │</span><br><span class="line">│   └── test (测试)                                │</span><br><span class="line">├── target                                         │</span><br><span class="line">│   ├── classes ◄──────────────────────────────────┘</span><br><span class="line">│   │   ├── com (放编译后的 .class 文件)</span><br><span class="line">│   │   ├── templates (放模板)</span><br><span class="line">│   │   └── application.yml (properties) 占位符替换</span><br><span class="line">│   ├── generated-sources</span><br><span class="line">│   ├── maven-status</span><br><span class="line">│   └── test-classes</span><br><span class="line">├── pom.xml</span><br><span class="line">└── 其他文件：.gitignore / .gitattributes / .mvnw / .mvnw.cmd 等</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>在熟悉框架之后进入我们的学习，这次学习的内容是guide中的Properties and Configuration ，觉得看完这篇blog还不是很清楚的可以看下原文.</p>
+<blockquote>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/how-to/properties-and-configuration.html">https://docs.spring.io/spring-boot/how-to/properties-and-configuration.html</a></p>
+</blockquote>
+<p>接下来会从6个部分讲解properties和configuration是如何被spring 使用的。</p>
+<hr>
+<h3 id="part1-maven资源展开（限制条件：生产环境即源码-main-中，test-中不行）"><a href="#part1-maven资源展开（限制条件：生产环境即源码-main-中，test-中不行）" class="headerlink" title="part1: maven资源展开（限制条件：生产环境即源码 main 中，test 中不行）"></a>part1: maven资源展开（限制条件：生产环境即源码 <code>main</code> 中，<code>test</code> 中不行）</h3><h4 id="资源过滤"><a href="#资源过滤" class="headerlink" title="资源过滤"></a>资源过滤</h4><ol>
+<li><p>在 application.yml &#x2F; properties 中，常用 <code>@ @</code> 占位符来避免硬编码，是从已解析的 <code>pom.xml</code>  中找到占位键对应的值，进行替换后写入 <code>target / classes</code> 中的 <code>application.yml</code>。例如在 src 中 application.properties 中写 <code>version = @project.version@</code> 替换。</p>
+</li>
+<li><p>展开属性，也就是占位符的替换，是由 maven 在编译、打包期间进行的。<code>maven-resources-plugin</code> 是执行者，这个插件是 <code>pom.xml</code> <code>&lt;parent&gt;</code> 中配置 <code>spring-boot-starter</code> 就自带的。常在 <code>pom.xml</code> 中 <code>&lt;parent&gt;</code>自带的。</p>
+<blockquote>
+<p>Tips:如果不用 <code>starter-parent</code> 需要在prom.xml中添加<build/>和<plugins/>相关内容</p>
+</blockquote>
+</li>
+<li><p>展开属性失效：当开启 <code>addResources</code> 标识的时候，开启 <code>addResources</code> 的同时，也开启了热重载（hot reloading），将 <code>src/main/resources</code> 挂载到运行的 classpath 上</p>
+</li>
+</ol>
+<blockquote>
+<p>TIP：这里的挂载是什么？有什么效果？<br>正常（非挂载状态下），Java 程序运行只能读取 <code>target / classes</code>（即编译后的目录）中的文件，如果在程序运行时修改源码，程序并不能直接展现变化，必须再次经过一次 maven 编译和拷贝更新。<br>而挂载则是将源码路径 <code>src/main/resources</code> 追加到 classpath 上，使得源码修改可以立刻生效，而无需编译，便于开发。</p>
+</blockquote>
+<hr>
+<h3 id="part2-使用外部配置控制-Spring-Application"><a href="#part2-使用外部配置控制-Spring-Application" class="headerlink" title="part2: 使用外部配置控制 Spring Application"></a>part2: 使用外部配置控制 Spring Application</h3><p>使用外部配置控制指的是 application.properties &#x2F; yml<br>Spring Application 中修改配置使用 Java API。</p>
+<p>这里教程说到：<code>application.properties</code> 中可以使用 <code>spring.main.*</code> 来改变 spring Application 的一些配置，被称为外部化配置（实质是配置的映射），而与此相对的，写在 Application 中的则是硬编码。</p>
+<p>例如，以下的代码在properties中关闭了打印 spring banner 的配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.main.banner-mode</span> = <span class="string">off</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>既然这里说到application.properties &#x2F; yml可以通过 <code>Spring Application</code> 映射的 <code>spring.main.*</code> 修改属性，则我们可以发现两种设置存在优先级：<code>外部配置 &gt; Java API</code>。</p>
+<p>普通配置项（如 Banner、Web类型、port 等）遵循这个优先级，是 <code>Java API &lt; 外部配置</code>。</p>
+<p>但存在例外：<strong>主配置源（primary sources）</strong>。</p>
+<blockquote>
+<p>TIP：何为主配置源<code>根据官方定义，primary sources 是指传给</code>SpringApplication<code>构造函数（或</code>SpringApplicationBuilder.sources()<code>方法）的那些 class 类或 package，它们是用于引导和创建 spring 应用上下文的顶级配置起点（ApplicationContext）。 主配置源可以有多个，但一般只传一个主类（即有 main() 并有</code>@SpringBootApplication<code>的那个类）。 主配置源通常贴着</code>@SpringBootApplication&#96; 注解，是整个 Spring 容器的艮起点。<br>一般来说长这样：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyApplication.class 是主配置源</span></span><br><span class="line"><span class="type">SpringApplication</span> <span class="variable">application</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SpringApplication</span>(MyApplication.class);</span><br><span class="line">application.run(args);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="part3：修改应用外部属性的位置"><a href="#part3：修改应用外部属性的位置" class="headerlink" title="part3：修改应用外部属性的位置"></a>part3：修改应用外部属性的位置</h3><p>这个标题在第一次看到时会觉得一头雾水，实际上，这一部分讲的是<strong>如何让 Spring Boot 正确读取自定义配置文件</strong>，以及给出了配置不生效时（也就是读取失败时）如何通过日志排查。</p>
+<p>我们都用过 spring initializr 拉过 spring 框架，也都知道外部配置 <code>application.properties / yml</code> 中读取配置的（Spring 默认从…）。但在实际生产中，我们可能会修改 <code>.yml</code> 文件名称或位置。</p>
+<p>举一个大家都遇到过的问题——模版接入的 api key 注入，这些配置出于安全考虑，都会直接写在项目的外部配置中。因此，如何让 Spring 读到这些应用外部属性呢？</p>
+<p>一般是通过命令行 &#x2F; 系统属性 &#x2F; 环境变量在程序启动时修改两个参数：<code>spring.config.name</code> 和 <code>spring.config.location</code><br>前者适用于仅修改名称而文件读取路径不变的情况，后者直接修改查找路径。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java -jar app.jar --spring.config.name=myapp</span><br><span class="line">java -jar app.jar --spring.config.location=file:/etc/myapp/config.yml</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>为什么通过外部环境传入？</strong><br>因为读取配置文件之前就需要知悉文件读取路径，只有命令行 &#x2F; 系统属性 &#x2F; 环境变量可以做到。</p>
+<p><strong>排查配置不生效的方法：trace 日志</strong><br>官方提供的排查方法如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -jar app.jar --logging.level.org.springframework.boot.context.config=<span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="part4：使用“简短”的-cmd-参数"><a href="#part4：使用“简短”的-cmd-参数" class="headerlink" title="part4：使用“简短”的 cmd 参数"></a>part4：使用“简短”的 cmd 参数</h3><p>这里介绍的是 port 的简短配置方式，操作方式是：<br>在 <code>application.properties / yml</code> 中：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span> = <span class="string">$&#123;port:8080&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>TIP：这里的${变量名 ：默认值}</p>
+</blockquote>
+<p>这样 <code>port</code> 在命令行中就可代替 <code>server.port</code>，并且有了默认值 8080。<br>这样做也使得在 Docker、Heroku 等平台部署更方便，因为在 PaaS 环境中分配端口注入方式为 <code>PORT</code>，也就可以被正确识别为 <code>server.port</code> 并注入。</p>
+<hr>
+<h3 id="part5：使用-YAML-作为外部属性配置"><a href="#part5：使用-YAML-作为外部属性配置" class="headerlink" title="part5：使用 YAML 作为外部属性配置"></a>part5：使用 YAML 作为外部属性配置</h3><p>yaml 是 json 的超集，不难看出两者格式与语法区别很相似。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yaml</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">  <span class="attr">active:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">java</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">spring</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># json</span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">8080</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;active&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;java&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;spring&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.yaml</code> 解析所需依赖包含在 <code>spring-boot-starter</code> 中。解析后由树状变为如 <code>properties</code> 一样的单层，生成以 <code>.</code> 分隔的键。</p>
+<p>由于 yaml 树状结构清晰，一般复杂项目都会采用 yaml，而不是 properties。</p>
+<hr>
+<h3 id="part6：设置激活的-Spring-Profile"><a href="#part6：设置激活的-Spring-Profile" class="headerlink" title="part6：设置激活的 Spring Profile"></a>part6：设置激活的 Spring Profile</h3><p>什么是 profile，我们为什么要激活它?</p>
+<p>profile 是 spring 框架提供的一种环境隔离机制，它允许开发者把针对不同运行环境的配置和组件分隔开，当某一 profile 被激活，对应的配置和组件才会生效。</p>
+<p>在开发过程中，我们需要在不同环境中运行一套代码，通常会有：<code>dev</code> 开发环境  <code>prod</code> 生产环境 。这些环境的数据库连接、日志级别、API 注入方式等都会存在很大差异，而每次手动修改配置则很容易出错也很吃力。于是我们引入了profile，便于快速切换环境。</p>
+<p><strong>那profile具体要怎么写，写在哪里呢？</strong></p>
+<p>profile 是由 <strong>Java 代码与配置文件共同完成的</strong></p>
+<p>在 Java 代码中，一般用于加载组件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Profile(&quot;dev&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MockPaymentService</span> <span class="keyword">implements</span> <span class="title class_">PaymentService</span> &#123; ... &#125;</span><br><span class="line"><span class="comment">// 表示当激活 dev 环境时，才注册 MockPaymentService 对象为组件</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Profile(&quot;prod&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AlipayService</span> <span class="keyword">implements</span> <span class="title class_">PaymentService</span> &#123; ... &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在配置文件中一般控制配置参数具体数值：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application-dev.yml</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/dev-db</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当激活某一 profile 时，相关的 Java 代码和配置文件（包括通用的 <code>application.yml</code> 与对应的 <code>application-profile.yml</code> ）会被激活。</p>
+<p>这里配置文件划分 profile有两种方式：</p>
+<ol>
+<li>第一种是分为多个 yml 文件：</li>
+</ol>
+<ul>
+<li><code>application.yml</code> — 通用</li>
+<li><code>application-dev.yml</code> — 不同 profile</li>
+<li><code>application-prod.yml</code></li>
+</ul>
+<ol start="2">
+<li>第二种是 <code>application.yml</code> 中用 <code>#---</code> 分区。例如：</li>
+</ol>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># properties</span></span><br><span class="line"><span class="attr">server.port</span> = <span class="string">8080</span></span><br><span class="line"><span class="comment">#---</span></span><br><span class="line"><span class="attr">spring.config.activate.on-profile</span> = <span class="string">development</span></span><br><span class="line"><span class="attr">server.port</span> = <span class="string">8081</span></span><br><span class="line"><span class="comment">#---</span></span><br><span class="line"><span class="attr">spring.config.activate.on-profile</span> = <span class="string">production</span></span><br><span class="line"><span class="attr">server.port</span> = <span class="string">0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中激活的 profile 设置可覆盖默认。</p>
+<p><strong>那如何激活 profile 呢？</strong></p>
+<p>在启动程序时指定激活命令，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--spring.profiles.active=prod</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>default profile 如何设置呢？</strong></p>
+<p>在 <code>application.properties</code> 中可设置 default profile：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.profiles.default</span>=<span class="string">dev</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>学到这里，我们已经读完了官方教程的大部分内容，对于Configuration和Properties也有了大致的认识和掌握！关于具体如何写，在下一次笔记中会写到。</p>
+<hr>
+
+    </div>
+
+    
+    <nav class="post-nav">
+      <span></span>
+      
+        <a class="post-nav-next" href="/2026/08/19/DispatcherServlet%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">DispatcherServlet 简单介绍 →</a>
+      
+    </nav>
+    
+
+    
+      <section id="comments" class="comments-block">
+  <div class="ledger"></div>
+  <div class="comments-headline"><span class="latin">Commentarii</span> · 评论</div>
+  <script src="https://giscus.app/client.js"
+    data-repo="zzmleslie/zzmleslie.github.io"
+    data-repo-id="R_kgDORP80dA"
+    data-category="Ideas"
+    data-category-id="DIC_kwDORP80dM4C8joU"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="dark"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async>
+  </script>
+</section>
+
+    
+  </div>
+
+  <footer class="site-footer">
+  <div class="ledger" style="margin:0 0 28px"></div>
+  <p>&copy; 2026 Zzm&#39;s Blog · <span class="latin">Codex Personalis</span></p>
+</footer>
+
+</div>
+
+
+</body>
+</html>
