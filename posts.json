@@ -1,5 +1,17 @@
 [
   {
+    "title": "AOP简单总结",
+    "date": "2026-09-06",
+    "path": "2026/09/06/aop简单总结/",
+    "excerpt": "简单看了下其他网站的aop都写的很简单啊，感觉理解困难，于是跟了廖雪峰的教程，写的很容易懂 https://liaoxuefeng.com/books/java/spring/aop/index.html 跟完之后手搓一下自己的理解 ---",
+    "tags": [
+      "-spring"
+    ],
+    "categories": [
+      "Tech"
+    ]
+  },
+  {
     "title": "素食者 | 채식주의자",
     "date": "2026-09-05",
     "path": "2026/09/05/素食者/",

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOP简单总结 · Zzm&#39;s Blog</title>
+<meta name="description" content="喜欢rana猫猫、波奇酱和超可爱的khalil喵">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Noto+Serif+SC:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+<div class="article-body">
+  <div class="article-topbar">
+  <div class="wrap">
+    <a class="back-link" href="/">← 回到首页</a>
+    <a class="blog-mark" href="/">zzmLeslie<small>CODEX PERSONALIS</small></a>
+  </div>
+</div>
+
+
+  <div class="article-wrap">
+    <header class="article-header">
+      <h1>AOP简单总结</h1>
+      <div class="article-meta">
+        <time datetime="2026-09-06">2026-09-06</time>
+        
+          <span class="sep">·</span>
+          
+            <a href="/categories/Tech/">Tech</a>
+          
+        
+        
+          <span class="sep">·</span>
+          <a href="/tags/spring/">-spring</a>
+        
+      </div>
+      
+    </header>
+
+    <div class="ledger" style="margin:36px 0 44px"></div>
+
+    <div class="article-content">
+      <p>简单看了下其他网站的aop都写的很简单啊，感觉理解困难，于是跟了廖雪峰的教程，写的很容易懂</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://liaoxuefeng.com/books/java/spring/aop/index.html">https://liaoxuefeng.com/books/java/spring/aop/index.html</a></p>
+</blockquote>
+<p>跟完之后手搓一下自己的理解</p>
+<hr>
+<h4 id="什么是aop"><a href="#什么是aop" class="headerlink" title="什么是aop"></a>什么是aop</h4><p>Aspect Oriented Programming，面向切面编程。什么是切面呢？我们不妨思考一下，日志在业务场景场景中的实现——系统每进行一次服务，日志就应该自动打印出来。这些服务调用的方法，可能分散在各个文件中，如果为了在每次执行业务后打印出日志，那我们需要在每个方法的后面加上打印日志服务，势必会造成冗余和修改困难。于是我们想，日志打印在每个业务方法中执行的逻辑是一样的，我们可不可以把这种同样实现的方法抽象出来，写在一起，然后在每次执行需要打印日志的业务方法时再注入呢？这就是aop。面对同样的逻辑实现的方法，我们可以提出一个切面。在业务逻辑执行前&#x2F;后，Ioc执行到相应注解的时候，会自动帮我们<br>注入。这样，我们只需要在需要日志打印的方法前加对应的annotaion，再统一写一个Aspect就可以了。所以aop的实现其实是一种动态代理。</p>
+<hr>
+<h4 id="aop拦截器"><a href="#aop拦截器" class="headerlink" title="aop拦截器"></a>aop拦截器</h4><p>aop的拦截器展示了aop是如何实现拦截、注入切面代码的。<br>拦截器有以下类型：</p>
+<ol>
+<li>@Before：这种拦截器先执行拦截代码，再执行目标代码。如果拦截器抛异常，那么目标代码就不执行了；</li>
+<li>@After：这种拦截器先执行目标代码，再执行拦截器代码。无论目标代码是否抛异常，拦截器代码都会执行；</li>
+<li>@AfterReturning：和@After不同的是，只有当目标代码正常返回时，才执行拦截器代码；</li>
+<li>@AfterThrowing：和@After不同的是，只有当目标代码抛出了异常时，才执行拦截器代码；</li>
+<li>@Around：能完全控制目标代码是否执行，并可以在执行前后、抛异常后执行任意拦截代码，可以说是包含了上面所有功能。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.aop;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LogginAspect</span> &#123;</span><br><span class="line">    <span class="comment">//在执行UserService的每个方法之前执行</span></span><br><span class="line">    <span class="meta">@Before(&quot;execution(public * com.example.aop.UserService.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doAccessCheck</span><span class="params">()</span>&#123;</span><br><span class="line">        System.err.println(<span class="string">&quot;[Before] do access check ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在执行MialService的每个方法前后执行；</span></span><br><span class="line">    <span class="comment">//@Around注解，它和@Before不同，@Around可以决定是否执行目标方法</span></span><br><span class="line">    <span class="meta">@Around(&quot;execution(public * com.example.aop.MailService.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">doLogging</span><span class="params">(ProceedingjoinPoint pjp)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="comment">//我们在doLogging()内部先打印日志，再调用方法，最后打印日志后返回结果。</span></span><br><span class="line">        System.err.println(<span class="string">&quot;[Around] start &quot;</span> + pjp.getSignature());</span><br><span class="line">        <span class="type">Object</span> <span class="variable">retVal</span> <span class="operator">=</span> pjp.proceed();</span><br><span class="line">        System.err.println(<span class="string">&quot;[Around] done &quot;</span> + pjp.getSignature());</span><br><span class="line">        <span class="keyword">return</span> retVal;</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="aop具体是如何实现的"><a href="#aop具体是如何实现的" class="headerlink" title="aop具体是如何实现的"></a>aop具体是如何实现的</h4><p>深入了解aop的实现，我们会发现，实际上aop是spring使用CGLIB生成proxy。<br>什么意思呢？AspectJ将Aspect织入原类的时候，并没有改变原类中的任何字段&#x2F;方法，实际上是创建了一个新的类，继承了原类，并做了对应方法的覆盖修改，实现新的方法。<br>需要注意的是，注册在Ioc容器中的Bean不是原始类而是proxy。而因为Aspect是针对方法设计的，而不是针对成员变量的共享设计的，因此，在proxy的创建中，proxy中的成员变量是不会被做初始化操作的！因此，当注入proxy且使用” . “访问proxy的成员变量时，会NPE。<br>如何修复这个问题？我们需要使用getter&#x2F;setter让proxy把访问成员变量的事情转交给原类的方法去做，这样得到的就是原类中已被初始化的数值。<br>在proxy这个特性下，我们也了解到，原来java写这么多getter&#x2F;setter不是摆设！</p>
+<hr>
+
+    </div>
+
+    
+    <nav class="post-nav">
+      <span></span>
+      
+        <a class="post-nav-next" href="/2026/09/05/%E7%B4%A0%E9%A3%9F%E8%80%85/">素食者 | 채식주의자 →</a>
+      
+    </nav>
+    
+
+    
+      <section id="comments" class="comments-block">
+  <div class="ledger"></div>
+  <div class="comments-headline"><span class="latin">Commentarii</span> · 评论</div>
+  <script src="https://giscus.app/client.js"
+    data-repo="zzmleslie/zzmleslie.github.io"
+    data-repo-id="R_kgDORP80dA"
+    data-category="Ideas"
+    data-category-id="DIC_kwDORP80dM4C8joU"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="dark"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async>
+  </script>
+</section>
+
+    
+  </div>
+
+  <footer class="site-footer">
+  <div class="ledger" style="margin:0 0 28px"></div>
+  <p>&copy; 2026 Zzm&#39;s Blog · <span class="latin">Codex Personalis</span></p>
+</footer>
+
+</div>
+
+
+</body>
+</html>
